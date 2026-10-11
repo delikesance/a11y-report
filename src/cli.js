@@ -7,6 +7,8 @@ import { loadBranding } from './cli/branding.js';
 import { assertOutWritable, writeOutputs } from './cli/outputs.js';
 import { USAGE } from './cli/usage.js';
 import { readJson } from './cli/values.js';
+import { detectTerminal } from './cli/terminal.js';
+import { summaryLines } from './cli/summary.js';
 
 export { parseCliArgs } from './cli/options.js';
 export { loadBranding } from './cli/branding.js';
@@ -15,6 +17,7 @@ const EXIT_USAGE = 1;
 
 const progress = (message) => process.stderr.write(`${message}\n`);
 const silent = () => {};
+const errorLine = (term, message) => `${term.symbol('fail')} ${term.paint('red', 'Erreur')} : ${message}`;
 
 async function crawlTargets(urls, crawlSettings, log) {
   const { crawl } = await import('./crawl.js');
@@ -42,14 +45,14 @@ function runCi(scan, { thresholds, format }) {
   return exitCode;
 }
 
-async function run(argv) {
+async function run(argv, term) {
   const { urls, options, settings } = parseCliArgs(argv);
   if (options.help) {
     process.stdout.write(USAGE);
     return EXIT_OK;
   }
   if (urls.length === 0 && !options['from-json']) {
-    process.stderr.write(`Erreur : aucune URL fournie.\n\n${USAGE}`);
+    process.stderr.write(`${errorLine(term, 'aucune URL fournie.')}\n\n${USAGE}`);
     return EXIT_USAGE;
   }
 
@@ -58,6 +61,7 @@ async function run(argv) {
   const log = settings.ci ? silent : progress;
   const scan = await obtainScan(urls, { options, settings, log });
   if (options['save-json']) writeFileSync(options['save-json'], JSON.stringify(scan, null, 2));
+  for (const line of summaryLines(scan, term)) log(line);
 
   log('Génération des rapports...');
   for (const path of await writeOutputs(scan, { formats: settings.formats, out: options.out, branding })) {
@@ -67,10 +71,11 @@ async function run(argv) {
 }
 
 async function main(argv) {
+  const term = detectTerminal(process.stderr, { argv });
   try {
-    return await run(argv);
+    return await run(argv, term);
   } catch (error) {
-    process.stderr.write(`Erreur : ${error.message}\n`);
+    process.stderr.write(`${errorLine(term, error.message)}\n`);
     return EXIT_USAGE;
   }
 }
