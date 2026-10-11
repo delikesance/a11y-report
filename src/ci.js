@@ -63,13 +63,20 @@ function parseFlagValue(key, raw) {
   return raw && Number.isFinite(number) ? number : raw;
 }
 
+function splitThresholdPair(pair) {
+  const separator = pair.indexOf('=');
+  const key = pair.slice(0, separator === -1 ? undefined : separator).trim();
+  if (separator === -1) throw new Error(`Seuil invalide : "${key}" (attendu : ${key}=0)`);
+  return [key, pair.slice(separator + 1).trim()];
+}
+
 export function parseThresholdsFlags(text) {
-  const raw = Object.fromEntries(
-    text.split(',').map((pair) => {
-      const [key, value] = pair.split('=').map((part) => part.trim());
-      return [key, parseFlagValue(key, value)];
-    }),
-  );
+  const raw = {};
+  for (const pair of text.split(',')) {
+    const [key, value] = splitThresholdPair(pair);
+    if (Object.hasOwn(raw, key)) throw new Error(`Seuil en double : ${key}`);
+    raw[key] = parseFlagValue(key, value);
+  }
   return normalizeThresholds(raw);
 }
 

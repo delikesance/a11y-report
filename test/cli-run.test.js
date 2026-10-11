@@ -89,11 +89,18 @@ describe('a11y-report (CLI, serveur de fixtures)', () => {
       assert.match(readFileSync(join(cwd, 'bilan.html'), 'utf8'), /<html/i);
     });
 
-    test('plusieurs formats vers un --out qui ressemble à un fichier : refusé', async () => {
+    test('plusieurs formats vers un --out qui ressemble à un fichier : dossier créé', async () => {
       const cwd = workDir();
-      const { code, stderr } = await runCli([`${server.url}${HEALTHY}`, '--format', 'json,csv', '--out', 'bilan.pdf', ...BRANDING_ARGS], { cwd });
+      const { code } = await runCli([`${server.url}${HEALTHY}`, '--format', 'json,csv', '--out', 'bilan.pdf', ...BRANDING_ARGS], { cwd });
+      assert.equal(code, 0);
+      assert.match(readFileSync(join(cwd, 'bilan.pdf', 'rapport.json'), 'utf8'), /"pages"/);
+    });
+
+    test('--out dans un dossier parent inexistant : erreur avant le scan', async () => {
+      const cwd = workDir();
+      const { code, stderr } = await runCli([`${server.url}${HEALTHY}`, '--out', 'absent/rapport.json', ...BRANDING_ARGS], { cwd });
       assert.equal(code, 1);
-      assert.match(stderr, /--out doit être un dossier quand plusieurs formats/);
+      assert.match(stderr, /Dossier de sortie introuvable/);
     });
   });
 

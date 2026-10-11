@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { EXIT_OK, evaluateThresholds } from './ci.js';
 import { parseCliArgs } from './cli/options.js';
 import { loadBranding } from './cli/branding.js';
-import { writeOutputs } from './cli/outputs.js';
+import { assertOutWritable, writeOutputs } from './cli/outputs.js';
 import { USAGE } from './cli/usage.js';
 import { readJson } from './cli/values.js';
 
@@ -53,6 +53,7 @@ async function run(argv) {
     return EXIT_USAGE;
   }
 
+  assertOutWritable(options.out, settings.formats);
   const branding = loadBranding(options);
   const log = settings.ci ? silent : progress;
   const scan = await obtainScan(urls, { options, settings, log });
