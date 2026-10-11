@@ -18,7 +18,7 @@ describe('parseCliArgs', () => {
     assert.equal(options.client, 'Acme');
     assert.equal(options.agency, 'Agence');
     assert.equal(options.color, '#112233');
-    assert.equal(options.out, 'rapport.pdf');
+    assert.equal(options.out, undefined);
   });
 
   test('accepte --from-json sans URL', () => {

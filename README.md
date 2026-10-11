@@ -37,13 +37,41 @@ La progression s'affiche sur la sortie d'erreur ; le PDF est écrit à l'emplace
 | `--taux 80` | Taux horaire en euros HT pour chiffrer le devis. |
 | `--telephone "..."` | Téléphone affiché dans le devis. |
 | `--validite 30` | Validité du devis en jours (défaut : 30). |
-| `--out rapport.pdf` | Fichier PDF généré (défaut : `rapport.pdf`). |
+| `--format LISTE` | Formats générés : `pdf` (défaut), `json`, `html`, `csv`, `sarif`. Répétable ou séparés par des virgules : `--format json,html`. |
+| `--out CHEMIN` | Fichier de sortie (un seul format) ou dossier (plusieurs formats, ou chemin se terminant par `/`). Défaut : `rapport.<format>`. |
 | `--branding b.json` | Charge le branding depuis un fichier JSON. Les options passées en ligne de commande l'emportent. |
 | `--from-json scan.json` | Recharge un scan sauvegardé au lieu de lancer un audit (aucune URL requise). |
 | `--save-json scan.json` | Sauvegarde le résultat de l'audit au format JSON, pour le réutiliser avec `--from-json`. |
+| `--concurrency N` | Pages auditées en parallèle, de 1 à 16 (défaut : 1). |
+| `--viewport V` | Viewport d'audit : `mobile`, `tablet`, `desktop` ou `LARGEURxHAUTEUR` (ex. `375x812`). Répétable (défaut : `desktop`). |
+| `--crawl` | Explore le site à partir de chaque URL donnée (même origine, robots.txt respecté). |
+| `--crawl-depth N` | Profondeur maximale des liens suivis, de 0 à 10 (défaut : 2). Requiert `--crawl`. |
+| `--max-pages N` | Nombre maximal de pages découvertes, de 1 à 1000 (défaut : 50). Requiert `--crawl`. |
+| `--sitemap` / `--no-sitemap` | Lit (défaut) ou ignore le `sitemap.xml`. Requiert `--crawl`. |
+| `--exclude MOTIF` | Exclut les URLs correspondant au motif glob ; répétable. Requiert `--crawl`. |
+| `--delay MS` | Pause entre deux requêtes d'exploration (défaut : 250 ms). Requiert `--crawl`. |
+| `--ci` | Mode intégration continue : sortie réduite sur stdout, code de retour selon les seuils. |
+| `--seuil "critical=0,serious=0"` | Seuils CI : `critical`, `serious`, `moderate`, `minor` (nombres d'occurrences), `score` (score minimal), `unaudited` (`true`/`false`). Requiert `--ci`. |
+| `--seuils-fichier s.json` | Seuils CI lus dans un fichier JSON ; `--seuil` l'emporte. Requiert `--ci`. |
+| `--ci-format github\|text` | Format des résultats CI : annotations GitHub ou texte (défaut : `text`). Requiert `--ci`. |
 | `-h, --help` | Affiche l'aide. |
 
-Sans URL et sans `--from-json`, la commande affiche l'aide et se termine avec le code 1. Toute erreur (URL invalide, option inconnue, fichier illisible) affiche un message `Erreur : ...` et se termine avec le code 1.
+Codes de retour : `0` succès (ou seuils respectés avec `--ci`), `1` erreur d'utilisation ou d'exécution (URL invalide, option inconnue, fichier illisible, aucune URL), `2` seuils CI non respectés, `3` page non auditée alors que les seuils l'interdisent. Toute erreur affiche un message `Erreur : ...`. L'aide complète est affichée par `--help`.
+
+Exemples :
+
+```bash
+# Rapports JSON et HTML dans ./rapports, 4 pages en parallèle, mobile et desktop
+node src/cli.js https://exemple.fr/ --crawl --max-pages 30 --concurrency 4 \
+  --viewport mobile --viewport desktop --format json,html --out ./rapports \
+  --client "Exemple SAS" --agency "Mon Agence"
+
+# Échec du build si la moindre occurrence critique ou grave subsiste
+node src/cli.js https://exemple.fr/ --ci --seuil "critical=0,serious=0" --ci-format github \
+  --format json --client "Exemple SAS" --agency "Mon Agence"
+```
+
+Pour l'intégration continue, voir [docs/ci.md](docs/ci.md).
 
 ## Devis intégré
 

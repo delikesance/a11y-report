@@ -1,140 +1,68 @@
 #!/usr/bin/env node
-import { parseArgs } from 'node:util';
-import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { resolveQuoteRates } from './report/quote-rates.js';
+import { EXIT_OK, evaluateThresholds } from './ci.js';
+import { parseCliArgs } from './cli/options.js';
+import { loadBranding } from './cli/branding.js';
+import { writeOutputs } from './cli/outputs.js';
+import { USAGE } from './cli/usage.js';
+import { readJson } from './cli/values.js';
 
-const OPTIONS = {
-  client: { type: 'string' },
-  agency: { type: 'string' },
-  logo: { type: 'string' },
-  color: { type: 'string' },
-  contact: { type: 'string' },
-  taux: { type: 'string' },
-  telephone: { type: 'string' },
-  validite: { type: 'string' },
-  out: { type: 'string', default: 'rapport.pdf' },
-  branding: { type: 'string' },
-  'from-json': { type: 'string' },
-  'save-json': { type: 'string' },
-  help: { type: 'boolean', short: 'h' },
-};
+export { parseCliArgs } from './cli/options.js';
+export { loadBranding } from './cli/branding.js';
 
-const USAGE = `Usage : a11y-report <url...> --client "X" --agency "Y" [options]
-       a11y-report --from-json scan.json --client "X" --agency "Y" [options]
+const EXIT_USAGE = 1;
 
-Options :
-  --client "X"        nom du client (requis sauf via --branding)
-  --agency "Y"        nom de l'agence (requis sauf via --branding)
-  --logo f.png        logo de l'agence
-  --color #rrggbb     couleur principale du rapport
-  --contact "..."     coordonnées affichées dans le rapport
-  --taux 550          TJM en euros HT pour chiffrer le devis (défaut 550)
-  --telephone "..."   téléphone affiché dans le devis
-  --validite 30       validité du devis en jours (défaut : 30)
-  --out rapport.pdf   fichier PDF généré (défaut : rapport.pdf)
-  --branding b.json   charge le branding depuis un JSON (les options passées l'emportent)
-  --from-json s.json  recharge un scan sauvegardé au lieu de scanner les URLs
-  --save-json s.json  sauvegarde le scan au format JSON
-  -h, --help          affiche cette aide
-`;
+const progress = (message) => process.stderr.write(`${message}\n`);
+const silent = () => {};
 
-const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
-const HTTP_PROTOCOLS = ['http:', 'https:'];
-
-function parseHttpUrl(raw) {
-  let url;
-  try {
-    url = new URL(raw);
-  } catch {
-    throw new Error(`URL invalide : ${raw}`);
+async function crawlTargets(urls, crawlSettings, log) {
+  const { crawl } = await import('./crawl.js');
+  const found = [];
+  for (const url of urls) {
+    const { pages } = await crawl(url, crawlSettings);
+    found.push(...pages.map((page) => page.url));
   }
-  if (!HTTP_PROTOCOLS.includes(url.protocol)) {
-    throw new Error(`URL invalide (http ou https attendu) : ${raw}`);
-  }
-  return url.href;
+  const targets = [...new Set(found)];
+  log(`Exploration : ${targets.length} page(s) découverte(s).`);
+  return targets;
 }
 
-function readJson(path) {
-  try {
-    return JSON.parse(readFileSync(path, 'utf8'));
-  } catch {
-    throw new Error(`Fichier JSON illisible ou invalide : ${path}`);
-  }
-}
-
-function definedEntries(entries) {
-  return Object.fromEntries(Object.entries(entries).filter(([, value]) => value !== undefined));
-}
-
-function parsePositive(raw, label, isValid = Number.isFinite) {
-  if (raw === undefined) return undefined;
-  const value = Number(raw);
-  if (value <= 0 || !isValid(value)) throw new Error(`${label} invalide (nombre positif attendu) : ${raw}`);
-  return value;
-}
-
-export function parseCliArgs(argv) {
-  let parsed;
-  try {
-    parsed = parseArgs({ args: argv, options: OPTIONS, allowPositionals: true, strict: true });
-  } catch (error) {
-    throw new Error(`Arguments invalides (${error.message})`);
-  }
-  return { urls: parsed.positionals.map(parseHttpUrl), options: parsed.values };
-}
-
-export function loadBranding(options) {
-  const fromFile = options.branding ? readJson(options.branding) : {};
-  const fromFlags = definedEntries({
-    agency: options.agency,
-    client: options.client,
-    logoPath: options.logo,
-    primaryColor: options.color,
-    contact: options.contact,
-    phone: options.telephone,
-    tjm: parsePositive(options.taux, 'Taux horaire'),
-    quoteValidityDays: parsePositive(options.validite, 'Validité du devis', Number.isInteger),
-  });
-  const branding = { ...fromFile, ...fromFlags };
-
-  if (!branding.agency) throw new Error('--agency est requis (ou "agency" dans --branding).');
-  if (!branding.client) throw new Error('--client est requis (ou "client" dans --branding).');
-  if (branding.primaryColor !== undefined && !HEX_COLOR.test(branding.primaryColor)) {
-    throw new Error(`Couleur invalide (format #rrggbb attendu) : ${branding.primaryColor}`);
-  }
-  resolveQuoteRates(branding);
-  return branding;
-}
-
-async function obtainScan(urls, options) {
+async function obtainScan(urls, { options, settings, log }) {
   if (options['from-json']) return readJson(options['from-json']);
-  process.stderr.write(`Analyse de ${urls.length} page(s)...\n`);
+  const targets = settings.crawl ? await crawlTargets(urls, settings.crawl, log) : urls;
+  log(`Analyse de ${targets.length} page(s)...`);
   const { scanPages } = await import('./scan.js');
-  return scanPages(urls);
+  return scanPages(targets, { concurrency: settings.concurrency, viewports: settings.viewports });
+}
+
+function runCi(scan, { thresholds, format }) {
+  const { lines, exitCode } = evaluateThresholds(scan, { ...thresholds, format });
+  for (const line of lines) process.stdout.write(`${line}\n`);
+  return exitCode;
 }
 
 async function run(argv) {
-  const { urls, options } = parseCliArgs(argv);
+  const { urls, options, settings } = parseCliArgs(argv);
   if (options.help) {
     process.stdout.write(USAGE);
-    return 0;
+    return EXIT_OK;
   }
   if (urls.length === 0 && !options['from-json']) {
     process.stderr.write(`Erreur : aucune URL fournie.\n\n${USAGE}`);
-    return 1;
+    return EXIT_USAGE;
   }
 
   const branding = loadBranding(options);
-  const scan = await obtainScan(urls, options);
+  const log = settings.ci ? silent : progress;
+  const scan = await obtainScan(urls, { options, settings, log });
   if (options['save-json']) writeFileSync(options['save-json'], JSON.stringify(scan, null, 2));
 
-  // Chargés à la demande : l'aide et la validation fonctionnent sans navigateur.
-  const { buildReportHtml, renderPdf } = await import('./report.js');
-  process.stderr.write('Génération du rapport...\n');
-  await renderPdf(buildReportHtml(scan, branding), options.out);
-  process.stderr.write(`Rapport écrit : ${options.out}\n`);
-  return 0;
+  log('Génération des rapports...');
+  for (const path of await writeOutputs(scan, { formats: settings.formats, out: options.out, branding })) {
+    log(`Rapport écrit : ${path}`);
+  }
+  return settings.ci ? runCi(scan, settings.ci) : EXIT_OK;
 }
 
 async function main(argv) {
@@ -142,7 +70,7 @@ async function main(argv) {
     return await run(argv);
   } catch (error) {
     process.stderr.write(`Erreur : ${error.message}\n`);
-    return 1;
+    return EXIT_USAGE;
   }
 }
 
