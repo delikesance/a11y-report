@@ -17,6 +17,13 @@ test('methodology page explains the score, tools and partial RGAA estimate', () 
   assert.match(html, /n'est pas une déclaration d'accessibilité/);
 });
 
+test('methodology headline counts testable criteria without a conformity-like percentage', () => {
+  const html = renderMethodology(scan);
+  assert.match(html, /30 critères testables automatiquement sur 30 sans échec détecté\./);
+  assert.match(html, /Taux indicatif : 100 %/);
+  assert.doesNotMatch(html, /Estimation partielle RGAA : /);
+});
+
 test('manual review section is omitted when the scan has no unaudited or incomplete fields', () => {
   assert.equal(renderManualReview(scan), '');
 });

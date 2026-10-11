@@ -32,15 +32,22 @@ const renderScoreRules = () => {
   return `<p>Score sur 100 : 100 moins la somme des pénalités de chaque problème distinct (une règle en échec compte une fois, quel que soit son nombre d'occurrences), minimum 0.</p><ul>${penalties.join('')}</ul>`;
 };
 
+const renderEstimateHeadline = ({ testable, passing, percent }) =>
+  percent === null
+    ? 'Estimation non calculée, aucune page auditée.'
+    : `${passing} critères testables automatiquement sur ${testable} sans échec détecté.`;
+
+const renderIndicativeRate = ({ percent, unmapped }) =>
+  percent === null
+    ? ''
+    : `<p>Taux indicatif : ${escapeHtml(percent)} % (${escapeHtml(unmapped)} règle(s) sans critère RGAA rattaché comptée(s) comme échec).</p>`;
+
 const renderRgaaEstimate = (scan) => {
-  const { testable, passing, percent } = computeRgaaEstimate(scan);
-  const result =
-    percent === null
-      ? 'non calculée, aucune page auditée.'
-      : `${percent} % (${passing} critères sur ${testable} sans anomalie détectée).`;
+  const estimate = computeRgaaEstimate(scan);
   return `<div class="me-warning">
-    <p><span class="strong">Estimation partielle RGAA : ${escapeHtml(result)}</span></p>
-    <p>Ce pourcentage porte uniquement sur les ${testable} critères du RGAA ${escapeHtml(RGAA_CRITERIA_COUNT)} qu'un test automatique peut vérifier. Ce n'est pas un taux de conformité. L'absence d'anomalie détectée ne prouve pas qu'un critère est respecté.</p>
+    <p><span class="strong">${escapeHtml(renderEstimateHeadline(estimate))}</span></p>
+    ${renderIndicativeRate(estimate)}
+    <p>Ce décompte porte uniquement sur les ${escapeHtml(estimate.testable)} critères du RGAA ${escapeHtml(RGAA_CRITERIA_COUNT)} qu'un test automatique peut vérifier. Ce n'est pas un taux de conformité. L'absence d'anomalie détectée ne prouve pas qu'un critère est respecté.</p>
     <p>Ce document n'est pas une déclaration d'accessibilité. Celle-ci relève du critère 1.6 du RGAA et est établie et publiée par l'éditeur du site.</p>
   </div>`;
 };
@@ -62,7 +69,7 @@ export function renderMethodology(scan) {
   ${renderScope(scan)}
   <h3 class="ap-subtitle">Calcul du score</h3>
   ${renderScoreRules()}
-  <h3 class="ap-subtitle">Estimation RGAA</h3>
+  <h3 class="ap-subtitle">Estimation partielle RGAA</h3>
   ${renderRgaaEstimate(scan)}
   <h3 class="ap-subtitle">Ce que le test automatique ne couvre pas</h3>
   <ul>${LIMIT_ITEMS.map(li).join('')}</ul>
