@@ -5,7 +5,7 @@ const listOrEmpty = (value) => (Array.isArray(value) ? value : []);
 const renderUnauditedItem = (entry) => `<li>${escapeHtml(entry.url ?? entry)}</li>`;
 
 const renderIncompleteItem = ({ page, violation }) =>
-  `<li><strong>${escapeHtml(violation.help)}</strong> : ${escapeHtml(page.url)} (${escapeHtml(violation.nodes.length)} élément(s))</li>`;
+  `<li><span class="strong">${escapeHtml(violation.help)}</span> : ${escapeHtml(page.url)} (${escapeHtml(violation.nodes.length)} élément(s))</li>`;
 
 const renderBlock = (title, items) =>
   items.length ? `<h3 class="ap-subtitle">${title}</h3><ul class="mr-list">${items.join('')}</ul>` : '';

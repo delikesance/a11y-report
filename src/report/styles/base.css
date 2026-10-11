@@ -11,21 +11,7 @@
 
 @page {
   size: A4;
-  margin: 0 0 16mm;
-
-  @bottom-left {
-    content: var(--footer-left);
-    padding: 0 14mm;
-    font: 11px 'IBM Plex Sans', sans-serif;
-    color: var(--muted);
-  }
-
-  @bottom-right {
-    content: "Page " counter(page) " / " counter(pages);
-    padding: 0 14mm;
-    font: 11px 'IBM Plex Sans', sans-serif;
-    color: var(--muted);
-  }
+  margin: 0;
 }
 
 html,
@@ -65,12 +51,11 @@ img {
   max-width: 100%;
 }
 
-/* 297mm minus the 16mm bottom margin reserved for the @page footer */
 .page {
   position: relative;
   box-sizing: border-box;
   width: 210mm;
-  height: 281mm;
+  height: 297mm;
   break-after: page;
 }
 

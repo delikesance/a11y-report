@@ -39,7 +39,7 @@ const renderRgaaEstimate = (scan) => {
       ? 'non calculée, aucune page auditée.'
       : `${percent} % (${passing} critères sur ${testable} sans anomalie détectée).`;
   return `<div class="me-warning">
-    <p><strong>Estimation partielle RGAA : ${escapeHtml(result)}</strong></p>
+    <p><span class="strong">Estimation partielle RGAA : ${escapeHtml(result)}</span></p>
     <p>Ce pourcentage porte uniquement sur les ${testable} critères du RGAA ${escapeHtml(RGAA_CRITERIA_COUNT)} qu'un test automatique peut vérifier. Ce n'est pas un taux de conformité. L'absence d'anomalie détectée ne prouve pas qu'un critère est respecté.</p>
     <p>Ce document n'est pas une déclaration d'accessibilité. Celle-ci relève du critère 1.6 du RGAA et est établie et publiée par l'éditeur du site.</p>
   </div>`;
