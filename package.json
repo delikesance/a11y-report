@@ -12,7 +12,8 @@
     "lint:layout": "node scripts/layout-lint.js",
     "check:links": "node scripts/check-links.js",
     "check:site-layout": "node scripts/check-site-layout.js",
-    "build:site": "node scripts/build-site-css.js"
+    "build:site": "node scripts/build-site-css.js",
+    "build:demo": "node scripts/build-demo.js"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.10.0",
