@@ -30,6 +30,7 @@
   "scripts": {
     "test": "node --test test/*.test.js",
     "verify:pdf": "node scripts/verify-pdf.js",
+    "check:dod": "node scripts/check-dod.js",
     "lint:layout": "node scripts/layout-lint.js",
     "check:links": "node scripts/check-links.js",
     "check:site-layout": "node scripts/check-site-layout.js",
