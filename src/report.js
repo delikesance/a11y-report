@@ -8,8 +8,10 @@ import { renderSummary } from './report/summary.js';
 import { renderDetails } from './report/details.js';
 import { renderQuote } from './report/quote.js';
 import { renderPageTable, renderLimits } from './report/appendix.js';
+import { renderManualReview } from './report/manual-review.js';
+import { renderMethodology } from './report/methodology.js';
 
-const STYLE_MODULES = ['base', 'cover', 'summary', 'details', 'quote', 'appendix'];
+const STYLE_MODULES = ['base', 'cover', 'summary', 'details', 'quote', 'appendix', 'methodology'];
 const DATE_FORMAT = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
 
 const readStyle = (name) => readFileSync(new URL(`./report/styles/${name}.css`, import.meta.url), 'utf8');
@@ -43,7 +45,9 @@ ${renderSummary(problems, score, quote, branding)}
 <div class="flow">${renderDetails(problems)}</div>
 ${renderQuote(quote, problems, branding)}
 ${renderPageTable(scan)}
+${renderManualReview(scan)}
 ${renderLimits()}
+${renderMethodology(scan)}
 </body>
 </html>`;
 }

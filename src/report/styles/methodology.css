@@ -1,0 +1,28 @@
+.me-page {
+  page-break-before: always;
+}
+
+.ap-subtitle {
+  margin: 20px 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.me-page ul,
+.me-page p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.me-warning {
+  padding: 14px 16px;
+  border-left: 4px solid var(--accent);
+  background: #fdf3e7;
+  color: #1a1a1a;
+}
+
+.mr-list {
+  font-size: 11px;
+  line-height: 1.5;
+}

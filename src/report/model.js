@@ -1,6 +1,6 @@
 import { describeRule, IMPACT_ORDER } from '../rules-fr.js';
 
-const IMPACT_PENALTY = { critical: 10, serious: 5, moderate: 2, minor: 1 };
+export const IMPACT_PENALTY = { critical: 10, serious: 5, moderate: 2, minor: 1 };
 const QUOTE_PHASES = [
   { key: 'bloquants', label: 'Bloquants', impacts: ['critical'] },
   { key: 'genants', label: 'Gênants', impacts: ['serious'] },
