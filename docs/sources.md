@@ -41,3 +41,4 @@ Chaque affirmation citée dans le rapport (règle, référence RGAA ou WCAG, chi
 | Critère 1.6 RGAA : la déclaration d'accessibilité est établie et publiée par l'éditeur du site | https://accessibilite.numerique.gouv.fr/doc/RGAA-v4.1.2.pdf | 2026-10-11 |
 | Critères 1.3, 1.6, 1.7 RGAA : intitulés sur la pertinence des alternatives et des descriptions détaillées | https://accessibilite.numerique.gouv.fr/doc/RGAA-v4.1.2.pdf | 2026-10-11 |
 | veraPDF est un validateur de fichiers PDF couvrant toutes les parties et niveaux de conformité PDF/A et PDF/UA | https://verapdf.org/ | 2026-10-11 |
+| Dérogations « Hors RGAA 4.1 » (accesskeys, css-orientation-lock, target-size) : justifications dans `HORS_RGAA_JUSTIFICATION` (rgaa-map.js). Critère WCAG 2.5.8 postérieur à RGAA 4.1 ; absence de critère RGAA pour l’orientation et les raccourcis : **non vérifié sur la page officielle, à confirmer** | https://accessibilite.numerique.gouv.fr/doc/RGAA-v4.1.2.pdf | 2026-10-11 |
