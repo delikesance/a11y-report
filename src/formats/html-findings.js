@@ -37,11 +37,13 @@ export function renderIncomplete({ scan }) {
   );
   const content = rows.length === 0
     ? '<p>Aucun point à vérifier.</p>'
-    : `<table>
+    : `<div class="table-wrap" tabindex="0">
+<table>
 <caption>Constats à confirmer à la main</caption>
 <thead><tr><th scope="col">Page</th><th scope="col">Règle</th><th scope="col">Élément</th><th scope="col">Constat</th></tr></thead>
 <tbody>${rows.map(renderIncompleteRow).join('')}</tbody>
-</table>`;
+</table>
+</div>`;
   return `<section aria-labelledby="a-verifier">
 <h2 id="a-verifier">Points à vérifier manuellement</h2>
 ${content}
