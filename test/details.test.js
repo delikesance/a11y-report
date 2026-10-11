@@ -33,7 +33,7 @@ test('renderDetails renders one card per problem with its key data', () => {
   assert.match(html, /Liste déroulante sans nom accessible/);
   assert.match(html, /Associer un libellé visible/);
   assert.match(html, /15 min par occurrence/);
-  assert.match(html, /<strong>2<\/strong>/);
+  assert.match(html, /<span class="strong">2<\/span>/);
   assert.match(html, /Critique/);
 });
 

@@ -35,7 +35,7 @@ test('renderQuote lists each phase with its count, severity and first titles', (
 test('renderQuote shows phase hours, phase prices and the total', () => {
   const html = render();
 
-  assert.match(html, /<strong class="qt-cell__value">1 h<\/strong>/);
+  assert.match(html, /<span class="qt-cell__value strong">1 h<\/span>/);
   assert.match(html, /150 € HT/);
 });
 
@@ -57,7 +57,7 @@ test('renderQuote marks an empty phase as having no problem', () => {
 
   assert.match(html, /qt-phase--genants qt-phase--empty/);
   assert.match(html, /Aucun problème/);
-  assert.match(html, /<strong class="qt-cell__value">—<\/strong>/);
+  assert.match(html, /<span class="qt-cell__value strong">—<\/span>/);
 });
 
 test('renderQuote escapes branding values', () => {

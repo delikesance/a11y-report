@@ -36,12 +36,12 @@ function phaseDescription(phase, problems) {
 }
 
 function renderCell(label, value, modifier) {
-  return `<div class="qt-cell qt-cell--${modifier}"><span class="qt-cell__label">${label}</span><strong class="qt-cell__value">${escapeHtml(value)}</strong></div>`;
+  return `<div class="qt-cell qt-cell--${modifier}"><span class="qt-cell__label">${label}</span><span class="qt-cell__value strong">${escapeHtml(value)}</span></div>`;
 }
 
 function renderPhase(phase, index, problems) {
   const emptyClass = phase.problemCount === 0 ? ' qt-phase--empty' : '';
-  return `<li class="qt-phase qt-phase--${phase.key}${emptyClass}">
+  return `<div class="qt-phase qt-phase--${phase.key}${emptyClass}">
   <span class="qt-phase__num">${index + 1}</span>
   <div class="qt-phase__body">
     <h3 class="qt-phase__label">${escapeHtml(phase.label)}</h3>
@@ -49,7 +49,7 @@ function renderPhase(phase, index, problems) {
   </div>
   ${renderCell('Durée', formatHours(phase.hours), 'duration')}
   ${renderCell('Prix HT', formatPrice(phase.price), 'price')}
-</li>`;
+</div>`;
 }
 
 function renderTop(branding) {
@@ -85,7 +85,7 @@ export function renderQuote(quote, problems, branding) {
 ${renderTop(branding)}
 <h2 class="qt-title">Corriger l'essentiel en trois étapes.</h2>
 <p class="qt-intro">Nous commençons par ce qui bloque des utilisateurs, puis nous traitons le reste. Chaque étape est livrée et vérifiée séparément.</p>
-<ol class="qt-phases">${quote.phases.map((phase, index) => renderPhase(phase, index, problems)).join('')}</ol>
+<div class="qt-phases">${quote.phases.map((phase, index) => renderPhase(phase, index, problems)).join('')}</div>
 ${renderTotal(quote)}
 ${renderColumns()}
 <div class="qt-spacer"></div>

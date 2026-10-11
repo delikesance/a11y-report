@@ -36,8 +36,8 @@ function renderCompare({ avant, apres }) {
 
 function renderFooter(problem) {
   return `<div class="dt-footer">
-    <div><div class="dt-stat-label">Temps de correction</div><strong>${formatDuration(problem.rule.minutesParOccurrence)} par occurrence</strong></div>
-    <div><div class="dt-stat-label">Occurrences</div><strong>${problem.occurrences}</strong></div>
+    <div><div class="dt-stat-label">Temps de correction</div><span class="strong">${formatDuration(problem.rule.minutesParOccurrence)} par occurrence</span></div>
+    <div><div class="dt-stat-label">Occurrences</div><span class="strong">${problem.occurrences}</span></div>
   </div>`;
 }
 
