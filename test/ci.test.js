@@ -15,6 +15,7 @@ const violation = (impact, nodeCount = 1) => ({
   tags: [],
   nodes: Array.from({ length: nodeCount }, () => NODE),
 });
+/** @param {string} url @param {any[]} [violations] @param {string | null} [error] */
 const page = (url, violations = [], error = null) => ({ url, title: '', violations, passes: 0, incomplete: [], error });
 const scanOf = (...pages) => ({ generatedAt: '2026-10-11T00:00:00.000Z', pages });
 const CLEAN = scanOf(page('https://site.test/'));

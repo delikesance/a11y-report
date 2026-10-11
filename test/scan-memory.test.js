@@ -13,7 +13,7 @@ const run = promisify(execFile);
 
 const measure = async (pages) => {
   const { stdout } = await run(process.execPath, ['--expose-gc', SCRIPT, String(pages), String(CONCURRENCY)]);
-  return JSON.parse(stdout.trim().split('\n').pop());
+  return JSON.parse(stdout.trim().split('\n').pop() ?? '');
 };
 
 test(`le tas Node plafonne après GC entre ${SMALL_RUN} et ${LARGE_RUN} pages, sans processus résiduel`, async () => {

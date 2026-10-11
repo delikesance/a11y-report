@@ -29,10 +29,14 @@ function priceCentsFor(hours, rates) {
   return Math.max(toCents(rates.minimumPhase), workCents);
 }
 
+/** @typedef {{key: string, label: string, problemCount: number, occurrences: number, minutes: number, hours: number, priceCents: number | null, lowCents: number | null, highCents: number | null}} Phase */
+
+/** @returns {Phase} */
 function emptyPhase({ key, label }) {
   return { key, label, problemCount: 0, occurrences: 0, minutes: 0, hours: 0, priceCents: null, lowCents: null, highCents: null };
 }
 
+/** @returns {Phase} */
 function pricedPhase({ key, label }, phaseProblems, rates) {
   const minutes = sumOf(phaseProblems, problemMinutes);
   const hours = roundUpToHalfHour(minutes / MINUTES_PER_HOUR);
@@ -55,6 +59,7 @@ function buildPhase(phase, problems, rates) {
   return phaseProblems.length === 0 ? emptyPhase(phase) : pricedPhase(phase, phaseProblems, rates);
 }
 
+/** @param {Phase} phase */
 function toPublicPhase({ priceCents, lowCents, highCents, ...phase }) {
   return { ...phase, price: toEuros(priceCents), low: toEuros(lowCents), high: toEuros(highCents) };
 }

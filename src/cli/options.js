@@ -1,4 +1,5 @@
 import { parseArgs } from 'node:util';
+import { messageOf } from '../error-message.js';
 import { DEFAULT_VIEWPORT, parseViewport } from '../viewport.js';
 import { FORMATS } from '../formats/index.js';
 import { parseThresholdsFlags, readThresholdsFile } from '../ci.js';
@@ -15,6 +16,7 @@ const DELAY = { flag: '--delay', min: 0, max: 60000, example: 500 };
 const CRAWL_ONLY_FLAGS = ['crawl-depth', 'max-pages', 'sitemap', 'no-sitemap', 'exclude', 'delay'];
 const CI_ONLY_FLAGS = ['seuil', 'seuils-fichier', 'ci-format'];
 
+/** @type {import('node:util').ParseArgsOptionsConfig} */
 const OPTIONS = {
   client: { type: 'string' },
   agency: { type: 'string' },
@@ -116,7 +118,7 @@ export function parseCliArgs(argv) {
   try {
     parsed = parseArgs({ args: argv, options: OPTIONS, allowPositionals: true, strict: true });
   } catch (error) {
-    throw new Error(`Arguments invalides (${error.message})`);
+    throw new Error(`Arguments invalides (${messageOf(error)})`, { cause: error });
   }
   const { values, positionals } = parsed;
   const urls = positionals.map(parseHttpUrl);

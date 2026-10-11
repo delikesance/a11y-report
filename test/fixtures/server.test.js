@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { startFixtureServer } from './server.js';
 
+/** @type {RequestInit} */
 const MANUAL = { redirect: 'manual' };
 const SLOW_MS = 200;
 const TIMEOUT_MS = 300;
@@ -22,6 +23,7 @@ after(async () => {
   await fixture.close();
 });
 
+/** @param {string} path @param {RequestInit} [init] */
 const get = (path, init = MANUAL) => fetch(`${base}${path}`, init);
 
 describe('status routes', () => {
@@ -29,7 +31,7 @@ describe('status routes', () => {
     test(`/status/${code} answers ${code}`, async () => {
       const res = await get(`/status/${code}`);
       assert.equal(res.status, code);
-      assert.match(res.headers.get('content-type'), /^text\/html/);
+      assert.match(res.headers.get('content-type') ?? '', /^text\/html/);
     });
   }
 });
@@ -41,7 +43,7 @@ describe('redirect routes', () => {
     while (path.startsWith('/redirect/')) {
       const res = await get(path);
       assert.equal(res.status, 302);
-      path = res.headers.get('location');
+      path = res.headers.get('location') ?? '';
       hops += 1;
     }
     assert.equal(hops, 3);
@@ -95,7 +97,7 @@ describe('content routes', () => {
   test('/sitemap.xml is an XML urlset', async () => {
     const res = await get('/sitemap.xml');
     assert.equal(res.status, 200);
-    assert.match(res.headers.get('content-type'), /^application\/xml/);
+    assert.match(res.headers.get('content-type') ?? '', /^application\/xml/);
     assert.match(await res.text(), /<urlset[\s>]/);
   });
 
@@ -107,7 +109,7 @@ describe('content routes', () => {
 
   test('/big contains 5000 paragraph elements', async () => {
     const body = await (await get('/big')).text();
-    assert.equal(body.match(/<p>/g).length, BIG_ELEMENT_COUNT);
+    assert.equal((body.match(/<p>/g) ?? []).length, BIG_ELEMENT_COUNT);
   });
 });
 

@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { extname, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
@@ -14,7 +14,7 @@ const MIME = { '.html': 'text/html', '.css': 'text/css', '.svg': 'image/svg+xml'
 const serve = () =>
   new Promise((resolve) => {
     const server = createServer((request, response) => {
-      const urlPath = decodeURIComponent(new URL(request.url, 'http://x').pathname);
+      const urlPath = decodeURIComponent(new URL(request.url ?? '/', 'http://x').pathname);
       const filePath = join(SITE_DIR, urlPath === '/' ? 'index.html' : urlPath);
       try {
         const body = readFileSync(filePath);

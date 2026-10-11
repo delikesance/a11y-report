@@ -13,6 +13,7 @@ const UTF8_ENV = { LANG: 'fr_FR.UTF-8' };
 
 const ttyStream = (columns = 80) => ({ isTTY: true, columns });
 const pipeStream = () => ({ isTTY: false });
+/** @param {{isTTY?: boolean, columns?: number}} stream @param {{env?: Record<string, string>, argv?: string[]}} [options] */
 const termFor = (stream, { env = UTF8_ENV, argv = [] } = {}) => detectTerminal(stream, { env, argv });
 
 const snapshotPath = (width) => `${SNAPSHOT_DIR}summary-w${width}.txt`;

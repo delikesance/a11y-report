@@ -21,6 +21,7 @@ const nodes = (id, count) =>
     failureSummary: 'Corriger cet élément',
   }));
 
+/** @param {string[]} rule */
 const violation = ([id, impact], count) => ({
   id,
   impact,

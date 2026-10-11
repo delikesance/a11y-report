@@ -33,7 +33,7 @@ const runCli = (args) =>
   new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [CLI_PATH, ...args], { stdio: ['ignore', 'inherit', 'inherit'] });
     child.on('error', reject);
-    child.on('exit', (code) => (code === 0 ? resolve() : reject(new Error(`CLI en échec (code ${code})`))));
+    child.on('exit', (code) => (code === 0 ? resolve(undefined) : reject(new Error(`CLI en échec (code ${code})`))));
   });
 
 export async function buildDemo({ assetsDir = SITE_ASSETS_DIR } = {}) {

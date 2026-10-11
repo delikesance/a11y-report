@@ -83,9 +83,6 @@ test('applies agency colors and falls back on invalid ones', () => {
   assert.ok(unsafe.includes('--primary:#1f3a5f'));
 });
 
-test('renders the footer with client and scanned page count', () => {
-  const html = buildReportHtml(scan, branding);
-});
 
 test('orders cover, summary, details, quote, page table, then limits', () => {
   const html = buildReportHtml(scan, branding);
@@ -113,5 +110,5 @@ test('renders a multi-page PDF', async () => {
   const pdf = await readFile(outPath);
   assert.equal(pdf.subarray(0, 4).toString('latin1'), '%PDF');
   assert.ok((await stat(outPath)).size > 10 * 1024);
-  assert.ok(pdf.toString('latin1').match(/\/Type\s*\/Page\b/g).length > 1);
+  assert.ok((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) ?? []).length > 1);
 });

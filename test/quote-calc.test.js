@@ -88,13 +88,13 @@ test('property: totals equal the sum of phases, TTC equals HT plus TVA, low is n
     assert.equal(quote.totalLow, priced.length ? sum('low') : null);
     assert.equal(quote.totalHigh, priced.length ? sum('high') : null);
     if (priced.length) {
-      assert.equal(quote.ttc, Math.round(quote.totalPrice * 100 * (1 + rates.tva)) / 100);
-      assert.ok(quote.totalLow <= quote.totalHigh);
+      assert.equal(quote.ttc, Math.round((quote.totalPrice ?? 0) * 100 * (1 + rates.tva)) / 100);
+      assert.ok((quote.totalLow ?? 0) <= (quote.totalHigh ?? 0));
     }
     for (const phase of priced) {
-      assert.ok(phase.price > 0);
-      assert.ok(phase.price >= rates.minimumPhase);
-      assert.ok(phase.low <= phase.high);
+      assert.ok((phase.price ?? 0) > 0);
+      assert.ok((phase.price ?? 0) >= rates.minimumPhase);
+      assert.ok((phase.low ?? 0) <= (phase.high ?? 0));
     }
   }
 });

@@ -7,7 +7,7 @@ import { renderProblems, renderIncomplete, renderQuote } from './html-findings.j
 
 const DATE_FORMAT = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
 
-export function render(scan, { branding = {} } = {}) {
+export function render(scan, { branding = /** @type {Record<string, any>} */ ({}) } = {}) {
   const context = {
     scan,
     branding,

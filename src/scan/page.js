@@ -1,4 +1,4 @@
-import AxeBuilder from '@axe-core/playwright';
+import { AxeBuilder } from '@axe-core/playwright';
 import { withRetries } from './retry.js';
 import { WCAG_TAGS, toViolation } from './axe.js';
 import {
@@ -6,7 +6,6 @@ import {
   failureCause,
   isRetryableError,
   isRetryableStatus,
-  isTimeout,
   skipCause,
 } from './causes.js';
 
