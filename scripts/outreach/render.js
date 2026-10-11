@@ -1,3 +1,4 @@
+const ASCII_MAX = 0x7f;
 const PLACEHOLDER = /\{\{[^{}]+\}\}/g;
 const SUBJECT_CHUNK_LENGTH = 10;
 const REQUIRED_SENDER_KEYS = [
@@ -48,6 +49,7 @@ export const csvRecords = (text) => {
 
 const splitEml = (text) => {
   const separator = /\n\n/.exec(text);
+  if (!separator) throw new Error("EML sans separateur entre en-tetes et corps");
   const head = text.slice(0, separator.index);
   const body = text.slice(separator.index + separator[0].length);
   const headers = head.split('\n').map((line) => {
@@ -62,7 +64,7 @@ const fillTemplate = (text, values) => text.replace(PLACEHOLDER, (token) => {
   return Object.hasOwn(values, key) ? values[key] : token;
 });
 
-const isAscii = (text) => /^[\x00-\x7F]*$/.test(text);
+const isAscii = (text) => Array.from(text).every((char) => char.codePointAt(0) <= ASCII_MAX);
 
 const encodeHeader = (value) => {
   if (isAscii(value)) return value;

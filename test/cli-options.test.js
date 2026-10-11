@@ -75,8 +75,10 @@ describe('parseCliArgs : crawl', () => {
   });
 
   test('le sitemap est lu par défaut et --sitemap ne retire rien', () => {
-    assert.equal(parseCliArgs([URL_ARG, '--crawl', '--sitemap']).settings.crawl.sitemap, true);
-    assert.equal(parseCliArgs([URL_ARG, '--crawl']).settings.crawl.sitemap, undefined);
+    assert.equal(parseCliArgs([URL_ARG, '--crawl', '--sitemap']).settings.crawl?.sitemap, true);
+    const { crawl } = parseCliArgs([URL_ARG, '--crawl']).settings;
+    assert.ok(crawl);
+    assert.equal(crawl.sitemap, undefined);
   });
 
   test('refuse une option de crawl sans --crawl', () => {
@@ -107,8 +109,8 @@ describe('parseCliArgs : CI', () => {
 
   test('--seuil l\'emporte sur --seuils-fichier', () => {
     const { settings } = parseCliArgs([URL_ARG, '--ci', '--seuils-fichier', seuilsFile(), '--seuil', 'critical=5']);
-    assert.equal(settings.ci.thresholds.maxCritical, 5);
-    assert.equal(settings.ci.thresholds.maxSerious, 1);
+    assert.equal(settings.ci?.thresholds.maxCritical, 5);
+    assert.equal(settings.ci?.thresholds.maxSerious, 1);
   });
 
   test('rejette un format CI inconnu', () => {

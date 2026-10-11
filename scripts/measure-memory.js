@@ -48,11 +48,11 @@ const timer = setInterval(async () => {
   peakChildren = Math.max(peakChildren, children.count);
 }, SAMPLE_INTERVAL_MS);
 
-global.gc();
+global.gc?.();
 const heapBefore = process.memoryUsage().heapUsed;
 const scan = await scanPages(urls, { concurrency });
 clearInterval(timer);
-global.gc();
+global.gc?.();
 const heapAfter = process.memoryUsage().heapUsed;
 const leftover = await childrenStats();
 await server.close();

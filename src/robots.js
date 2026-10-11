@@ -5,7 +5,10 @@ export function parseRobots(text) {
 }
 
 function parseGroups(text) {
+  /** @typedef {{agents: string[], rules: {allow: boolean, pattern: string}[]}} Group */
+  /** @type {Group[]} */
   const groups = [];
+  /** @type {Group | null} */
   let current = null;
   for (const line of text.split(/\r?\n/)) {
     const [key, value] = splitDirective(line);

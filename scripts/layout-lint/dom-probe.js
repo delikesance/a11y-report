@@ -6,7 +6,7 @@ export function probeLayout({ pageHeight }) {
   const STRANDED_BAND = 90;
   const HEADINGS = new Set(['H1', 'H2', 'H3', 'H4']);
   const findings = [];
-  for (const flow of document.querySelectorAll('.flow')) {
+  for (const flow of /** @type {NodeListOf<HTMLElement>} */ (document.querySelectorAll('.flow'))) {
     flow.style.height = `${Math.ceil(flow.getBoundingClientRect().height / pageHeight) * pageHeight}px`;
   }
   const pageOf = (top) => Math.floor((top + TOLERANCE) / pageHeight) + 1;
@@ -59,15 +59,16 @@ export function probeLayout({ pageHeight }) {
     }
     const wrap = style.overflowWrap;
     if (!/mono/i.test(style.fontFamily) && (wrap === 'anywhere' || wrap === 'break-word' || style.wordBreak === 'break-all')) {
-      const text = [...element.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => node.textContent).join(' ');
+      const text = [...element.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).map((node) => node.textContent ?? '').join(' ');
       const longest = text.split(/\s+/).reduce((max, word) => (word.length > max.length ? word : max), '');
       const context = document.createElement('canvas').getContext('2d');
+      if (!context) continue;
       context.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
       if (longest && context.measureText(longest).width > element.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) + TOLERANCE) {
         add(element, 'broken-word', `mot « ${longest.slice(0, 30)} » coupé au milieu`);
       }
     }
-    const siblings = [...element.parentElement.children].filter((sibling) => sibling !== element && visible(sibling) && !['STYLE', 'SCRIPT'].includes(sibling.tagName));
+    const siblings = [...(element.parentElement?.children ?? [])].filter((sibling) => sibling !== element && visible(sibling) && !['STYLE', 'SCRIPT'].includes(sibling.tagName));
     for (const sibling of siblings) {
       if (sibling.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_PRECEDING) continue;
       if (['absolute', 'fixed'].some((position) => getComputedStyle(sibling).position === position || style.position === position)) continue;
@@ -96,12 +97,12 @@ export function probeLayout({ pageHeight }) {
     return blended;
   };
   for (const element of all) {
-    const hasText = [...element.childNodes].some((node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+    const hasText = [...element.childNodes].some((node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim());
     if (!hasText) continue;
     const style = getComputedStyle(element);
     const background = backgroundOf(element);
     if (!background) continue;
-    const [red, green, blue, alpha = 1] = style.color.match(/[\d.]+/g).map(Number);
+    const [red, green, blue, alpha = 1] = (style.color.match(/[\d.]+/g) ?? []).map(Number);
     const foreground = [red, green, blue].map((channel, index) => channel * alpha + background[index] * (1 - alpha));
     samples.push({
       page: pageOf(absolute(element).top),

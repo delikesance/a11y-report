@@ -1,5 +1,5 @@
 const ANSI_CODES = { bold: 1, dim: 2, red: 31, green: 32, yellow: 33, cyan: 36 };
-const ANSI_PATTERN = /\x1b\[[0-9;]*m/g;
+const ANSI_PATTERN = new RegExp(`${String.fromCharCode(0x1b)}\\[[0-9;]*m`, 'g');
 const SYMBOLS = {
   ok: { unicode: '✔', ascii: 'OK', style: 'green' },
   fail: { unicode: '✖', ascii: 'KO', style: 'red' },
@@ -25,6 +25,7 @@ export const stripAnsi = (text) => text.replace(ANSI_PATTERN, '');
 
 export const visibleLength = (text) => [...stripAnsi(text)].length;
 
+/** @param {{isTTY?: boolean, columns?: number}} stream @param {{env?: Record<string, string | undefined>, argv?: string[]}} [options] */
 export function detectTerminal(stream, { env = process.env, argv = [] } = {}) {
   const color = useColor(stream, { env, argv });
   const unicode = useUnicode(env);

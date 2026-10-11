@@ -15,6 +15,7 @@ const summary = (output) => output.split('\n').filter((line) => /^# (tests|pass|
 const hasFlag = (flag) => (line) => line.includes(`'${flag}'`);
 const hasFormat = (format) => (line) => hasFlag('--format')(line) && line.includes(format);
 const PDF_TEST_TITLE = /test\(\s*'[^']*\bPDF\b/;
+/** @type {[string, (line: string) => boolean][]} */
 const CLI_OPTIONS = [
   ['--format csv', hasFormat('csv')],
   ['--format json', hasFormat('json')],
@@ -59,7 +60,7 @@ function cliOptionCheck() {
     readFileSync(join(ROOT, file), 'utf8').split('\n').map((text, index) => ({ location: `${file}:${index + 1}`, text })));
   const found = CLI_OPTIONS.map(([name, matches]) => ({ name, hit: lines.find(({ text }) => matches(text)) }));
   const missing = found.filter(({ hit }) => !hit).map(({ name }) => name);
-  const evidence = found.filter(({ hit }) => hit).map(({ name, hit }) => `${name} -> ${hit.location}`);
+  const evidence = found.filter(({ hit }) => hit).map(({ name, hit }) => `${name} -> ${hit?.location}`);
   return result(
     'cli-options',
     "Options CLI couvertes par un test d'intégration",

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { writeFileSync, readFileSync, realpathSync } from 'node:fs';
+import { writeFileSync, realpathSync } from 'node:fs';
+import { messageOf } from './error-message.js';
 import { fileURLToPath } from 'node:url';
 import { EXIT_OK, evaluateThresholds } from './ci.js';
 import { parseCliArgs } from './cli/options.js';
@@ -75,7 +76,7 @@ async function main(argv) {
   try {
     return await run(argv, term);
   } catch (error) {
-    process.stderr.write(`${errorLine(term, error.message)}\n`);
+    process.stderr.write(`${errorLine(term, messageOf(error))}\n`);
     return EXIT_USAGE;
   }
 }

@@ -54,7 +54,7 @@ function decodeTitle(infoBody) {
 
 const xmlEscape = (text) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-export const buildXmp = (title, language) => `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+export const buildXmp = (title, language) => `<?xpacket begin="\uFEFF" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/">
@@ -72,6 +72,7 @@ const streamObject = (id, dictionary, data) =>
 function rewriteContentStream(pdf, id) {
   const text = latin1(pdf);
   const header = new RegExp(`\\n${id} 0 obj\\n<<([\\s\\S]*?)>>\\s*stream\\r?\\n`).exec(text);
+  if (!header) throw new Error(`Objet ${id} introuvable`);
   const start = header.index + header[0].length;
   const compressed = pdf.subarray(start, text.indexOf('endstream', start)).toString('latin1').replace(/\n$/, '');
   const marked = markPaintingAsArtifact(inflateSync(bytes(compressed)).toString('latin1'));

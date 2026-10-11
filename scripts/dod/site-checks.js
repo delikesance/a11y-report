@@ -1,3 +1,4 @@
+import { messageOf } from '../../src/error-message.js';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { startFixtureServer } from '../../test/fixtures/server.js';
@@ -29,7 +30,7 @@ async function siteAuditCheck() {
     const ok = status === 0 && scan.pages.length > 0 && violations === 0;
     return result('site-audit', 'Audit CLI du site : 0 violation', statusOf(ok), `exit ${status}, ${scan.pages.length} pages, ${violations} violation(s)`, output);
   } catch (error) {
-    return result('site-audit', 'Audit CLI du site : 0 violation', 'FAIL', `échec : ${error.message}`);
+    return result('site-audit', 'Audit CLI du site : 0 violation', 'FAIL', `échec : ${messageOf(error)}`);
   } finally {
     await server.close();
   }

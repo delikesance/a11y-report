@@ -37,3 +37,18 @@ Journal des décisions d'architecture et de produit. Une entrée par décision :
 - **Contexte :** Lighthouse mesure l'accessibilité et la performance du site (gate >= 95 / >= 90).
 - **Décision :** lighthouse 12.6.0 utilisé comme outil de développement, installé dans un dossier hors dépôt ; aucune dépendance ajoutée à `package.json`.
 - **Conséquences :** la mesure n'est pas rejouée en CI ; relancer manuellement avec `CHROME_PATH` pointant vers le Chromium de Playwright.
+
+- **Date :** 2026-10-11
+- **Contexte :** aucun contrôle statique du code (lint, types) ; les scripts `lint` et `typecheck` sont attendus par `check:dod`.
+- **Décision :** devDependencies `eslint` (+ `@eslint/js`, `globals`) avec la config recommandée en flat config, sans règle de style ; `typescript` (+ `@types/node`) en `checkJs`, `noEmit`, `strict`, vérifiant les types via JSDoc sans compilation ni migration du code en TypeScript.
+- **Conséquences :** `npm run lint` et `npm run typecheck` sortent en 0 sur src, scripts, test et design. Aucun `ts-ignore` ni règle ESLint désactivée.
+
+- **Date :** 2026-10-11
+- **Contexte :** `strict` signale environ 870 paramètres sans type explicite (`noImplicitAny`) dans un code JavaScript non annoté.
+- **Décision :** seule exception à `strict` : `noImplicitAny: false`. Les autres vérifications strictes (null, types de retour, appels) restent actives. Les fonctions évaluées dans le navigateur (`src/scan/page.js`, `scripts/layout-lint/dom-probe.js`, `scripts/check-site-layout.js`) reçoivent les globals navigateur dans ESLint et la lib `DOM` dans tsconfig.
+- **Conséquences :** annoter progressivement en JSDoc puis retirer l'exception.
+
+- **Date :** 2026-10-11
+- **Contexte :** `package.json` et `LICENSE` déclarent `UNLICENSED`.
+- **Décision :** `UNLICENSED` est un espace réservé : le choix de licence est une décision humaine, non prise ici. Alternatives : MIT (réutilisation libre, sans copyleft), AGPL-3.0 (copyleft réseau, protège contre la reprise en SaaS fermé).
+- **Conséquences :** ne pas publier sur un registre tant que la licence n'est pas tranchée ; le changement touche `package.json`, `LICENSE` et le README.

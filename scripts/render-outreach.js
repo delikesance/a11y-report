@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { messageOf } from '../src/error-message.js';
 // Génère des .eml à partir des gabarits d'outreach/<variante>/ et de prospects/agences.csv.
 // N'envoie jamais rien : les fichiers sont écrits dans out/ (ignoré par git).
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -41,6 +42,6 @@ const main = () => {
 try {
   main();
 } catch (error) {
-  console.error(`Rendu refusé : ${error.message}`);
+  console.error(`Rendu refusé : ${messageOf(error)}`);
   process.exitCode = 1;
 }

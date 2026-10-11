@@ -27,6 +27,7 @@ const TEXT_TYPES = new Set(['text/html', 'text/css', 'text/javascript', 'text/pl
 const html = (title, body) =>
   `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>${title}</title></head><body>${body}</body></html>`;
 
+/** @param {import('node:http').ServerResponse} res @param {number} status @param {Record<string, string>} headers @param {string | Uint8Array} [body] */
 const send = (res, status, headers, body = '') => {
   res.writeHead(status, headers);
   res.end(body);
@@ -76,6 +77,7 @@ const serveStatic = async ({ root, pathname, res }) => {
   }
 };
 
+/** @type {{match: RegExp, handle: (ctx: any, found: RegExpExecArray) => any}[]} */
 const routes = [
   { match: /^\/status\/(404|500|503)$/, handle: ({ res }, [, code]) => sendHtml(res, html(code, `<h1>Erreur ${code}</h1>`), Number(code)) },
   { match: /^\/redirect\/(\d+)$/, handle: ({ res }, [, n]) => send(res, 302, { Location: Number(n) > 1 ? `/redirect/${Number(n) - 1}` : HOME_PAGE }) },
@@ -117,7 +119,7 @@ const dispatch = (ctx) => {
 export const startFixtureServer = ({ port = 0, root = DEFAULT_ROOT } = {}) => {
   const sockets = new Set();
   const server = createServer((req, res) => {
-    const url = new URL(req.url, 'http://localhost');
+    const url = new URL(req.url ?? '/', 'http://localhost');
     Promise.resolve(dispatch({ req, res, url, root, pathname: url.pathname })).catch(() => sendNotFound(res));
   });
   server.on('connection', (socket) => {
@@ -127,7 +129,7 @@ export const startFixtureServer = ({ port = 0, root = DEFAULT_ROOT } = {}) => {
 
   return new Promise((resolveStart) => {
     server.listen(port, '127.0.0.1', () => {
-      const { port: boundPort } = server.address();
+      const { port: boundPort } = /** @type {import('node:net').AddressInfo} */ (server.address());
       resolveStart({
         url: `http://127.0.0.1:${boundPort}`,
         close: () => new Promise((resolveClose) => {

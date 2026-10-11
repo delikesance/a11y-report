@@ -35,7 +35,9 @@
     "check:links": "node scripts/check-links.js",
     "check:site-layout": "node scripts/check-site-layout.js",
     "build:site": "node scripts/build-site-css.js",
-    "build:demo": "node scripts/build-demo.js"
+    "build:demo": "node scripts/build-demo.js",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.10.0",
@@ -43,5 +45,12 @@
     "@fontsource/ibm-plex-sans": "^5.3.0",
     "@fontsource/source-serif-4": "^5.3.1",
     "playwright": "^1.50.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.5",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "typescript": "^7.0.2"
   }
 }
