@@ -39,8 +39,27 @@ test('an identical node repeated across pages is counted once for fix time', () 
   const sameNode = { html: '<img>', target: '#logo' };
   const quote = computeQuote([problem('critical', [sameNode, sameNode, sameNode], 30)], { tjm: 550, marge: 0 });
 
-  assert.equal(quote.phases[0].occurrences, 3);
+  assert.equal(quote.phases[0].occurrences, 1);
   assert.equal(quote.phases[0].minutes, 30);
+});
+
+test('a problem without node still counts one occurrence and one fix', () => {
+  const quote = computeQuote([problem('critical', [], 30)], { tjm: 550, marge: 0, minimumPhase: 1 });
+
+  assert.equal(quote.phases[0].occurrences, 1);
+  assert.equal(quote.phases[0].minutes, 30);
+});
+
+test('a problem with null or unknown impact is billed in the finitions phase', () => {
+  const quote = computeQuote(
+    [problem(null, distinctNodes(1), 10), problem('blocker', distinctNodes(1), 10)],
+    { tjm: 550, marge: 0, minimumPhase: 1 },
+  );
+
+  assert.equal(quote.phases[0].price, null);
+  assert.equal(quote.phases[1].price, null);
+  assert.equal(quote.phases[2].problemCount, 2);
+  assert.equal(quote.phases[2].minutes, 20);
 });
 
 test('a phase without problem has no amount and totals stay null without any problem', () => {
