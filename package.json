@@ -10,6 +10,8 @@
     "test": "node --test test/*.test.js",
     "verify:pdf": "node scripts/verify-pdf.js",
     "lint:layout": "node scripts/layout-lint.js",
+    "check:links": "node scripts/check-links.js",
+    "check:site-layout": "node scripts/check-site-layout.js",
     "build:site": "node scripts/build-site-css.js"
   },
   "dependencies": {
