@@ -69,3 +69,15 @@ Source : `docs/baseline.md` (sections 3 et 5) et écarts par rapport à la cible
 5. PDF balisé et veraPDF (PDF-01, PDF-02).
 6. CLI (CLI-01 à CLI-06).
 7. Design, site web, démarchage, livraison (DES, WEB, OUT, DEL).
+
+## Écarts issus du marché
+
+Source : `docs/marche.md` (sections 1 et 4). Aucun de ces points n'est déjà au backlog ci-dessus.
+
+| ID | Priorité | Étape | Élément | Critère d'acceptation |
+| --- | --- | --- | --- | --- |
+| MKT-01 | P1 | 7 | Modèle de déclaration d'accessibilité pré-rempli (niveau de conformité, contenus non accessibles, contact, mention Défenseur des droits), à compléter par l'agence. | Le PDF ou le HTML généré contient les rubriques de la déclaration listées sur accessibilite.numerique.gouv.fr ; aucune conformité affirmée sans résultat de test manuel. |
+| MKT-02 | P1 | 7 | Annexe de tests manuels guidés (clavier, lecteur d'écran) à compléter avant livraison, pour couvrir la limite de l'audit automatique. | Le rapport contient une checklist des critères non testables automatiquement, avec case à cocher et champ de constat ; les critères cochés apparaissent dans la synthèse. |
+| MKT-03 | P2 | 3 | Référence RGAA 4.1.2 par critère dans le rapport : critères testés automatiquement, critères non couverts, numéro de critère pour chaque règle. | Chaque règle affichée porte son numéro de critère RGAA (source `docs/sources.md`) ; une section liste les critères sans règle axe correspondante. |
+| MKT-04 | P2 | 7 | Comparaison entre deux scans sauvegardés en JSON (nouvelles, corrigées, persistantes). | Avec deux fichiers `--save-json`, le rapport liste les écarts par règle et par page ; test sur deux scans de fixtures. |
+| MKT-05 | P2 | 7 | Rapport d'exemple public, anonymisé, pour démonstration commerciale. | Un PDF d'exemple accompagne la documentation ; aucune donnée d'un client réel ; passe `verify:pdf` une fois PDF-01 livré. |
