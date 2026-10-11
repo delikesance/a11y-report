@@ -62,7 +62,7 @@ test('aucune ressource externe n\'est chargée', () => {
 
 test('les déclarations de statut et les champs à compléter sont présents', () => {
   const declaration = read(join(SITE_DIR, 'declaration-d-accessibilite.html'));
-  assert.match(declaration, /non évalué \/ en cours/);
+  assert.match(declaration, /partiellement conforme/);
   assert.match(read(join(SITE_DIR, 'mentions-legales.html')), /\[A COMPLETER PAR L'EDITEUR\]/);
 });
 
