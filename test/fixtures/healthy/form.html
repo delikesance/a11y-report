@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact – Boulangerie Dupont</title>
+  <style>nav a { display: inline-block; min-width: 24px; min-height: 24px; padding: 6px 8px; }</style>
+</head>
+<body>
+  <a href="#contenu">Aller au contenu</a>
+  <header>
+    <nav aria-label="Principale">
+      <ul>
+        <li><a href="home.html">Accueil</a></li>
+        <li><a href="article.html">Actualités</a></li>
+        <li><a href="form.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="contenu">
+    <h1>Nous contacter</h1>
+    <form action="#" method="post">
+      <div>
+        <label for="nom">Nom complet</label>
+        <input id="nom" name="nom" type="text" autocomplete="name" required>
+      </div>
+      <div>
+        <label for="email">Adresse e-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div>
+        <label for="sujet">Sujet</label>
+        <select id="sujet" name="sujet">
+          <option value="commande">Passer une commande</option>
+          <option value="candidature">Candidature</option>
+          <option value="autre">Autre demande</option>
+        </select>
+      </div>
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5"></textarea>
+      </div>
+      <div>
+        <input id="rgpd" name="rgpd" type="checkbox" required>
+        <label for="rgpd">J'accepte que mes données soient utilisées pour répondre à ma demande.</label>
+      </div>
+      <button type="submit">Envoyer le message</button>
+    </form>
+  </main>
+  <footer>
+    <p>Boulangerie Dupont, 12 rue du Four, 75011 Paris.</p>
+  </footer>
+</body>
+</html>
