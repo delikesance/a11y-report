@@ -1,0 +1,30 @@
+name: Accessibilité
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Audit d'accessibilité
+        run: >
+          node src/cli.js https://preprod.example.com
+          --ci --ci-format github
+          --seuils "critical=0,serious=0,score=80,unaudited=true"
+          --out rapport-a11y.pdf
+      - name: Rapport PDF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rapport-a11y
+          path: rapport-a11y.pdf
