@@ -1,4 +1,5 @@
 import { parseRobots } from './robots.js';
+import { decodeEntities } from './entities.js';
 
 const DEFAULTS = {
   depth: 2,
@@ -8,6 +9,7 @@ const DEFAULTS = {
   delayMs: 250,
   respectRobots: true,
   userAgent: 'a11y-report',
+  timeoutMs: 10_000,
 };
 const TRACKING_PARAM = /^utm_/i;
 const HTML_TYPE = /text\/html|application\/xhtml\+xml/i;
@@ -19,7 +21,8 @@ const OK = 200;
 export async function crawl(startUrl, options = {}) {
   const opts = { ...DEFAULTS, ...options };
   const origin = new URL(startUrl).origin;
-  const robotsBody = await readBody(`${origin}/robots.txt`, opts.userAgent);
+  const http = { userAgent: opts.userAgent, timeoutMs: opts.timeoutMs };
+  const robotsBody = await readBody(`${origin}/robots.txt`, http);
   const robots = parseRobots(robotsBody);
   const excluded = opts.exclude.map(globToRegExp);
   const seen = new Set();
@@ -33,7 +36,7 @@ export async function crawl(startUrl, options = {}) {
 
   enqueue(startUrl, startUrl, 0, 'start');
   if (opts.sitemap) {
-    for (const loc of await discoverSitemapUrls(origin, robotsBody, opts.userAgent)) enqueue(loc, origin, 0, 'sitemap');
+    for (const loc of await discoverSitemapUrls(origin, robotsBody, http)) enqueue(loc, origin, 0, 'sitemap');
   }
 
   const pages = [];
@@ -48,7 +51,11 @@ export async function crawl(startUrl, options = {}) {
     }
     if (requested) await pause(opts.delayMs);
     requested = true;
-    const res = await fetchResource(entry.url, opts.userAgent);
+    const res = await fetchResource(entry.url, http);
+    if (res && new URL(res.url).origin !== origin) {
+      skipped.push({ url: entry.url, reason: 'offsite-redirect' });
+      continue;
+    }
     if (res?.status !== OK) {
       skipped.push({ url: entry.url, reason: res ? `http-${res.status}` : 'unreachable' });
       continue;
@@ -59,7 +66,7 @@ export async function crawl(startUrl, options = {}) {
     }
     pages.push({ url: entry.url, depth: entry.depth, reason: entry.reason });
     if (entry.depth < opts.depth) {
-      for (const [, href] of res.body.matchAll(LINK_HREF)) enqueue(href, entry.url, entry.depth + 1, 'link');
+      for (const [, href] of res.body.matchAll(LINK_HREF)) enqueue(decodeEntities(href), entry.url, entry.depth + 1, 'link');
     }
   }
   return { pages, skipped };
@@ -99,35 +106,38 @@ function globToRegExp(glob) {
 
 const escapeRegExp = (text) => text.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
 
-async function discoverSitemapUrls(origin, robotsBody, userAgent) {
+async function discoverSitemapUrls(origin, robotsBody, http) {
   const declared = [...robotsBody.matchAll(SITEMAP_LINE)].map(([, url]) => url);
   const candidates = new Set([`${origin}/sitemap.xml`, ...declared]);
   const urls = [];
-  for (const candidate of candidates) urls.push(...(await readSitemap(candidate, userAgent, new Set())));
+  for (const candidate of candidates) urls.push(...(await readSitemap(candidate, http, new Set())));
   return urls;
 }
 
-async function readSitemap(url, userAgent, visited) {
+async function readSitemap(url, http, visited) {
   if (visited.has(url)) return [];
   visited.add(url);
-  const body = await readBody(url, userAgent);
-  const locs = [...body.matchAll(LOC)].map(([, loc]) => loc);
+  const body = await readBody(url, http);
+  const locs = [...body.matchAll(LOC)].map(([, loc]) => decodeEntities(loc));
   if (!body.includes('<sitemapindex')) return locs;
   const urls = [];
-  for (const loc of locs) urls.push(...(await readSitemap(loc, userAgent, visited)));
+  for (const loc of locs) urls.push(...(await readSitemap(loc, http, visited)));
   return urls;
 }
 
-async function readBody(url, userAgent) {
-  const res = await fetchResource(url, userAgent);
+async function readBody(url, http) {
+  const res = await fetchResource(url, http);
   return res?.status === OK ? res.body : '';
 }
 
-async function fetchResource(url, userAgent) {
+async function fetchResource(url, { userAgent, timeoutMs }) {
   try {
-    const res = await fetch(url, { headers: { 'User-Agent': userAgent } });
+    const res = await fetch(url, {
+      headers: { 'User-Agent': userAgent },
+      signal: AbortSignal.timeout(timeoutMs),
+    });
     const type = res.headers.get('content-type') ?? '';
-    return { status: res.status, type, body: await res.text() };
+    return { url: res.url, status: res.status, type, body: await res.text() };
   } catch {
     return null;
   }
