@@ -1,82 +1,26 @@
 import { readFileSync } from 'node:fs';
-import { extname } from 'node:path';
 import { chromium } from 'playwright';
-import { describeRule, IMPACT_FR, IMPACT_ORDER } from './rules-fr.js';
+import { IMPACT_FR, IMPACT_ORDER } from './rules-fr.js';
+import {
+  DEFAULT_ACCENT,
+  DEFAULT_PRIMARY,
+  EXAMPLES_PER_PROBLEM,
+  LIMITS_PARAGRAPHS,
+  TOP_PRIORITIES,
+  badge,
+  brandColor,
+  escapeHtml,
+  formatDuration,
+  renderLogo,
+  truncate,
+} from './report/shared.js';
+import { collectProblems, computeImpactWeightedScore, totalFixMinutes } from './report/model.js';
 
 const css = readFileSync(new URL('./report.css', import.meta.url), 'utf8');
 
-const IMPACT_PENALTY = { critical: 10, serious: 5, moderate: 2, minor: 1 };
-const DEFAULT_PRIMARY = '#1f3a5f';
-const DEFAULT_ACCENT = '#e07a1f';
-const HEX_COLOR = /^#[0-9a-f]{6}$/i;
-const MIME_BY_EXTENSION = {
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.svg': 'image/svg+xml',
-  '.webp': 'image/webp',
-};
-const SNIPPET_MAX_LENGTH = 240;
-const EXAMPLES_PER_PROBLEM = 3;
-const TOP_PRIORITIES = 5;
 const DATE_FORMAT = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
-const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 const FOOTER_TEMPLATE =
   '<div style="font-size:9px;width:100%;text-align:center;color:#666;">Page <span class="pageNumber"></span> / <span class="totalPages"></span></div>';
-const LIMITS_PARAGRAPHS = [
-  "Un scan automatique détecte environ 30 à 40 % des problèmes d'accessibilité. Les autres exigences (pertinence des alternatives textuelles, cohérence des parcours, compréhension des contenus, navigation au clavier) nécessitent un audit manuel.",
-  "Ce rapport ne remplace ni un audit manuel, ni une déclaration de conformité au RGAA.",
-];
-
-const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ENTITIES[char]);
-
-const brandColor = (value, fallback) => (HEX_COLOR.test(value ?? '') ? value : fallback);
-
-const truncate = (text) =>
-  text.length > SNIPPET_MAX_LENGTH ? `${text.slice(0, SNIPPET_MAX_LENGTH)}…` : text;
-
-const badge = (impact) =>
-  `<span class="badge ${escapeHtml(impact)}">${escapeHtml(IMPACT_FR[impact])}</span>`;
-
-function formatDuration(minutes) {
-  if (minutes < 60) return `${minutes} min`;
-  return `${Math.floor(minutes / 60)} h ${String(minutes % 60).padStart(2, '0')} min`;
-}
-
-function collectProblems(scan) {
-  const problemsById = new Map();
-  for (const page of scan.pages) {
-    for (const violation of page.violations) {
-      const problem = problemsById.get(violation.id) ?? { ...violation, nodes: [], pages: [] };
-      problem.nodes.push(...violation.nodes);
-      problem.pages.push(page);
-      problemsById.set(violation.id, problem);
-    }
-  }
-  return [...problemsById.values()]
-    .map((problem) => ({ ...problem, occurrences: problem.nodes.length, rule: describeRule(problem.id) }))
-    .sort(
-      (a, b) =>
-        IMPACT_ORDER.indexOf(a.impact) - IMPACT_ORDER.indexOf(b.impact) ||
-        b.occurrences - a.occurrences,
-    );
-}
-
-// Score sur 100: chaque problème distinct retire un nombre de points selon son impact.
-function computeImpactWeightedScore(problems) {
-  const penalty = problems.reduce((sum, problem) => sum + IMPACT_PENALTY[problem.impact], 0);
-  return Math.max(0, 100 - penalty);
-}
-
-const totalFixMinutes = (problems) =>
-  problems.reduce((sum, problem) => sum + problem.rule.minutesParOccurrence * problem.occurrences, 0);
-
-function renderLogo(logoPath, agency) {
-  if (!logoPath) return '';
-  const mime = MIME_BY_EXTENSION[extname(logoPath).toLowerCase()] ?? 'application/octet-stream';
-  const data = readFileSync(logoPath).toString('base64');
-  return `<img class="logo" alt="${escapeHtml(agency)}" src="data:${mime};base64,${data}">`;
-}
 
 function renderCover(scan, branding, date) {
   return `<section class="page cover">
