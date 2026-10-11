@@ -16,7 +16,7 @@ function parseGroups(text) {
       }
       current.agents.push(value.toLowerCase());
     } else if ((key === 'allow' || key === 'disallow') && current && value) {
-      current.rules.push({ allow: key === 'allow', pattern: value });
+      current.rules.push({ allow: key === 'allow', pattern: canonicalPath(value) });
     }
   }
   return groups;
@@ -30,7 +30,7 @@ function splitDirective(line) {
 }
 
 function isAllowed(groups, url, userAgent) {
-  const path = pathOf(url);
+  const path = canonicalPath(pathOf(url));
   const rules = applicableRules(groups, userAgent.toLowerCase());
   const matches = rules.filter((rule) => toRegExp(rule.pattern).test(path));
   if (matches.length === 0) return true;
@@ -42,6 +42,19 @@ function applicableRules(groups, userAgent) {
   const named = groups.filter((group) => group.agents.some((agent) => agent !== ANY_AGENT && userAgent.includes(agent)));
   const selected = named.length > 0 ? named : groups.filter((group) => group.agents.includes(ANY_AGENT));
   return selected.flatMap((group) => group.rules);
+}
+
+const PERCENT_ESCAPE = /%([0-9a-f]{2})/gi;
+const UNRESERVED = /^[\w.~-]$/;
+const NEEDS_ENCODING = /[^!-~]|[[\]]/gu;
+
+function canonicalPath(text) {
+  return text
+    .replace(PERCENT_ESCAPE, (escape, hex) => {
+      const char = String.fromCharCode(parseInt(hex, 16));
+      return UNRESERVED.test(char) ? char : escape.toUpperCase();
+    })
+    .replace(NEEDS_ENCODING, (char) => encodeURIComponent(char));
 }
 
 function pathOf(url) {
