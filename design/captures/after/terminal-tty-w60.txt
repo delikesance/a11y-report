@@ -1,0 +1,13 @@
+[33m⚠[0m https://client.example/ac… : 3 occurrence(s), score 85/100
+[32m✔[0m https://client.example/c… : 0 occurrence(s), score 100/100
+[31m✖[0m https://client.example/panier : HTTP 500
+
+[1mPage[0m                 [1mCritique[0m  [1mMajeur[0m  [1mModéré[0m  [1mMineur[0m  [1mScore[0m
+[2m───────────────────  ────────  ──────  ──────  ──────  ─────[0m
+https://client.exa…         2       1       0       0     85
+https://client.exa…         0       0       0       0    100
+https://client.exa…         -       -       -       -      -
+
+Total : 3 page(s), 3 occurrence(s), 1 en erreur
+Génération des rapports...
+Rapport écrit : /tmp/claude-1002/-home-workstation-Projects/54ba6489-4039-4546-addd-7caf1510a4b4/scratchpad/out/rapport.json

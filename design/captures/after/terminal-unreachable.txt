@@ -1,0 +1,10 @@
+Analyse de 1 page(s)...
+✖ http://x.invalid/ : domaine introuvable
+
+Page               Critique  Majeur  Modéré  Mineur  Score
+─────────────────  ────────  ──────  ──────  ──────  ─────
+http://x.invalid/         -       -       -       -      -
+
+Total : 1 page(s), 0 occurrence(s), 1 en erreur
+Génération des rapports...
+Rapport écrit : /tmp/claude-1002/-home-workstation-Projects/54ba6489-4039-4546-addd-7caf1510a4b4/scratchpad/out/rapport.json

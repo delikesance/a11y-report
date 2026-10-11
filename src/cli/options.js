@@ -42,6 +42,7 @@ const OPTIONS = {
   seuil: { type: 'string' },
   'seuils-fichier': { type: 'string' },
   'ci-format': { type: 'string' },
+  'no-color': { type: 'boolean' },
   help: { type: 'boolean', short: 'h' },
 };
 

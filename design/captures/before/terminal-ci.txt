@@ -1,0 +1,3 @@
+Seuils CI non respectés
+2 occurrence(s) Critique (seuil 0)
+1 occurrence(s) Majeur (seuil 0)

@@ -38,6 +38,7 @@ Intégration continue (--ci) :
   --ci-format github|text          format des résultats de seuils (défaut : text)
 
 Divers :
+  --no-color            n'affiche pas de couleurs (NO_COLOR=1 a le même effet)
   -h, --help            affiche cette aide
 
 Exemples :
