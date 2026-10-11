@@ -103,6 +103,13 @@ function parseCi(values) {
   return { thresholds: parseThresholds(values), format };
 }
 
+function assertFromJsonAlone(values, urls) {
+  if (!values['from-json']) return;
+  if (urls.length > 0 || values.crawl) {
+    throw new Error('--from-json ne peut pas être combiné à des URL ni à --crawl. Exemple : a11y-report --from-json scan.json');
+  }
+}
+
 export function parseCliArgs(argv) {
   let parsed;
   try {
@@ -111,8 +118,10 @@ export function parseCliArgs(argv) {
     throw new Error(`Arguments invalides (${error.message})`);
   }
   const { values, positionals } = parsed;
+  const urls = positionals.map(parseHttpUrl);
+  assertFromJsonAlone(values, urls);
   return {
-    urls: positionals.map(parseHttpUrl),
+    urls,
     options: values,
     settings: {
       formats: parseFormats(values.format),
