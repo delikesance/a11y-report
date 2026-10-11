@@ -24,6 +24,10 @@ const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '
 
 export const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ENTITIES[char]);
 
+const URL_BREAK_AFTER = /(?<=[/?&=_-])(?!\/)/;
+
+export const breakableUrl = (url) => String(url ?? '').split(URL_BREAK_AFTER).map(escapeHtml).join('<wbr>');
+
 export const brandColor = (value, fallback) => (HEX_COLOR.test(value ?? '') ? value : fallback);
 
 export const truncate = (text) =>

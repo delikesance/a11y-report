@@ -43,10 +43,12 @@ ${renderCover(scan, branding, date, problems, score)}
 ${renderSummary(problems, score, quote, branding)}
 <div class="flow">${renderDetails(problems)}</div>
 ${renderQuote(quote, problems, branding)}
+<div class="ap-tail">
 ${renderPageTable(scan)}
 ${renderManualReview(scan)}
 ${renderLimits()}
 ${renderMethodology(scan)}
+</div>
 </body>
 </html>`;
 }

@@ -35,7 +35,7 @@ test('manual review section lists unaudited pages and incomplete points when pre
     pages: [{ ...scan.pages[0], incomplete: [{ id: 'color-contrast', help: 'Contraste', nodes: [{ html: '<p>', target: 'p' }] }] }],
   };
   const html = renderManualReview(extended);
-  assert.match(html, /https:\/\/client\.example\/panne/);
+  assert.match(html.replaceAll('<wbr>', ''), /https:\/\/client\.example\/panne/);
   assert.match(html, /Contraste/);
 });
 
