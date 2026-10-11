@@ -8,7 +8,7 @@ Sources de référence : `docs/market/concurrents-fr.md`, `docs/market/concurren
 
 | Outil | Type | Prix public | Rapport PDF FR ? | RGAA ? | Forces | Faiblesses | Source |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **a11y-reports** (ce dépôt) | CLI Node 22, local | Non fixé (voir section 6) | Oui : PDF A4 en français, marque blanche (`--agency`, `--logo`, `--color`) | Partiel : chaque règle porte sa référence RGAA ; pas de pourcentage de conformité RGAA (REP-01 au backlog) | Local (Playwright + axe-core embarqués) ; devis par phase chiffré (`--taux`) ; branding par fichier | PDF non balisé (PDF-01) ; 46 règles sur 105 en texte générique (RULE-01) ; erreurs HTTP non signalées (SCAN-01) ; pas de TVA (QUO-01) | `README.md`, `docs/baseline.md` (sections 1, 3, 5) |
+| **a11y-reports** (ce dépôt) | CLI Node 22, local | Non fixé (voir section 6) | Oui : PDF A4 en français, marque blanche (`--agency`, `--logo`, `--color`) | Partiel : chaque règle porte sa référence RGAA ; pas de pourcentage de conformité RGAA (REP-01 au backlog) | Local (Playwright + axe-core embarqués) ; devis par phase chiffré (`--taux`) ; branding par fichier | Résolus depuis : PDF balisé (PDF-01), TVA et TTC (QUO-01), erreurs HTTP signalées (SCAN-01), fiches pour les règles (RULE-01) | `README.md`, `docs/baseline.md` (sections 1, 3, 5) |
 | axe-core (`@axe-core/cli`, Playwright, Puppeteer) | Bibliothèque open source | Gratuit | Non documenté (reporter `reporter-earl` cité) | Non : règles WCAG, pas de référentiel RGAA | Moteur de référence ; MPL-2.0 ; 726 étoiles | Sortie technique, pas de livrable client ; couverture automatique partielle | https://github.com/dequelabs/axe-core-npm |
 | Pa11y (CLI, Dashboard, Webservice, Pa11y CI) | Outils open source | Gratuit | Non : Dashboard en graphes, Webservice en JSON | Non documenté | Suivi quotidien et graphes d'évolution (Dashboard) | Pas de moteur de conformité RGAA ; site sous CC-BY-NC 4.0 (licence des outils à vérifier) | https://www.pa11y.org/ |
 | Lighthouse CI | Outil open source (CI) | Gratuit | Non : rapport dans la pull request | Non (score Lighthouse) | Budgets, suivi entre commits, Apache-2.0 | Pas de rapport client ni de référentiel RGAA | https://github.com/GoogleChrome/lighthouse-ci |
@@ -42,7 +42,7 @@ Ce que l'outil fait, d'après le code et la documentation :
 - sauvegarde et rechargement du scan en JSON (`--save-json`, `--from-json`) ;
 - limites de l'audit automatique écrites dans le README et, à traiter, dans le rapport.
 
-Ce que l'outil ne fait pas encore (écarts relevés dans `docs/baseline.md`) : PDF balisé, score par page, pourcentage RGAA, TVA et TTC, audit des résultats « incomplete », options de concurrence, de viewport, de crawl et de mode CI.
+Écarts relevés dans `docs/baseline.md` au départ, résolus dans la version 1.0.0 : PDF balisé, score par page, estimation partielle RGAA, TVA et TTC, résultats « incomplete », options de concurrence, de viewport, de crawl et de mode CI.
 
 Positionnement retenu : **un générateur de livrable client pour agences, pas une plateforme de suivi ni une prestation d'audit humain**. Il se place entre le moteur open source (axe, gratuit mais sans livrable) et l'audit humain (2 000 € HT et plus, section 3 du tableau). Il ne se présente pas comme une certification de conformité RGAA, comme le précise le README.
 
@@ -72,7 +72,7 @@ Confidentialité : l'audit tourne sur le poste de l'agence (Playwright et axe-co
 | « Un audit automatique ne trouve qu'un tiers des problèmes. » | Exact, et le rapport le dit : le README et le rapport affichent cette limite. L'outil ne prétend pas remplacer un test avec lecteur d'écran. Un test manuel guidé est un écart à combler (MKT-02). |
 | « axe-core est gratuit. » | Oui, axe-core est gratuit et sert de base à l'outil. Il ne produit pas de rapport client, de devis ni de marque blanche. |
 | « Deque, Siteimprove et accessiBe ont des plateformes complètes. » | Leurs prix ne sont pas publics ou ne sont publics que pour un widget. L'outil est un CLI local, sans abonnement ni données envoyées à un tiers (à confirmer, section 2). |
-| « Vos rapports ne sont pas accessibles. » | Vrai aujourd'hui : le PDF n'est pas balisé (PDF-01, étape 5). À ne pas présenter comme conforme avant veraPDF passé. |
+| « Vos rapports ne sont pas accessibles. » | Résolu (PDF-01) : le PDF est balisé et passe veraPDF. Vérifier chaque rapport livré avec `npm run verify:pdf`. |
 | « Le RGAA n'est pas pris en compte. » | Chaque règle affiche sa référence RGAA ; le pourcentage RGAA n'existe pas encore (REP-01, étape 4). Présenter le rapport comme indicatif. |
 | « Les prix publics sont plus bas chez accessiBe. » | Leurs prix sont en dollars, pour un widget ou une surveillance de pages, pas pour un audit client en français. Comparer par livrable, pas par ligne de prix. |
 | « Qui garantit les sources juridiques ? » | Les références sont sourcées dans `docs/sources.md` avec URL et date de consultation. Les points non vérifiés sont marqués « à vérifier juridiquement ». |
@@ -108,8 +108,8 @@ Ancrages :
 
 Points à valider avant publication :
 - la licence du logiciel n'est pas définie dans le dépôt (le champ `license` n'a pas été relevé) : le modèle de vente en dépend ;
-- la TVA n'est pas gérée (QUO-01) : les prix ci-dessus sont HT ;
-- ces prix supposent un PDF balisé pour les agences (PDF-01) ; sans lui, ne pas vendre à l'agence 30 et plus.
+- les prix ci-dessus sont HT ; la TVA est gérée dans le devis du rapport (QUO-01 résolu) ;
+- PDF-01 résolu : le PDF balisé lève la condition posée à la vente à l'agence 30 et plus.
 
 ## 7. Sources
 

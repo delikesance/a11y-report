@@ -1,6 +1,8 @@
 # Baseline technique : a11y-reports
 
-Photographie de l'existant, établie avant les évolutions visées (formats, concurrence, viewport, crawl, mode CI, score détaillé, PDF balisé). Mesures prises sur le dépôt courant avec `npm test` et `node --test --experimental-test-coverage test/*.test.js`.
+État de départ : les points marqués « résolu » l'ont été dans la version 1.0.0 (voir CHANGELOG.md).
+
+Photographie de l'existant, établie avant (état de départ : les points ci-dessous marqués « résolu » l'ont été dans la version 1.0.0, voir CHANGELOG.md)  les évolutions visées (formats, concurrence, viewport, crawl, mode CI, score détaillé, PDF balisé). Mesures prises sur le dépôt courant avec `npm test` et `node --test --experimental-test-coverage test/*.test.js`.
 
 ## 1. Architecture
 
@@ -43,9 +45,9 @@ Point d'entrée : `cli.js` (branding : fichier `--branding` puis options en lign
 - **Erreurs HTTP ignorées.** `scan.js` appelle `page.goto(url, { waitUntil: 'load' })` sans lire la réponse : une page 404 ou 500 est auditée comme si elle était saine, et son rapport ne le signale pas. Seules les exceptions de navigation (injoignable, timeout) remplissent `error`.
 - **Résultats « incomplete » perdus.** `scan.js` ne conserve que le compte `incomplete` ; les nœuds concernés (sortie d'axe) ne sont pas stockés, donc le rapport ne peut ni les lister ni les chiffrer.
 - **Règles sans texte spécifique.** 46 règles axe-core sur 105 n'ont pas d'entrée dans `src/rules-fr.js` (59 clés) et reçoivent le texte générique : `accesskeys`, `aria-allowed-role`, `aria-dialog-name`, `aria-tab-name`, `audio-caption`, `autocomplete-valid`, `color-contrast-enhanced`, `duplicate-id`, `duplicate-id-active`, `frame-tested`, `hidden-content`, `image-redundant-alt`, `landmark-*-is-top-level` (3), `marquee`, `meta-refresh-no-exceptions`, `p-as-heading`, `summary-name`, `td-has-header`, entre autres. Liste complète : `node` comparant `getRules()` d'axe-core aux clés de `RULES`.
-- **Devis sans TVA.** Les prix sont en « € » HT, sans ligne de TVA ni total TTC. Sans `--taux`, les prix affichent un tiret (`EMPTY_VALUE`), pas « 0 € » : le défaut attendu n'est pas un problème actuel.
+- **Devis sans TVA (résolu : TVA et TTC dans le devis, 20 % par défaut).** Les prix sont en « € » HT, sans ligne de TVA ni total TTC. Sans `--taux`, les prix affichent un tiret (`EMPTY_VALUE`), pas « 0 € » : le défaut attendu n'est pas un problème actuel.
 - **Score global seulement.** `model.js` calcule un score sur 100 (pénalités par impact) affiché en couverture. Il n'existe ni score par page, ni méthodologie documentée dans le rapport, ni pourcentage de conformité RGAA.
-- **PDF non balisé.** Aucune trace de balisage (tags, langue du document, titres de signets) dans `report.js` ni `renderPdf` ; le PDF n'est pas accessible en lecture par un lecteur d'écran.
+- **PDF non balisé (résolu : PDF balisé, langue `fr`, signets, conforme veraPDF PDF/UA-1, voir `docs/pdf-accessibility.md`).** Aucune trace de balisage (tags, langue du document, titres de signets) dans `report.js` ni `renderPdf` ; le PDF n'est pas accessible en lecture par un lecteur d'écran.
 - **CLI restreinte.** Options présentes : `--client`, `--agency`, `--logo`, `--color`, `--contact`, `--taux`, `--telephone`, `--validite`, `--out`, `--branding`, `--from-json`, `--save-json`. Absentes : `--format`, `--concurrency`, `--viewport`, `--crawl`, `--ci`.
 
 ## 4. Inventaire des tests
@@ -87,9 +89,9 @@ Lacunes de couverture constatées : `cli.js` lignes 108-145 (exécution réelle)
 | Signaler les erreurs HTTP par page | Absent : `goto` sans contrôle de statut (`scan.js:33`). |
 | Conserver et afficher les résultats « incomplete » d'axe | Absent : seul le compte est gardé (`scan.js:40`). |
 | Texte spécifique pour les 105 règles axe-core | 59 règles sur 105 couvertes ; 46 en texte générique. |
-| Devis avec TVA et total TTC | Absent ; HT uniquement, sans total TTC. |
+| Devis avec TVA et total TTC | Absent au départ ; résolu : HT, TVA et TTC. |
 | Score par page, méthodologie, pourcentage RGAA | Score global sur 100 seulement ; pas de score par page, pas de méthodologie ni de pourcentage RGAA. |
-| PDF balisé (accessible) | Absent. |
+| PDF balisé (accessible) | Absent au départ ; résolu. |
 | CLI `--format`, `--concurrency`, `--viewport`, `--crawl`, `--ci` | Absentes. |
 
 Écarts déjà couverts : devis par phase (`quote.js`, `model.js`), mode `--from-json` / `--save-json`, branding par fichier, pied de page numéroté.
