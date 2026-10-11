@@ -32,3 +32,8 @@ Journal des décisions d'architecture et de produit. Une entrée par décision :
 - **Contexte :** PDF/UA : pied de page en marges `@page` non balisé, XMP absent.
 - **Décision :** pied de page et numérotation supprimés ; post-traitement JS pur du PDF (XMP, artefacts) dans `src/pdf-accessibility.js`.
 - **Conséquences :** le test veraPDF est bloquant ; le post-traitement suppose un PDF Chromium à table xref classique et flux de contenu ligne à ligne.
+
+- **Date :** 2026-10-11
+- **Contexte :** Lighthouse mesure l'accessibilité et la performance du site (gate >= 95 / >= 90).
+- **Décision :** lighthouse 12.6.0 utilisé comme outil de développement, installé dans un dossier hors dépôt ; aucune dépendance ajoutée à `package.json`.
+- **Conséquences :** la mesure n'est pas rejouée en CI ; relancer manuellement avec `CHROME_PATH` pointant vers le Chromium de Playwright.
