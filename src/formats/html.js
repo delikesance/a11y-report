@@ -1,13 +1,11 @@
 import { collectProblems } from '../report/model.js';
-import { DEFAULT_ACCENT, DEFAULT_PRIMARY, brandColor, escapeHtml } from '../report/shared.js';
+import { escapeHtml } from '../report/shared.js';
 import { REPORT_CSS } from './html-style.js';
+import { renderTokenCss } from './html-tokens.js';
 import { renderIntro, renderSummary, renderPages, renderUnaudited } from './html-overview.js';
 import { renderProblems, renderIncomplete, renderQuote } from './html-findings.js';
 
 const DATE_FORMAT = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
-
-const renderRootVariables = (branding) =>
-  `:root{--primary:${brandColor(branding.primaryColor, DEFAULT_PRIMARY)};--accent:${brandColor(branding.accentColor, DEFAULT_ACCENT)};}`;
 
 export function render(scan, { branding = {} } = {}) {
   const context = {
@@ -22,7 +20,7 @@ export function render(scan, { branding = {} } = {}) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escapeHtml(`Rapport d'accessibilité - ${branding.client ?? ''}`)}</title>
-<style>${renderRootVariables(branding)}
+<style>${renderTokenCss(branding)}
 ${REPORT_CSS}</style>
 </head>
 <body>
