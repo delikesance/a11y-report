@@ -34,6 +34,9 @@ La progression s'affiche sur la sortie d'erreur ; le PDF est écrit à l'emplace
 | `--logo f.png` | Logo de l'agence affiché dans le rapport. |
 | `--color #rrggbb` | Couleur principale du rapport. |
 | `--contact "..."` | Coordonnées affichées dans le rapport. |
+| `--taux 80` | Taux horaire en euros HT pour chiffrer le devis. |
+| `--telephone "..."` | Téléphone affiché dans le devis. |
+| `--validite 30` | Validité du devis en jours (défaut : 30). |
 | `--out rapport.pdf` | Fichier PDF généré (défaut : `rapport.pdf`). |
 | `--branding b.json` | Charge le branding depuis un fichier JSON. Les options passées en ligne de commande l'emportent. |
 | `--from-json scan.json` | Recharge un scan sauvegardé au lieu de lancer un audit (aucune URL requise). |
@@ -41,6 +44,21 @@ La progression s'affiche sur la sortie d'erreur ; le PDF est écrit à l'emplace
 | `-h, --help` | Affiche l'aide. |
 
 Sans URL et sans `--from-json`, la commande affiche l'aide et se termine avec le code 1. Toute erreur (URL invalide, option inconnue, fichier illisible) affiche un message `Erreur : ...` et se termine avec le code 1.
+
+## Devis intégré
+
+Le rapport se termine par un devis par phase (bloquants, gênants, finitions) avec la durée estimée de chaque phase. Sans `--taux`, le devis affiche les durées sans prix.
+
+```bash
+node src/cli.js https://exemple.fr \
+  --client "Exemple SAS" \
+  --agency "Mon Agence" \
+  --taux 80 \
+  --telephone "01 23 45 67 89" \
+  --validite 30
+```
+
+Avec `--taux 80`, chaque phase reçoit un prix HT calculé à partir de ce taux horaire.
 
 ## Format de `branding.json`
 
@@ -65,6 +83,9 @@ Sans URL et sans `--from-json`, la commande affiche l'aide et se termine avec le
 | `accentColor` | non | Couleur d'accent au format `#rrggbb`. |
 | `contact` | non | Coordonnées affichées dans le rapport. |
 | `date` | non | Date affichée dans le rapport. |
+| `hourlyRate` | non | Taux horaire en euros HT pour le devis. |
+| `phone` | non | Téléphone affiché dans le devis. |
+| `quoteValidityDays` | non | Validité du devis en jours (défaut : 30). |
 
 ## Limites de l'audit automatique
 

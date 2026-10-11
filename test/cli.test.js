@@ -89,6 +89,46 @@ describe('loadBranding', () => {
     );
   });
 
+  test('mappe --taux, --telephone et --validite', () => {
+    const branding = loadBranding({
+      agency: 'Agence',
+      client: 'Acme',
+      taux: '80',
+      telephone: '01 23 45 67 89',
+      validite: '45',
+    });
+    assert.equal(branding.hourlyRate, 80);
+    assert.equal(branding.phone, '01 23 45 67 89');
+    assert.equal(branding.quoteValidityDays, 45);
+  });
+
+  test('lit hourlyRate, phone et quoteValidityDays du fichier --branding', () => {
+    const file = join(dir, 'devis.json');
+    writeFileSync(file, JSON.stringify({ agency: 'Agence', client: 'Acme', hourlyRate: 60, phone: '0102', quoteValidityDays: 15 }));
+    const branding = loadBranding({ branding: file, taux: '90' });
+    assert.equal(branding.hourlyRate, 90);
+    assert.equal(branding.phone, '0102');
+    assert.equal(branding.quoteValidityDays, 15);
+  });
+
+  test('rejette un taux horaire non positif', () => {
+    for (const taux of ['0', '-5', 'abc']) {
+      assert.throws(
+        () => loadBranding({ agency: 'Agence', client: 'Acme', taux }),
+        /Taux horaire invalide/,
+      );
+    }
+  });
+
+  test('rejette une validité qui n\'est pas un entier positif', () => {
+    for (const validite of ['0', '1.5', 'abc']) {
+      assert.throws(
+        () => loadBranding({ agency: 'Agence', client: 'Acme', validite }),
+        /Validité du devis invalide/,
+      );
+    }
+  });
+
   test('signale un fichier --branding illisible', () => {
     const file = join(dir, 'absent.json');
     assert.throws(

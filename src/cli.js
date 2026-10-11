@@ -9,6 +9,9 @@ const OPTIONS = {
   logo: { type: 'string' },
   color: { type: 'string' },
   contact: { type: 'string' },
+  taux: { type: 'string' },
+  telephone: { type: 'string' },
+  validite: { type: 'string' },
   out: { type: 'string', default: 'rapport.pdf' },
   branding: { type: 'string' },
   'from-json': { type: 'string' },
@@ -25,6 +28,9 @@ Options :
   --logo f.png        logo de l'agence
   --color #rrggbb     couleur principale du rapport
   --contact "..."     coordonnées affichées dans le rapport
+  --taux 80           taux horaire en euros HT pour chiffrer le devis (sans taux : durées sans prix)
+  --telephone "..."   téléphone affiché dans le devis
+  --validite 30       validité du devis en jours (défaut : 30)
   --out rapport.pdf   fichier PDF généré (défaut : rapport.pdf)
   --branding b.json   charge le branding depuis un JSON (les options passées l'emportent)
   --from-json s.json  recharge un scan sauvegardé au lieu de scanner les URLs
@@ -60,6 +66,13 @@ function definedEntries(entries) {
   return Object.fromEntries(Object.entries(entries).filter(([, value]) => value !== undefined));
 }
 
+function parsePositive(raw, label, isValid = Number.isFinite) {
+  if (raw === undefined) return undefined;
+  const value = Number(raw);
+  if (value <= 0 || !isValid(value)) throw new Error(`${label} invalide (nombre positif attendu) : ${raw}`);
+  return value;
+}
+
 export function parseCliArgs(argv) {
   let parsed;
   try {
@@ -78,6 +91,9 @@ export function loadBranding(options) {
     logoPath: options.logo,
     primaryColor: options.color,
     contact: options.contact,
+    phone: options.telephone,
+    hourlyRate: parsePositive(options.taux, 'Taux horaire'),
+    quoteValidityDays: parsePositive(options.validite, 'Validité du devis', Number.isInteger),
   });
   const branding = { ...fromFile, ...fromFlags };
 
