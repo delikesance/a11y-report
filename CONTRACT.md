@@ -3,7 +3,7 @@
 ## src/scan.js
 `export async function scanPages(urls: string[]): Promise<Scan>`
 Scan = `{ generatedAt: string(ISO), pages: Page[] }`
-Page = `{ url, title, violations: Violation[], passes: number, incomplete: number, error?: string }`
+Page = `{ url, title, violations: Violation[], passes: number, incomplete: Violation[], error?: string }` (le nombre de nœuds incomplets = `incomplete.length`)
 Violation = `{ id, impact: 'critical'|'serious'|'moderate'|'minor', help, description, helpUrl, tags: string[], nodes: { html, target: string, failureSummary }[] }`
 Une page injoignable donne `error` rempli et listes vides, sans lever d'exception. Navigateur: chromium headless de playwright, axe-core WCAG 2.0/2.1/2.2 A+AA + best-practice.
 
