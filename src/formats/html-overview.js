@@ -37,11 +37,13 @@ const renderPageRow = (page) => {
 export function renderPages({ scan }) {
   return `<section aria-labelledby="pages">
 <h2 id="pages">Pages auditées</h2>
+<div class="table-wrap" tabindex="0">
 <table>
 <caption>Score et résultats par page</caption>
 <thead><tr><th scope="col">Adresse</th><th scope="col">Titre</th><th scope="col">Score</th><th scope="col">Violations</th><th scope="col">À vérifier</th><th scope="col">Statut</th></tr></thead>
 <tbody>${scan.pages.map(renderPageRow).join('')}</tbody>
 </table>
+</div>
 </section>`;
 }
 

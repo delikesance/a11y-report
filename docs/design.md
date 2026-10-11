@@ -32,6 +32,14 @@ Le test `test/design-tokens.test.js` échoue si une paire passe sous son seuil. 
 
 Les fichiers de branding reprennent exactement les couleurs de `tokens.json` ; le test vérifie cette égalité.
 
+## Rapport HTML
+
+`src/formats/html.js` génère le CSS depuis `tokens.json` (`html-tokens.js`) : variables `:root`, thème sombre via `prefers-color-scheme` et `data-theme`, styles d'impression. Les tableaux sont dans un conteneur défilant focusable (`.table-wrap`) pour rester lisibles à 360 px. Lien d'évitement vers `#contenu`, contours de focus visibles.
+
+- Captures avant/après : `design/captures/before/` et `design/captures/after/` (360, 768, 1280 px). Aucun débordement horizontal mesuré.
+- Audit par le produit lui-même (`node src/cli.js` sur le rapport servi en HTTP local) : 0 violation, 39 règles passées.
+- Les polices ne sont pas embarquées dans le HTML (rapport autonome, pile de secours système).
+
 ## Ajouter une marque ou une couleur
 
 1. Ajouter la couleur dans `tokens.json` (section `color`).
