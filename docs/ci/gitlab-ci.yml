@@ -1,0 +1,14 @@
+a11y:
+  image: mcr.microsoft.com/playwright:v1.50.0-noble
+  stage: test
+  script:
+    - npm ci
+    - >
+      node src/cli.js https://preprod.example.com
+      --ci --ci-format text
+      --seuils "critical=0,serious=0,score=80,unaudited=true"
+      --out rapport-a11y.pdf
+  artifacts:
+    when: always
+    paths:
+      - rapport-a11y.pdf
