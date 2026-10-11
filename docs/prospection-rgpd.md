@@ -2,7 +2,7 @@
 
 > **Avertissement.** Ce document n'est pas un avis juridique. Il résume les textes et les pratiques à la date du 11 octobre 2026 et doit être validé par un avocat avant toute utilisation opérationnelle.
 
-Les sources sont listées dans [sources.md](sources.md). Les points marqués **[À VÉRIFIER]** n'ont pas pu être confirmés sur une page officielle au moment de la rédaction.
+Les sources sont listées dans [sources.md](sources.md). Les points marqués **[À VÉRIFIER]** n'ont pas pu être confirmés sur une page officielle (les autres points ont été relus sur cnil.fr, Légifrance et EUR-Lex le 11 octobre 2026) au moment de la rédaction.
 
 ## 1. Deux régimes à distinguer
 
@@ -33,7 +33,7 @@ Pour une prospection à froid (pas de relation client préalable), l'exception �
 
 ## 4. LCEN
 
-La loi pour la confiance dans l'économie numérique (LCEN, loi 2004-575) encadre la prospection électronique et impose l'identification de l'émetteur et un moyen d'opposition. **[À VÉRIFIER]** Références d'articles à compléter après consultation de Légifrance (non extraites à la rédaction).
+La loi pour la confiance dans l'économie numérique (LCEN, loi 2004-575) encadre la prospection électronique et impose l'identification de l'émetteur et un moyen d'opposition. Référence : article 22 de la loi 2004-575, dont la version d'origine (JORF) pose l'interdiction sans consentement préalable des personnes physiques, l'exception « produits analogues » et l'interdiction de masquer l'identité de l'émetteur ; ces règles figurent désormais à l'article L34-5 CPCE (§ 3). **[À VÉRIFIER]** Texte actuellement en vigueur de l'article 22 non confirmé (seule la version de 2004 a été lue).
 
 ## 5. Information des personnes : articles 13 et 14 RGPD
 
@@ -55,12 +55,12 @@ Modèle de mention : [mention-information-prospection.md](mention-information-pr
 
 - Le responsable tient un registre de ses traitements, mis à la disposition de l'autorité de contrôle sur demande (article 30 ; considérant 82).
 - Le traitement « prospection B2B » doit y figurer. Modèle : [registre-traitement-prospection.md](registre-traitement-prospection.md).
-- Article 30, paragraphe 5 : les obligations de registre « ne s'appliquent pas à une entreprise » de moins de 250 personnes, sous conditions fixées par l'article (texte intégral des conditions non relu ici ; **[À VÉRIFIER]**) : traitement occasionnel, pas de données sensibles. Ne pas s'en prévaloir sans analyse, la prospection récurrente n'est généralement pas occasionnelle.
+- Article 30, paragraphe 5 : les obligations de registre « ne s'appliquent pas à une entreprise » de moins de 250 personnes, sous conditions fixées par l'article (« ne s'appliquent pas à une entreprise ou à une organisation comptant moins de 250 employés », sauf risque pour les droits des personnes, traitement non occasionnel ou données sensibles ; formulation exacte des réserves **[À VÉRIFIER]**) : traitement occasionnel, pas de données sensibles. Ne pas s'en prévaloir sans analyse, la prospection récurrente n'est généralement pas occasionnelle.
 
 ## 8. Durée de conservation
 
-- **[À VÉRIFIER CNIL]** Repère de la CNIL : 3 ans à compter de la collecte ou du dernier contact émanant du prospect. Passé ce délai, données supprimées ou archivées (base intermédiaire d'accès restreint).
-- Le « contact » à retenir doit être défini par écrit : une réponse ou une demande d'information compte ; une simple ouverture de message n'est pas un contact.
+- Repère de la CNIL : les données de prospects peuvent être conservées « pendant un délai de trois ans à compter de leur collecte » ou du dernier contact émanant du prospect (questions-réponses CNIL, sources.md). Passé ce délai, données supprimées ou archivées (base intermédiaire d'accès restreint).
+- Le « contact » à retenir doit être défini par écrit : une réponse, une demande d'information ou un clic sur un lien compte ; la CNIL indique que la simple ouverture d'un courriel ne devrait pas être considérée comme un contact.
 - Les données de clients relèvent d'autres obligations (comptables, contractuelles) et ont leur propre durée. Ne pas les confondre avec les données de prospection.
 
 ## 9. Entrepreneurs individuels et freelances
@@ -90,5 +90,5 @@ Modèle de mention : [mention-information-prospection.md](mention-information-pr
 
 - Articulation exacte L34-5 CPCE et règle B2B de la CNIL pour les adresses nominatives de professionnels.
 - Statut des adresses nominatives d'entrepreneurs individuels.
-- Références LCEN exactes.
+- Version en vigueur de l'article 22 LCEN.
 - Fiabilité de la pesée des intérêts pour une prospection récurrente.
