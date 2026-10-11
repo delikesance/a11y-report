@@ -36,3 +36,9 @@ test('computeImpactWeightedScore subtracts impact penalties from 100', () => {
   assert.equal(computeImpactWeightedScore(collectProblems(scan)), 85);
   assert.equal(computeImpactWeightedScore([]), 100);
 });
+
+test('computeImpactWeightedScore gives an unknown or null impact the lowest penalty, never NaN', () => {
+  const unknownImpacts = [{ impact: 'blocker' }, { impact: null }];
+
+  assert.equal(computeImpactWeightedScore(unknownImpacts), 98);
+});
