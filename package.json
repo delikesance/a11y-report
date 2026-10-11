@@ -9,7 +9,8 @@
   "scripts": {
     "test": "node --test test/*.test.js",
     "verify:pdf": "node scripts/verify-pdf.js",
-    "lint:layout": "node scripts/layout-lint.js"
+    "lint:layout": "node scripts/layout-lint.js",
+    "build:site": "node scripts/build-site-css.js"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.10.0",

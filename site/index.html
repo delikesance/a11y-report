@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>a11y-report : rapports d'audit d'accessibilité en PDF pour agences</title>
+<meta name="description" content="Générez en local un rapport PDF d'audit d'accessibilité en français, aux couleurs de votre agence, avec un devis chiffré par phase.">
+<meta property="og:title" content="a11y-report : rapports d'audit d'accessibilité pour agences">
+<meta property="og:description" content="Un rapport PDF en français, en marque blanche, généré en local depuis axe-core.">
+<meta property="og:image" content="assets/og.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">a11y-report</a>
+<nav aria-label="Principal">
+<ul class="nav-list">
+<li><a href="index.html" aria-current="page">Accueil</a></li>
+<li><a href="fonctionnalites.html">Fonctionnalités</a></li>
+<li><a href="demo.html">Démo</a></li>
+<li><a href="tarifs.html">Tarifs</a></li>
+<li><a href="documentation.html">Documentation</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="contenu">
+<div class="wrap">
+<section class="hero" aria-labelledby="titre-accueil">
+<div>
+<h1 id="titre-accueil">Un rapport d'audit d'accessibilité, prêt à livrer à votre client</h1>
+<p class="lead">a11y-report audite vos pages avec axe-core dans un navigateur local et produit un PDF en français, aux couleurs et au nom de votre agence, avec un devis par phase tiré du même audit.</p>
+<div class="actions">
+<a class="btn btn-primary" href="demo.html">Voir un exemple de rapport</a>
+<a class="btn btn-secondary" href="documentation.html">Installer l'outil</a>
+</div>
+</div>
+<img class="hero-media" src="assets/hero.svg" width="640" height="480" alt="Aperçu d'une page de rapport d'audit avec ses points d'erreur signalés">
+</section>
+<section aria-labelledby="titre-benefices">
+<h2 id="titre-benefices">Ce que l'outil apporte à votre agence</h2>
+<ul class="cards">
+<li class="card">
+<h3>Un livrable client, sans mise en forme</h3>
+<p>Le PDF A4 porte le nom et le logo de votre agence, la couleur de votre choix et le nom du client. Aucune autre marque n'y figure.</p>
+</li>
+<li class="card">
+<h3>Un devis tiré de l'audit</h3>
+<p>Les corrections sont regroupées en trois phases : bloquants, gênants, finitions. Avec un taux horaire, chaque phase reçoit un prix HT.</p>
+</li>
+<li class="card">
+<h3>Un audit exécuté sur votre poste</h3>
+<p>Playwright et axe-core tournent en local, en ligne de commande. Les résultats s'archivent en JSON et se rechargent sans relancer l'audit.</p>
+</li>
+</ul>
+</section>
+<section aria-labelledby="titre-limites">
+<h2 id="titre-limites">Une limite à connaître</h2>
+<p class="note">Un audit automatique détecte environ un tiers des problèmes d'accessibilité. Le rapport ne remplace pas un test manuel au clavier et avec un lecteur d'écran, et il n'est pas une certification de conformité RGAA ou WCAG. <a href="faq.html">Lire les questions fréquentes</a></p>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<p>a11y-report, outil en ligne de commande pour agences. Ce site ne dépose aucun cookie et n'appelle aucun service tiers.</p>
+<ul>
+<li><a href="mentions-legales.html">Mentions légales</a></li>
+<li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+<li><a href="declaration-d-accessibilite.html">Déclaration d'accessibilité</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>

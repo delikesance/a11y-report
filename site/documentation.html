@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Documentation | a11y-report</title>
+<meta name="description" content="Installer a11y-report, générer un premier rapport PDF, utiliser les options principales et intégrer l'audit à GitHub Actions ou GitLab CI.">
+<meta property="og:title" content="Documentation | a11y-report">
+<meta property="og:description" content="Installation, premier rapport, options et exemples d'intégration continue.">
+<meta property="og:image" content="assets/og.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">a11y-report</a>
+<nav aria-label="Principal">
+<ul class="nav-list">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="fonctionnalites.html">Fonctionnalités</a></li>
+<li><a href="demo.html">Démo</a></li>
+<li><a href="tarifs.html">Tarifs</a></li>
+<li><a href="documentation.html" aria-current="page">Documentation</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="contenu">
+<div class="wrap">
+<h1>Documentation</h1>
+<p class="lead">Installez l'outil, générez un premier rapport, puis ajustez les options à votre client.</p>
+<section aria-labelledby="titre-installation">
+<h2 id="titre-installation">Installation</h2>
+<p>Prérequis : Node.js 22 ou plus.</p>
+<pre><code>npm install
+npx playwright install chromium</code></pre>
+</section>
+<section aria-labelledby="titre-premier">
+<h2 id="titre-premier">Premier rapport</h2>
+<p>Passez une ou plusieurs URLs, le nom du client et celui de votre agence. Le PDF est écrit à l'emplacement de <code>--out</code>, et la progression s'affiche sur la sortie d'erreur.</p>
+<pre><code>node src/cli.js https://exemple.fr https://exemple.fr/contact \
+  --client "Exemple SAS" \
+  --agency "Mon Agence" \
+  --color "#1d4ed8" \
+  --contact "contact@agence.fr" \
+  --out rapport-exemple.pdf</code></pre>
+<p>Pour un devis chiffré, ajoutez <code>--taux</code> (taux horaire HT), <code>--telephone</code> et <code>--validite</code>.</p>
+</section>
+<section aria-labelledby="titre-options">
+<h2 id="titre-options">Options principales</h2>
+<div class="table-wrap">
+<table>
+<caption>Options les plus utilisées</caption>
+<thead>
+<tr>
+<th scope="col">Option</th>
+<th scope="col">Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row"><code>--client</code> et <code>--agency</code></th><td>Nom du client et de l'agence (requis, sauf via <code>--branding</code>).</td></tr>
+<tr><th scope="row"><code>--logo</code>, <code>--color</code></th><td>Logo de l'agence et couleur principale du rapport.</td></tr>
+<tr><th scope="row"><code>--branding</code></th><td>Charge le branding depuis un fichier JSON ; les options en ligne de commande l'emportent.</td></tr>
+<tr><th scope="row"><code>--format</code></th><td><code>pdf</code> (défaut), <code>json</code>, <code>html</code>, <code>csv</code> ou <code>sarif</code>, séparés par des virgules.</td></tr>
+<tr><th scope="row"><code>--viewport</code></th><td><code>mobile</code>, <code>tablet</code>, <code>desktop</code> ou <code>LARGEURxHAUTEUR</code>. Répétable.</td></tr>
+<tr><th scope="row"><code>--crawl</code></th><td>Explore le site à partir de chaque URL, avec <code>--crawl-depth</code>, <code>--max-pages</code>, <code>--exclude</code>.</td></tr>
+<tr><th scope="row"><code>--save-json</code> et <code>--from-json</code></th><td>Sauvegarde un scan, puis génère un rapport sans relancer l'audit.</td></tr>
+<tr><th scope="row"><code>--concurrency</code></th><td>Pages auditées en parallèle, de 1 à 16 (défaut : 1).</td></tr>
+</tbody>
+</table>
+</div>
+<p>La liste complète s'affiche avec <code>node src/cli.js --help</code>.</p>
+</section>
+<section aria-labelledby="titre-ci">
+<h2 id="titre-ci">Intégration continue</h2>
+<p>Le mode <code>--ci</code> n'affiche que le résumé des seuils et renvoie un code de sortie. Les seuils se donnent par option ou par fichier JSON.</p>
+<pre><code>node src/cli.js https://example.com --ci --seuil "critical=0,serious=5,score=80"</code></pre>
+<pre><code>{ "critical": 0, "serious": 5, "moderate": 20, "score": 80, "unaudited": true }</code></pre>
+<table>
+<caption>Codes de sortie en mode CI</caption>
+<thead>
+<tr>
+<th scope="col">Code</th>
+<th scope="col">Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">0</th><td>Tous les seuils sont respectés.</td></tr>
+<tr><th scope="row">1</th><td>Erreur d'usage : option invalide, URL invalide, fichier de seuils illisible.</td></tr>
+<tr><th scope="row">2</th><td>Au moins un seuil est dépassé.</td></tr>
+<tr><th scope="row">3</th><td>Une page est non auditée et <code>unaudited=true</code> est demandé.</td></tr>
+</tbody>
+</table>
+<p><code>--ci-format github</code> crée une annotation sur la pull request dans GitHub Actions ; <code>--ci-format text</code> (défaut) produit des lignes lisibles dans les journaux de GitLab CI.</p>
+<p>Exemples complets : <code>docs/ci/github-actions.yml</code> et <code>docs/ci/gitlab-ci.yml</code> dans le dépôt. Ils supposent que Playwright et Chromium sont installés (<code>npx playwright install --with-deps chromium</code>) et que l'audit vise une URL de préproduction joignable depuis le runner.</p>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<p>a11y-report, outil en ligne de commande pour agences. Ce site ne dépose aucun cookie et n'appelle aucun service tiers.</p>
+<ul>
+<li><a href="mentions-legales.html">Mentions légales</a></li>
+<li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+<li><a href="declaration-d-accessibilite.html">Déclaration d'accessibilité</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>
