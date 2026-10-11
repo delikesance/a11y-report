@@ -1,11 +1,32 @@
 {
   "name": "a11y-reports",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Génère des rapports d’accessibilité numérique (RGAA) à partir de scans automatisés, au format HTML et PDF.",
+  "license": "UNLICENSED",
+  "private": false,
   "type": "module",
   "bin": {
     "a11y-report": "src/cli.js"
   },
+  "files": [
+    "src",
+    "design/tokens.json",
+    "design/brandings",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "accessibilite",
+    "rgaa",
+    "wcag",
+    "audit",
+    "pdf",
+    "rapport"
+  ],
   "scripts": {
     "test": "node --test test/*.test.js",
     "verify:pdf": "node scripts/verify-pdf.js",
