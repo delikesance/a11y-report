@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Questions fréquentes | a11y-report</title>
+<meta name="description" content="Réponses aux objections fréquentes sur a11y-report : limites de l'audit automatique, coût, RGAA, accessibilité du PDF et confidentialité.">
+<meta property="og:title" content="Questions fréquentes | a11y-report">
+<meta property="og:description" content="Limites de l'audit automatique, RGAA, PDF, prix et confidentialité.">
+<meta property="og:image" content="assets/og.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">a11y-report</a>
+<nav aria-label="Principal">
+<ul class="nav-list">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="fonctionnalites.html">Fonctionnalités</a></li>
+<li><a href="demo.html">Démo</a></li>
+<li><a href="tarifs.html">Tarifs</a></li>
+<li><a href="documentation.html">Documentation</a></li>
+<li><a href="faq.html" aria-current="page">FAQ</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="contenu">
+<div class="wrap">
+<h1>Questions fréquentes</h1>
+<p class="note"><strong>Limite importante :</strong> un audit automatique ne détecte qu'environ un tiers des problèmes d'accessibilité. Les contenus accessibles seulement après connexion ou interaction ne sont pas audités, et les points « incomplets » demandent une vérification humaine.</p>
+<section aria-labelledby="titre-faq">
+<h2 id="titre-faq">Objections courantes</h2>
+<details>
+<summary>Un audit automatique ne trouve qu'un tiers des problèmes, non ?</summary>
+<p>C'est exact, et le rapport l'indique. a11y-report ne remplace pas un test avec lecteur d'écran et un contrôle au clavier. Il fournit la base technique de ce test.</p>
+</details>
+<details>
+<summary>axe-core est gratuit, pourquoi payer ?</summary>
+<p>axe-core est gratuit et sert de moteur à a11y-report. Il ne produit ni rapport client, ni devis, ni marque blanche.</p>
+</details>
+<details>
+<summary>Les grandes plateformes ont des offres complètes.</summary>
+<p>Leurs tarifs ne sont pas publics ou ne le sont que pour un widget. a11y-report est un outil en ligne de commande, sans abonnement, qui produit un livrable en français. Comparez les livrables, pas les lignes de prix.</p>
+</details>
+<details>
+<summary>Vos rapports sont-ils accessibles eux-mêmes ?</summary>
+<p>Pas encore : le PDF n'est pas balisé. Une version balisée et vérifiée par veraPDF est prévue. Ne présentez pas le rapport comme conforme avant cette vérification.</p>
+</details>
+<details>
+<summary>Le RGAA est-il pris en compte ?</summary>
+<p>Chaque règle affiche sa référence RGAA. Le rapport ne calcule pas encore de pourcentage de conformité RGAA : présentez-le comme indicatif.</p>
+</details>
+<details>
+<summary>Qui garantit les références juridiques ?</summary>
+<p>Les sources sont citées avec leur adresse et leur date de consultation. Les points non vérifiés sont marqués comme tels. Faites valider tout usage commercial par un juriste.</p>
+</details>
+</section>
+<section aria-labelledby="titre-faq-technique">
+<h2 id="titre-faq-technique">Technique et données</h2>
+<details>
+<summary>Où s'exécute l'audit ?</summary>
+<p>L'audit s'exécute sur votre poste, avec Playwright et axe-core. Les pages auditées sont celles que vous indiquez ou que l'exploration trouve sur votre site.</p>
+</details>
+<details>
+<summary>Quelles pages ne sont pas auditées ?</summary>
+<p>Les pages inaccessibles sans connexion, sans interaction ou sans saisie, sauf si leur URL est fournie directement. Une page injoignable reste dans le rapport avec son erreur.</p>
+</details>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<p>a11y-report, outil en ligne de commande pour agences. Ce site ne dépose aucun cookie et n'appelle aucun service tiers.</p>
+<ul>
+<li><a href="mentions-legales.html">Mentions légales</a></li>
+<li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+<li><a href="declaration-d-accessibilite.html">Déclaration d'accessibilité</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>

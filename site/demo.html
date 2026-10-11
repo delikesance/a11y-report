@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Démo : exemple de rapport | a11y-report</title>
+<meta name="description" content="Téléchargez un exemple de rapport d'audit d'accessibilité généré par a11y-report, au format PDF ou HTML.">
+<meta property="og:title" content="Démo : exemple de rapport | a11y-report">
+<meta property="og:description" content="Un exemple de rapport PDF en français, à télécharger.">
+<meta property="og:image" content="assets/og.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">a11y-report</a>
+<nav aria-label="Principal">
+<ul class="nav-list">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="fonctionnalites.html">Fonctionnalités</a></li>
+<li><a href="demo.html" aria-current="page">Démo</a></li>
+<li><a href="tarifs.html">Tarifs</a></li>
+<li><a href="documentation.html">Documentation</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="contenu">
+<div class="wrap">
+<h1>Voir un exemple de rapport</h1>
+<p class="lead">Ce fichier a été généré par a11y-report à partir d'un audit réel. Il montre la structure du rapport, le classement des défauts par phase et le devis.</p>
+<section aria-labelledby="titre-telechargements">
+<h2 id="titre-telechargements">Télécharger</h2>
+<ul class="cards">
+<li class="card">
+<h3>Rapport PDF</h3>
+<p>Le format remis à un client, au format A4.</p>
+<p><a class="btn btn-primary" href="assets/exemple-rapport.pdf">Télécharger le PDF d'exemple</a></p>
+</li>
+<li class="card">
+<h3>Rapport HTML</h3>
+<p>Le même rapport en page autonome, lisible dans un navigateur.</p>
+<p><a class="btn btn-secondary" href="assets/exemple-rapport.html">Ouvrir le HTML d'exemple</a></p>
+</li>
+</ul>
+</section>
+<section aria-labelledby="titre-lecture">
+<h2 id="titre-lecture">Comment lire ce rapport</h2>
+<p>Les défauts sont classés par gravité, puis regroupés en trois phases : bloquants, gênants, finitions. Chaque règle renvoie à sa référence RGAA lorsqu'elle existe.</p>
+<p class="note">Cet exemple ne constitue pas une certification de conformité. Un audit automatique ne remplace pas un test manuel au clavier et avec un lecteur d'écran.</p>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<p>a11y-report, outil en ligne de commande pour agences. Ce site ne dépose aucun cookie et n'appelle aucun service tiers.</p>
+<ul>
+<li><a href="mentions-legales.html">Mentions légales</a></li>
+<li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+<li><a href="declaration-d-accessibilite.html">Déclaration d'accessibilité</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Fonctionnalités | a11y-report</title>
+<meta name="description" content="Audit axe-core en local, rapport PDF en français, marque blanche, devis par phase, export JSON, HTML et SARIF, mode intégration continue.">
+<meta property="og:title" content="Fonctionnalités | a11y-report">
+<meta property="og:description" content="Ce que fait a11y-report : audit, rapport PDF en marque blanche, devis, exports et intégration continue.">
+<meta property="og:image" content="assets/og.png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+<div class="wrap">
+<a class="brand" href="index.html">a11y-report</a>
+<nav aria-label="Principal">
+<ul class="nav-list">
+<li><a href="index.html">Accueil</a></li>
+<li><a href="fonctionnalites.html" aria-current="page">Fonctionnalités</a></li>
+<li><a href="demo.html">Démo</a></li>
+<li><a href="tarifs.html">Tarifs</a></li>
+<li><a href="documentation.html">Documentation</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="contenu">
+<div class="wrap">
+<h1>Fonctionnalités</h1>
+<p class="lead">Un audit automatique des pages, un rapport PDF que vous pouvez remettre à votre client, et les formats nécessaires à votre chaîne de livraison.</p>
+<section aria-labelledby="titre-audit">
+<h2 id="titre-audit">Audit</h2>
+<ul>
+<li>Règles axe-core pour WCAG 2.0, 2.1 et 2.2, niveaux A et AA, et bonnes pratiques.</li>
+<li>Chaque règle affiche sa référence RGAA lorsqu'elle existe.</li>
+<li>Une ou plusieurs URLs, ou une exploration du site (même origine, robots.txt respecté) avec profondeur et nombre de pages réglables.</li>
+<li>Plusieurs viewports : mobile, tablette, bureau ou dimensions personnalisées.</li>
+<li>Une page injoignable apparaît dans le rapport avec son erreur, sans interrompre les autres pages.</li>
+</ul>
+</section>
+<section aria-labelledby="titre-rapport">
+<h2 id="titre-rapport">Rapport PDF en marque blanche</h2>
+<ul>
+<li>PDF A4 en français, avec le nom, le logo et la couleur de votre agence.</li>
+<li>Seule votre agence est nommée dans le document.</li>
+<li>Limites de l'audit automatique indiquées dans le rapport.</li>
+<li>Un rapport HTML autonome est généré en parallèle si vous le demandez.</li>
+</ul>
+</section>
+<section aria-labelledby="titre-devis">
+<h2 id="titre-devis">Devis par phase</h2>
+<p>Le rapport se termine par un devis en trois phases : bloquants, gênants, finitions. Chaque phase affiche sa durée estimée. Avec un taux horaire HT, chaque phase reçoit aussi un prix HT.</p>
+</section>
+<section aria-labelledby="titre-sorties">
+<h2 id="titre-sorties">Formats et intégration</h2>
+<ul>
+<li>Sorties PDF, JSON, HTML, CSV et SARIF.</li>
+<li>Sauvegarde du scan en JSON, puis rechargement pour générer un autre rapport sans relancer l'audit.</li>
+<li>Mode <code>--ci</code> avec seuils par niveau de gravité et codes de retour, pour bloquer une livraison. Voir la <a href="documentation.html">documentation</a>.</li>
+</ul>
+</section>
+</div>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<p>a11y-report, outil en ligne de commande pour agences. Ce site ne dépose aucun cookie et n'appelle aucun service tiers.</p>
+<ul>
+<li><a href="mentions-legales.html">Mentions légales</a></li>
+<li><a href="politique-de-confidentialite.html">Politique de confidentialité</a></li>
+<li><a href="declaration-d-accessibilite.html">Déclaration d'accessibilité</a></li>
+</ul>
+</div>
+</footer>
+</body>
+</html>
