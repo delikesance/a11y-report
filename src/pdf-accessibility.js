@@ -73,7 +73,7 @@ function rewriteContentStream(pdf, id) {
   const text = latin1(pdf);
   const header = new RegExp(`\\n${id} 0 obj\\n<<([\\s\\S]*?)>>\\s*stream\\r?\\n`).exec(text);
   const start = header.index + header[0].length;
-  const compressed = pdf.subarray(start, text.indexOf('endstream', start)).toString('latin1').replace(/\r?\n$/, '');
+  const compressed = pdf.subarray(start, text.indexOf('endstream', start)).toString('latin1').replace(/\n$/, '');
   const marked = markPaintingAsArtifact(inflateSync(bytes(compressed)).toString('latin1'));
   const dictionary = header[1].replace(/\/Length \d+/, '').trim();
   return streamObject(id, dictionary, deflateSync(bytes(marked)));
