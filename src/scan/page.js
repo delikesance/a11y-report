@@ -16,7 +16,8 @@ export async function scanPage(browser, url, settings) {
 }
 
 async function attemptPage(browser, url, settings) {
-  const context = await browser.newContext();
+  const { width, height, isMobile, hasTouch } = settings.viewport;
+  const context = await browser.newContext({ viewport: { width, height }, isMobile, hasTouch });
   try {
     return await withTimeout(auditUrl(context, url, settings), settings.timeoutMs);
   } catch (error) {
