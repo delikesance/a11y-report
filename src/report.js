@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright';
 import { DEFAULT_ACCENT, DEFAULT_PRIMARY, brandColor, escapeHtml } from './report/shared.js';
-import { collectProblems, computeImpactWeightedScore, computeQuote } from './report/model.js';
+import { collectProblems, computeImpactWeightedScore } from './report/model.js';
+import { computeQuote } from './report/quote-calc.js';
 import { buildFontCss } from './report/fonts.js';
 import { renderCover } from './report/cover.js';
 import { renderSummary } from './report/summary.js';
@@ -26,7 +27,7 @@ function renderRootVariables(scan, branding) {
 export function buildReportHtml(scan, branding) {
   const problems = collectProblems(scan);
   const score = computeImpactWeightedScore(problems);
-  const quote = computeQuote(problems, branding.hourlyRate);
+  const quote = computeQuote(problems, branding);
   const date = branding.date ?? DATE_FORMAT.format(new Date(scan.generatedAt));
   return `<!DOCTYPE html>
 <html lang="fr">

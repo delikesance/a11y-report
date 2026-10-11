@@ -97,16 +97,16 @@ describe('loadBranding', () => {
       telephone: '01 23 45 67 89',
       validite: '45',
     });
-    assert.equal(branding.hourlyRate, 80);
+    assert.equal(branding.tjm, 80);
     assert.equal(branding.phone, '01 23 45 67 89');
     assert.equal(branding.quoteValidityDays, 45);
   });
 
-  test('lit hourlyRate, phone et quoteValidityDays du fichier --branding', () => {
+  test('lit tjm, phone et quoteValidityDays du fichier --branding', () => {
     const file = join(dir, 'devis.json');
-    writeFileSync(file, JSON.stringify({ agency: 'Agence', client: 'Acme', hourlyRate: 60, phone: '0102', quoteValidityDays: 15 }));
+    writeFileSync(file, JSON.stringify({ agency: 'Agence', client: 'Acme', tjm: 60, phone: '0102', quoteValidityDays: 15 }));
     const branding = loadBranding({ branding: file, taux: '90' });
-    assert.equal(branding.hourlyRate, 90);
+    assert.equal(branding.tjm, 90);
     assert.equal(branding.phone, '0102');
     assert.equal(branding.quoteValidityDays, 15);
   });

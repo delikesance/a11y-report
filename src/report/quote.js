@@ -1,4 +1,5 @@
 import { escapeHtml, LIMITS_PARAGRAPHS } from './shared.js';
+import { EXCLUSIONS, formatNumber, hypothesesFor } from './quote-text.js';
 
 const DEFAULT_QUOTE_VALIDITY_DAYS = 30;
 const TITLES_PER_PHASE = 3;
@@ -15,7 +16,6 @@ const DELIVERABLES = [
   "Aide pour votre déclaration d'accessibilité",
 ];
 
-const formatNumber = (value) => value.toLocaleString('fr-FR');
 const formatHours = (hours) => `${formatNumber(hours)} h`;
 const formatPrice = (price, suffix = '') => (price == null ? EMPTY_VALUE : `${formatNumber(price)} €${suffix}`);
 const pick = (count, [singular, plural]) => (count === 1 ? singular : plural);
@@ -57,7 +57,11 @@ function renderTop(branding) {
 }
 
 function renderTotal(quote) {
-  return `<div class="qt-total"><span class="qt-total__label">Total des trois étapes</span><span class="qt-total__value">${formatPrice(quote.totalPrice, ' HT')}</span></div>`;
+  return `<div class="qt-total"><span class="qt-total__label">Total des trois étapes</span><span class="qt-total__value">${formatPrice(quote.totalPrice, ' HT')}</span><span class="qt-total__value">TVA ${formatPrice(quote.tva)} · ${formatPrice(quote.ttc, ' TTC')}</span><span class="qt-total__range">Fourchette ${formatPrice(quote.totalLow)} à ${formatPrice(quote.totalHigh)} HT</span></div>`;
+}
+
+function renderHypotheses(quote) {
+  return `<div class="qt-hypotheses"><h3 class="qt-column__title">Hypothèses</h3>${renderList(hypothesesFor(quote))}<h3 class="qt-column__title">Exclusions</h3>${renderList(EXCLUSIONS)}</div>`;
 }
 
 function renderList(items) {
@@ -87,6 +91,7 @@ ${renderTop(branding)}
 <p class="qt-intro">Nous commençons par ce qui bloque des utilisateurs, puis nous traitons le reste. Chaque étape est livrée et vérifiée séparément.</p>
 <ol class="qt-phases">${quote.phases.map((phase, index) => renderPhase(phase, index, problems)).join('')}</ol>
 ${renderTotal(quote)}
+${renderHypotheses(quote)}
 ${renderColumns()}
 <div class="qt-spacer"></div>
 ${renderContact(branding, validityDays)}
