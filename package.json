@@ -3,7 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "bin": { "a11y-report": "src/cli.js" },
-  "scripts": { "test": "node --test test/*.test.js" },
-  "dependencies": { "@axe-core/playwright": "^4.10.0", "playwright": "^1.50.0" }
+  "bin": {
+    "a11y-report": "src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/source-serif-4": "^5.3.1",
+    "playwright": "^1.50.0"
+  }
 }
