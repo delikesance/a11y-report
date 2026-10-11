@@ -1,3 +1,8 @@
+import { EXTRA_CORE } from "./rules/extra-core.js";
+import { EXTRA_A } from "./rules/extra-a.js";
+import { EXTRA_B } from "./rules/extra-b.js";
+import { RGAA_WCAG } from "./rules/rgaa-map.js";
+
 export const IMPACT_FR = { critical: "Critique", serious: "Majeur", moderate: "Modéré", minor: "Mineur" };
 
 export const IMPACT_ORDER = ["critical", "serious", "moderate", "minor"];
@@ -10,7 +15,6 @@ const RULES = {
     avant: "<img src='graphique.png'>",
     apres: "<img src='graphique.png' alt='Hausse de 12 % du trafic en 2025'>",
     minutesParOccurrence: 3,
-    rgaa: "1.1",
   },
   "input-image-alt": {
     titre: "Bouton image sans texte alternatif",
@@ -19,7 +23,6 @@ const RULES = {
     avant: "<input type='image' src='loupe.svg'>",
     apres: "<input type='image' src='loupe.svg' alt='Rechercher'>",
     minutesParOccurrence: 3,
-    rgaa: "1.1",
   },
   "role-img-alt": {
     titre: "Élément role=\"img\" sans nom accessible",
@@ -28,7 +31,6 @@ const RULES = {
     avant: "<span role='img'></span>",
     apres: "<span role='img' aria-label='Note : 4 sur 5'></span>",
     minutesParOccurrence: 3,
-    rgaa: "1.1",
   },
   "svg-img-alt": {
     titre: "SVG porteur d'information sans alternative",
@@ -37,7 +39,6 @@ const RULES = {
     avant: "<svg role='img'><path d='...'/></svg>",
     apres: "<svg role='img' aria-labelledby='t1'><title id='t1'>Panier vide</title><path d='...'/></svg>",
     minutesParOccurrence: 4,
-    rgaa: "1.1",
   },
   "object-alt": {
     titre: "Objet embarqué sans alternative",
@@ -46,7 +47,6 @@ const RULES = {
     avant: "<object data='carte.swf'></object>",
     apres: "<object data='carte.swf'><p>Carte des agences : 12 sites en Île-de-France.</p></object>",
     minutesParOccurrence: 5,
-    rgaa: "1.1",
   },
   "area-alt": {
     titre: "Zone cliquable d'une image-map sans alternative",
@@ -55,7 +55,6 @@ const RULES = {
     avant: "<area href='/paris' shape='rect' coords='0,0,50,50'>",
     apres: "<area href='/paris' alt='Agence de Paris' shape='rect' coords='0,0,50,50'>",
     minutesParOccurrence: 3,
-    rgaa: "1.1",
   },
   "server-side-image-map": {
     titre: "Image-map serveur non accessible",
@@ -64,7 +63,6 @@ const RULES = {
     avant: "<a href='/carte'><img ismap src='carte.png'></a>",
     apres: "<img src='carte.png' usemap='#carte' alt='Carte du réseau'><map name='carte'>...</map>",
     minutesParOccurrence: 10,
-    rgaa: "1.1",
   },
   "button-name": {
     titre: "Bouton sans nom accessible",
@@ -73,7 +71,6 @@ const RULES = {
     avant: "<button><svg>...</svg></button>",
     apres: "<button aria-label='Fermer la fenêtre'><svg aria-hidden='true'>...</svg></button>",
     minutesParOccurrence: 3,
-    rgaa: "11.9",
   },
   "input-button-name": {
     titre: "Bouton de formulaire sans nom",
@@ -82,7 +79,6 @@ const RULES = {
     avant: "<input type='submit'>",
     apres: "<input type='submit' value='Envoyer le devis'>",
     minutesParOccurrence: 2,
-    rgaa: "11.9",
   },
   "link-name": {
     titre: "Lien sans intitulé",
@@ -91,7 +87,6 @@ const RULES = {
     avant: "<a href='/contact'><img src='enveloppe.svg'></a>",
     apres: "<a href='/contact'><img src='enveloppe.svg' alt='Nous contacter'></a>",
     minutesParOccurrence: 2,
-    rgaa: "6.2",
   },
   "label": {
     titre: "Champ de formulaire sans étiquette",
@@ -100,7 +95,6 @@ const RULES = {
     avant: "<input type='email' placeholder='Votre e-mail'>",
     apres: "<label for='mail'>Votre e-mail</label><input id='mail' type='email'>",
     minutesParOccurrence: 3,
-    rgaa: "11.1",
   },
   "select-name": {
     titre: "Liste déroulante sans nom accessible",
@@ -109,7 +103,6 @@ const RULES = {
     avant: "<select><option>Paris</option></select>",
     apres: "<label for='ville'>Ville</label><select id='ville'><option>Paris</option></select>",
     minutesParOccurrence: 2,
-    rgaa: "11.1",
   },
   "aria-input-field-name": {
     titre: "Champ ARIA sans nom accessible",
@@ -118,7 +111,6 @@ const RULES = {
     avant: "<div role='combobox'></div>",
     apres: "<div role='combobox' aria-label='Choisir une agence'></div>",
     minutesParOccurrence: 4,
-    rgaa: "11.1",
   },
   "form-field-multiple-labels": {
     titre: "Champ de formulaire avec plusieurs étiquettes",
@@ -127,7 +119,6 @@ const RULES = {
     avant: "<label for='t'>Téléphone</label><label for='t'>(facultatif)</label><input id='t'>",
     apres: "<label for='t'>Téléphone (facultatif)</label><input id='t' aria-describedby='t-aide'>",
     minutesParOccurrence: 3,
-    rgaa: "11.2",
   },
   "color-contrast": {
     titre: "Contraste de texte insuffisant",
@@ -136,7 +127,6 @@ const RULES = {
     avant: "<p style='color:#9aa0a6;background:#fff'>Horaires</p>",
     apres: "<p style='color:#5f6368;background:#fff'>Horaires</p>",
     minutesParOccurrence: 4,
-    rgaa: "3.2",
   },
   "link-in-text-block": {
     titre: "Lien non distinguable dans un bloc de texte",
@@ -145,7 +135,6 @@ const RULES = {
     avant: "<p>Lisez notre <a href='/guide' style='color:#1a73e8'>guide</a>.</p>",
     apres: "<p>Lisez notre <a href='/guide' style='color:#1a73e8;text-decoration:underline'>guide</a>.</p>",
     minutesParOccurrence: 2,
-    rgaa: "10.6",
   },
   "html-has-lang": {
     titre: "Langue de la page non déclarée",
@@ -154,7 +143,6 @@ const RULES = {
     avant: "<html>",
     apres: "<html lang='fr'>",
     minutesParOccurrence: 1,
-    rgaa: "8.3",
   },
   "html-lang-valid": {
     titre: "Code de langue de la page invalide",
@@ -163,7 +151,6 @@ const RULES = {
     avant: "<html lang='francais'>",
     apres: "<html lang='fr'>",
     minutesParOccurrence: 1,
-    rgaa: "8.4",
   },
   "valid-lang": {
     titre: "Changement de langue avec code invalide",
@@ -172,7 +159,6 @@ const RULES = {
     avant: "<span lang='english'>Sign up</span>",
     apres: "<span lang='en'>Sign up</span>",
     minutesParOccurrence: 2,
-    rgaa: "8.8",
   },
   "html-xml-lang-mismatch": {
     titre: "Attributs lang et xml:lang incohérents",
@@ -181,7 +167,6 @@ const RULES = {
     avant: "<html lang='fr' xml:lang='en'>",
     apres: "<html lang='fr'>",
     minutesParOccurrence: 1,
-    rgaa: "8.3",
   },
   "document-title": {
     titre: "Titre de page absent ou vague",
@@ -190,7 +175,6 @@ const RULES = {
     avant: "<title>Accueil</title>",
     apres: "<title>Nos agences | Cabinet Dupont</title>",
     minutesParOccurrence: 2,
-    rgaa: "8.5",
   },
   "heading-order": {
     titre: "Niveaux de titres non hiérarchiques",
@@ -199,7 +183,6 @@ const RULES = {
     avant: "<h2>Services</h2><h4>Audit</h4>",
     apres: "<h2>Services</h2><h3>Audit</h3>",
     minutesParOccurrence: 3,
-    rgaa: "9.1",
   },
   "empty-heading": {
     titre: "Titre vide",
@@ -208,7 +191,6 @@ const RULES = {
     avant: "<h2><span class='icone'></span></h2>",
     apres: "<h2>Nos réalisations</h2>",
     minutesParOccurrence: 2,
-    rgaa: "9.1",
   },
   "page-has-heading-one": {
     titre: "Page sans titre de niveau 1",
@@ -217,7 +199,6 @@ const RULES = {
     avant: "<h2>Bienvenue</h2>",
     apres: "<h1>Bienvenue sur notre site</h1>",
     minutesParOccurrence: 2,
-    rgaa: "9.1",
   },
   "landmark-one-main": {
     titre: "Page sans zone principale",
@@ -226,7 +207,6 @@ const RULES = {
     avant: "<div class='contenu'>...</div>",
     apres: "<main class='contenu'>...</main>",
     minutesParOccurrence: 2,
-    rgaa: "12.6",
   },
   "landmark-unique": {
     titre: "Zones de repère en double",
@@ -235,7 +215,6 @@ const RULES = {
     avant: "<nav>...</nav><nav>...</nav>",
     apres: "<nav aria-label='Principal'>...</nav><nav aria-label='Pied de page'>...</nav>",
     minutesParOccurrence: 2,
-    rgaa: "12.6",
   },
   "landmark-main-is-top-level": {
     titre: "Zone principale imbriquée",
@@ -244,7 +223,6 @@ const RULES = {
     avant: "<aside><main>...</main></aside>",
     apres: "<main>...</main><aside>...</aside>",
     minutesParOccurrence: 3,
-    rgaa: "12.6",
   },
   "landmark-no-duplicate-main": {
     titre: "Plusieurs zones principales",
@@ -253,7 +231,6 @@ const RULES = {
     avant: "<main>...</main><main>...</main>",
     apres: "<main>...</main>",
     minutesParOccurrence: 2,
-    rgaa: "12.6",
   },
   "region": {
     titre: "Contenu hors zone de repère",
@@ -262,7 +239,6 @@ const RULES = {
     avant: "<div class='bandeau'>Promo</div>",
     apres: "<aside aria-label='Promotion'>Promo</aside>",
     minutesParOccurrence: 3,
-    rgaa: "9.2",
   },
   "skip-link": {
     titre: "Lien d'évitement absent ou cassé",
@@ -271,7 +247,6 @@ const RULES = {
     avant: "<body><nav>...</nav><main id='contenu'>...</main>",
     apres: "<body><a href='#contenu' class='evitement'>Aller au contenu</a><nav>...</nav><main id='contenu'>...</main>",
     minutesParOccurrence: 5,
-    rgaa: "12.7",
   },
   "bypass": {
     titre: "Page sans moyen de contourner les blocs répétés",
@@ -280,7 +255,6 @@ const RULES = {
     avant: "<header><nav>...</nav></header><div>...</div>",
     apres: "<a href='#contenu'>Aller au contenu</a><header><nav>...</nav></header><main id='contenu'>...</main>",
     minutesParOccurrence: 5,
-    rgaa: "12.7",
   },
   "aria-valid-attr": {
     titre: "Attribut ARIA inexistant",
@@ -289,7 +263,6 @@ const RULES = {
     avant: "<div aria-labelledy='titre'>",
     apres: "<div aria-labelledby='titre'>",
     minutesParOccurrence: 2,
-    rgaa: "7.1",
   },
   "aria-valid-attr-value": {
     titre: "Valeur ARIA non autorisée",
@@ -298,7 +271,6 @@ const RULES = {
     avant: "<button aria-expanded='oui'>Menu</button>",
     apres: "<button aria-expanded='false'>Menu</button>",
     minutesParOccurrence: 2,
-    rgaa: "7.1",
   },
   "aria-roles": {
     titre: "Rôle ARIA invalide",
@@ -307,7 +279,6 @@ const RULES = {
     avant: "<div role='boutton'>Envoyer</div>",
     apres: "<button>Envoyer</button>",
     minutesParOccurrence: 3,
-    rgaa: "7.1",
   },
   "aria-required-attr": {
     titre: "Attribut ARIA obligatoire manquant",
@@ -316,7 +287,6 @@ const RULES = {
     avant: "<div role='checkbox'>Accepter</div>",
     apres: "<div role='checkbox' aria-checked='false' tabindex='0'>Accepter</div>",
     minutesParOccurrence: 4,
-    rgaa: "7.1",
   },
   "aria-allowed-attr": {
     titre: "Attribut ARIA non permis pour ce rôle",
@@ -325,7 +295,6 @@ const RULES = {
     avant: "<div role='presentation' aria-checked='true'>",
     apres: "<div role='checkbox' aria-checked='true' tabindex='0'>",
     minutesParOccurrence: 3,
-    rgaa: "7.1",
   },
   "aria-hidden-focus": {
     titre: "Élément masqué aux lecteurs d'écran mais focusable",
@@ -334,7 +303,6 @@ const RULES = {
     avant: "<div aria-hidden='true'><a href='/aide'>Aide</a></div>",
     apres: "<div><a href='/aide'>Aide</a></div>",
     minutesParOccurrence: 3,
-    rgaa: "10.8",
   },
   "aria-required-children": {
     titre: "Enfants obligatoires manquants pour un rôle ARIA",
@@ -343,7 +311,6 @@ const RULES = {
     avant: "<div role='list'><div>Accueil</div></div>",
     apres: "<ul><li>Accueil</li></ul>",
     minutesParOccurrence: 4,
-    rgaa: "9.3",
   },
   "aria-required-parent": {
     titre: "Élément ARIA sans parent requis",
@@ -352,7 +319,6 @@ const RULES = {
     avant: "<div role='listitem'>Accueil</div>",
     apres: "<ul><li>Accueil</li></ul>",
     minutesParOccurrence: 3,
-    rgaa: "9.3",
   },
   "aria-command-name": {
     titre: "Bouton de commande sans nom accessible",
@@ -361,7 +327,6 @@ const RULES = {
     avant: "<div role='button'><svg>...</svg></div>",
     apres: "<div role='button' aria-label='Imprimer'><svg aria-hidden='true'>...</svg></div>",
     minutesParOccurrence: 3,
-    rgaa: "11.9",
   },
   "aria-toggle-field-name": {
     titre: "Case ou bouton à bascule sans nom",
@@ -370,7 +335,6 @@ const RULES = {
     avant: "<div role='switch' aria-checked='false'></div>",
     apres: "<div role='switch' aria-checked='false' aria-label='Recevoir la newsletter'></div>",
     minutesParOccurrence: 3,
-    rgaa: "7.1",
   },
   "nested-interactive": {
     titre: "Élément interactif imbriqué dans un autre",
@@ -379,7 +343,6 @@ const RULES = {
     avant: "<a href='/produit'><button>Acheter</button></a>",
     apres: "<a href='/produit'>Acheter</a>",
     minutesParOccurrence: 3,
-    rgaa: "7.1",
   },
   "duplicate-id-aria": {
     titre: "Identifiant dupliqué référencé par ARIA",
@@ -388,7 +351,6 @@ const RULES = {
     avant: "<h2 id='t'>Contact</h2><h2 id='t'>Adresse</h2>",
     apres: "<h2 id='t-contact'>Contact</h2><h2 id='t-adresse'>Adresse</h2>",
     minutesParOccurrence: 3,
-    rgaa: "8.2",
   },
   "frame-title": {
     titre: "Cadre iframe sans titre",
@@ -397,7 +359,6 @@ const RULES = {
     avant: "<iframe src='https://carte.example'></iframe>",
     apres: "<iframe src='https://carte.example' title='Localisation de nos agences'></iframe>",
     minutesParOccurrence: 2,
-    rgaa: "2.1",
   },
   "frame-title-unique": {
     titre: "Cadres avec titres identiques",
@@ -406,7 +367,6 @@ const RULES = {
     avant: "<iframe title='Vidéo'></iframe><iframe title='Vidéo'></iframe>",
     apres: "<iframe title='Vidéo : présentation'></iframe><iframe title='Vidéo : témoignage'></iframe>",
     minutesParOccurrence: 2,
-    rgaa: "2.2",
   },
   "list": {
     titre: "Liste mal structurée",
@@ -415,7 +375,6 @@ const RULES = {
     avant: "<ul><div>Accueil</div><li>Blog</li></ul>",
     apres: "<ul><li>Accueil</li><li>Blog</li></ul>",
     minutesParOccurrence: 2,
-    rgaa: "9.3",
   },
   "listitem": {
     titre: "Élément de liste hors liste",
@@ -424,7 +383,6 @@ const RULES = {
     avant: "<div><li>Conseil</li></div>",
     apres: "<ul><li>Conseil</li></ul>",
     minutesParOccurrence: 2,
-    rgaa: "9.3",
   },
   "definition-list": {
     titre: "Liste de définitions mal structurée",
@@ -433,7 +391,6 @@ const RULES = {
     avant: "<dl><p>Tarif</p><dd>40 €</dd></dl>",
     apres: "<dl><dt>Tarif</dt><dd>40 €</dd></dl>",
     minutesParOccurrence: 3,
-    rgaa: "9.3",
   },
   "meta-viewport": {
     titre: "Zoom de la page bloqué",
@@ -442,7 +399,6 @@ const RULES = {
     avant: "<meta name='viewport' content='width=device-width, maximum-scale=1'>",
     apres: "<meta name='viewport' content='width=device-width, initial-scale=1'>",
     minutesParOccurrence: 1,
-    rgaa: "10.4",
   },
   "meta-refresh": {
     titre: "Rafraîchissement automatique de la page",
@@ -451,7 +407,6 @@ const RULES = {
     avant: "<meta http-equiv='refresh' content='30'>",
     apres: "<button type='button'>Actualiser</button>",
     minutesParOccurrence: 2,
-    rgaa: "13.1",
   },
   "blink": {
     titre: "Contenu clignotant",
@@ -460,7 +415,6 @@ const RULES = {
     avant: "<blink>Promo</blink>",
     apres: "<span class='promo'>Promo</span>",
     minutesParOccurrence: 2,
-    rgaa: "13.8",
   },
   "tabindex": {
     titre: "Ordre de tabulation forcé",
@@ -469,7 +423,6 @@ const RULES = {
     avant: "<a href='/a' tabindex='3'>A</a>",
     apres: "<a href='/a'>A</a>",
     minutesParOccurrence: 2,
-    rgaa: "12.8",
   },
   "scope-attr-valid": {
     titre: "Attribut scope mal utilisé",
@@ -478,7 +431,6 @@ const RULES = {
     avant: "<td scope='col'>12 €</td>",
     apres: "<th scope='col'>Prix</th>",
     minutesParOccurrence: 2,
-    rgaa: "5.7",
   },
   "td-headers-attr": {
     titre: "Attribut headers de cellule incorrect",
@@ -487,7 +439,6 @@ const RULES = {
     avant: "<td headers='prix'>12 €</td>",
     apres: "<th id='prix'>Prix</th><td headers='prix'>12 €</td>",
     minutesParOccurrence: 4,
-    rgaa: "5.7",
   },
   "th-has-data-cells": {
     titre: "Cellule d'en-tête sans données associées",
@@ -496,7 +447,6 @@ const RULES = {
     avant: "<tr><th>Prix</th></tr>",
     apres: "<tr><th>Prix</th><td>12 €</td></tr>",
     minutesParOccurrence: 4,
-    rgaa: "5.7",
   },
   "table-duplicate-name": {
     titre: "Tableau dont le résumé répète la légende",
@@ -505,7 +455,6 @@ const RULES = {
     avant: "<table summary='Tarifs'><caption>Tarifs</caption>",
     apres: "<table><caption>Tarifs</caption>",
     minutesParOccurrence: 1,
-    rgaa: "5.2",
   },
   "video-caption": {
     titre: "Vidéo sans sous-titres",
@@ -514,7 +463,6 @@ const RULES = {
     avant: "<video src='presentation.mp4'></video>",
     apres: "<video src='presentation.mp4' controls><track kind='captions' src='presentation.vtt' srclang='fr' default></video>",
     minutesParOccurrence: 15,
-    rgaa: "4.1",
   },
   "no-autoplay-audio": {
     titre: "Son lancé automatiquement",
@@ -523,7 +471,6 @@ const RULES = {
     avant: "<audio src='ambiance.mp3' autoplay></audio>",
     apres: "<audio src='ambiance.mp3' controls></audio>",
     minutesParOccurrence: 2,
-    rgaa: "4.10",
   },
   "target-size": {
     titre: "Zone cliquable trop petite",
@@ -532,7 +479,6 @@ const RULES = {
     avant: "<a href='/tel' style='font-size:10px'>Appeler</a>",
     apres: "<a href='/tel' style='display:inline-block;min-width:24px;min-height:24px'>Appeler</a>",
     minutesParOccurrence: 3,
-    rgaa: "Hors RGAA 4.1 (WCAG 2.2, critère 2.5.8)",
   },
 };
 
@@ -541,14 +487,21 @@ const GENERIC_RULE = {
   avant: "—",
   apres: "—",
   minutesParOccurrence: 3,
-  rgaa: "Non référencé",
 };
 
+const EXTRA = { ...EXTRA_CORE, ...EXTRA_A, ...EXTRA_B };
+
+function withReferences(id, rule) {
+  const references = Object.hasOwn(RGAA_WCAG, id) ? RGAA_WCAG[id] : { rgaa: ["Non référencé"], wcag: [] };
+  const extra = Object.hasOwn(EXTRA, id) ? EXTRA[id] : {};
+  return { ...rule, ...extra, rgaa: references.rgaa.join(", "), wcag: references.wcag.join(", ") };
+}
+
 export function describeRule(id) {
-  if (Object.hasOwn(RULES, id)) return RULES[id];
-  return {
+  if (Object.hasOwn(RULES, id)) return withReferences(id, RULES[id]);
+  return withReferences(id, {
     titre: `Non-conformité « ${id} »`,
     pourquoi: "Cette règle signale un obstacle potentiel pour les utilisateurs de technologies d'assistance.",
     ...GENERIC_RULE,
-  };
+  });
 }
