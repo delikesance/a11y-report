@@ -1,5 +1,5 @@
 import { IMPACT_FR, IMPACT_ORDER } from '../rules-fr.js';
-import { LIMITS_PARAGRAPHS, escapeHtml } from './shared.js';
+import { LIMITS_PARAGRAPHS, breakableUrl, escapeHtml } from './shared.js';
 import { computePageScore } from './score.js';
 
 const countByImpact = (page, impact) => page.violations.filter((violation) => violation.impact === impact).length;
@@ -7,7 +7,7 @@ const countByImpact = (page, impact) => page.violations.filter((violation) => vi
 function renderPageRow(page) {
   const counts = IMPACT_ORDER.map((impact) => `<td class="ap-count ${impact}">${countByImpact(page, impact)}</td>`).join('');
   const score = computePageScore(page) ?? '—';
-  return `<tr><td>${escapeHtml(page.url)}</td><td>${escapeHtml(page.title)}</td><td class="ap-count">${score}</td>${counts}</tr>`;
+  return `<tr><td>${breakableUrl(page.url)}</td><td>${escapeHtml(page.title)}</td><td class="ap-count">${score}</td>${counts}</tr>`;
 }
 
 export function renderPageTable(scan) {

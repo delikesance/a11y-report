@@ -1,11 +1,11 @@
-import { escapeHtml } from './shared.js';
+import { breakableUrl, escapeHtml } from './shared.js';
 
 const listOrEmpty = (value) => (Array.isArray(value) ? value : []);
 
-const renderUnauditedItem = (entry) => `<li>${escapeHtml(entry.url ?? entry)}</li>`;
+const renderUnauditedItem = (entry) => `<li>${breakableUrl(entry.url ?? entry)}</li>`;
 
 const renderIncompleteItem = ({ page, violation }) =>
-  `<li><span class="strong">${escapeHtml(violation.help)}</span> : ${escapeHtml(page.url)} (${escapeHtml(violation.nodes.length)} élément(s))</li>`;
+  `<li><span class="strong">${escapeHtml(violation.help)}</span> : ${breakableUrl(page.url)} (${escapeHtml(violation.nodes.length)} élément(s))</li>`;
 
 const renderBlock = (title, items) =>
   items.length ? `<h3 class="ap-subtitle">${title}</h3><ul class="mr-list">${items.join('')}</ul>` : '';

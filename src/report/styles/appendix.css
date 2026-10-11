@@ -24,7 +24,7 @@
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .ap-table th {
@@ -59,4 +59,9 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--muted);
+}
+
+.ap-tail > .page {
+  height: auto;
+  break-after: auto;
 }
