@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>a11y-reports</title>
+  <rect width="64" height="64" rx="14" fill="#1e3a5f"/>
+  <circle cx="32" cy="32" r="18" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <path d="M24 33l6 6 11-13" fill="none" stroke="#b45309" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
