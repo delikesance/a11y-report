@@ -18,11 +18,11 @@ Le point décisif est donc la nature de l'adresse, pas le statut du destinataire
 - La prospection B2B peut reposer sur l'intérêt légitime du responsable de traitement (article 6, paragraphe 1, point f, RGPD ; considérant 47).
 - Cette base ne vaut que si la sollicitation a un **objet en rapport avec la profession** du destinataire. Une prospection hors champ professionnel relève du consentement.
 - Le responsable doit faire une **pesée des intérêts** et en garder la trace : il lui incombe de prouver que ses intérêts légitimes prévalent (considérant 69). Un document de mise en balance, daté, est recommandé.
-- **[À VÉRIFIER CNIL]** La CNIL indique que la prospection à destination de professionnels « peut être fondée sur l'intérêt légitime de l'organisme lorsque l'objet de la sollicitation est en rapport avec la profession de la personne démarchée ». Citation à confirmer sur cnil.fr.
+- La CNIL indique que « la prospection à l’égard de professionnels peut être fondée sur l’intérêt légitime de l’organisme » « lorsque l'objet de la sollicitation est en rapport avec la profession de la personne démarchée » (page CNIL citée dans sources.md). Article 6, paragraphe 1, point f : le traitement est licite s'il « est nécessaire aux fins des intérêts légitimes poursuivis par le responsable du traitement ou par un tiers », sauf prévalence des droits et intérêts de la personne.
 
 ## 3. Article L34-5 du CPCE
 
-Texte en vigueur depuis le 26 juillet 2020 (loi 2020-901, art. 8), selon la page Légifrance citée dans sources.md. Principes :
+Texte relu sur Légifrance le 11 octobre 2026 (version issue de la loi 2020-901, art. 8). La page signale la décision du Conseil constitutionnel n° 2026-1210 QPC du 25 juin 2026, qui déclare inconstitutionnels certains alinéas (abrogation reportée au 31 octobre 2027) ; elle concerne le cumul de poursuites, pas les obligations ci-dessous. Le texte prévoit des amendes administratives jusqu'à 75 000 EUR (personne physique) et 375 000 EUR (personne morale). Principes :
 
 1. **Interdiction** : la prospection directe par courrier électronique vers une personne physique qui n'a pas donné son consentement préalable est interdite.
 2. **Consentement** : libre, spécifique et informé.
@@ -39,6 +39,7 @@ La loi pour la confiance dans l'économie numérique (LCEN, loi 2004-575) encadr
 
 - **Article 13** : information au moment de la collecte directe (formulaire, échange).
 - **Article 14** : information lorsque les données ne sont pas collectées auprès de la personne (annuaires, sites web, bases tierces). Le délai est en principe d'un mois, et au plus tard lors du premier contact.
+- Article 14, paragraphe 2, point f : le responsable indique « la source d'où proviennent les données à caractère personnel » et, le cas échéant, si elles proviennent de sources accessibles au public.
 - Dans les deux cas, indiquer l'identité du responsable, la finalité, la base légale, les destinataires, la durée de conservation, les droits (accès, rectification, effacement, opposition) et, **pour l'article 14, la source de l'adresse** (article 14, paragraphe 2, point f).
 - Si plusieurs sources ont été utilisées, des informations générales sur l'origine suffisent (considérant 61).
 
@@ -46,7 +47,7 @@ Modèle de mention : [mention-information-prospection.md](mention-information-pr
 
 ## 6. Droit d'opposition : article 21 RGPD
 
-- La personne peut s'opposer à tout moment au traitement à des fins de prospection (article 21, paragraphes 2 et 3 ; considérant 70).
+- La personne peut s'opposer à tout moment au traitement à des fins de prospection (article 21, paragraphe 2) ; après opposition, « les données à caractère personnel ne sont plus traitées à ces fins » (article 21, paragraphe 3 ; considérant 70).
 - Lorsque l'opposition est exercée, les données ne peuvent plus être utilisées à cette fin. Il est prudent de conserver une **liste d'opposition minimale** (adresse uniquement) pour ne pas recontacter la personne.
 - Le lien de désinscription doit être présent dans **chaque** message, simple et gratuit, et son effet doit être immédiat.
 
@@ -54,7 +55,7 @@ Modèle de mention : [mention-information-prospection.md](mention-information-pr
 
 - Le responsable tient un registre de ses traitements, mis à la disposition de l'autorité de contrôle sur demande (article 30 ; considérant 82).
 - Le traitement « prospection B2B » doit y figurer. Modèle : [registre-traitement-prospection.md](registre-traitement-prospection.md).
-- **[À VÉRIFIER]** Exemption de tenue du registre pour les organisations de moins de 250 salariés : elle est conditionnelle (traitement occasionnel, pas de données sensibles). Ne pas s'en prévaloir sans analyse, la prospection récurrente n'est généralement pas occasionnelle.
+- Article 30, paragraphe 5 : les obligations de registre « ne s'appliquent pas à une entreprise » de moins de 250 personnes, sous conditions fixées par l'article (texte intégral des conditions non relu ici ; **[À VÉRIFIER]**) : traitement occasionnel, pas de données sensibles. Ne pas s'en prévaloir sans analyse, la prospection récurrente n'est généralement pas occasionnelle.
 
 ## 8. Durée de conservation
 
