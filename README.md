@@ -100,3 +100,7 @@ Avec `--taux 80`, chaque phase reçoit un prix HT calculé à partir de ce taux 
 ```bash
 npm test
 ```
+
+## Vérification PDF
+
+`npm run verify:pdf -- rapport.pdf` lance veraPDF (profil PDF/UA-1) via docker (`verapdf/cli`). Sortie non nulle si le PDF n est pas conforme. Limites : voir `docs/pdf-accessibility.md`.
