@@ -1,4 +1,6 @@
 import { readFileSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import { makePdfUaCompliant } from './pdf-accessibility.js';
 import { chromium } from 'playwright';
 import { DEFAULT_ACCENT, DEFAULT_PRIMARY, brandColor, escapeHtml } from './report/shared.js';
 import { collectProblems, computeImpactWeightedScore } from './report/model.js';
@@ -19,12 +21,8 @@ const readStyle = (name) => readFileSync(new URL(`./report/styles/${name}.css`, 
 const STYLES = STYLE_MODULES.map(readStyle).join('\n');
 const FONT_CSS = buildFontCss();
 
-const cssString = (text) => JSON.stringify(text).replace(/</g, '\\3c ');
-
-function renderRootVariables(scan, branding) {
-  const footerLeft = `${branding.client} · ${scan.pages.length} pages scannées`;
-  return `:root{--primary:${brandColor(branding.primaryColor, DEFAULT_PRIMARY)};--accent:${brandColor(branding.accentColor, DEFAULT_ACCENT)};--footer-left:${cssString(footerLeft)};}`;
-}
+const renderRootVariables = (branding) =>
+  `:root{--primary:${brandColor(branding.primaryColor, DEFAULT_PRIMARY)};--accent:${brandColor(branding.accentColor, DEFAULT_ACCENT)};}`;
 
 export function buildReportHtml(scan, branding) {
   const problems = collectProblems(scan);
@@ -37,7 +35,7 @@ export function buildReportHtml(scan, branding) {
 <meta charset="utf-8">
 <title>${escapeHtml(`Rapport d'accessibilité - ${branding.client}`)}</title>
 <style>${FONT_CSS}
-${renderRootVariables(scan, branding)}
+${renderRootVariables(branding)}
 ${STYLES}</style>
 </head>
 <body>
@@ -58,8 +56,7 @@ export async function renderPdf(html, outPath) {
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'load' });
-    await page.pdf({
-      path: outPath,
+    const pdf = await page.pdf({
       format: 'A4',
       margin: { top: 0, right: 0, bottom: 0, left: 0 },
       displayHeaderFooter: false,
@@ -68,6 +65,7 @@ export async function renderPdf(html, outPath) {
       tagged: true,
       outline: true,
     });
+    await writeFile(outPath, makePdfUaCompliant(pdf));
   } finally {
     await browser.close();
   }

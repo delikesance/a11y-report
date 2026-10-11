@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile } from 'node:fs/promises';
+import { chmod, mkdtemp, readFile } from 'node:fs/promises';
 import { inflateSync } from 'node:zlib';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -12,6 +12,7 @@ const scan = {
   pages: [{ url: 'https://client.example/accueil', title: 'Accueil', violations: [], passes: 10, incomplete: 0 }],
 };
 const branding = { agency: 'Agence Test', client: 'Client Test' };
+const READABLE_BY_CONTAINER = 0o755;
 const SKIP_NO_VERAPDF = 'veraPDF indisponible (docker absent)';
 
 const STREAM = /stream\r?\n([\s\S]*?)\r?\nendstream/g;
@@ -28,7 +29,9 @@ const readableObjects = (buffer) => {
 };
 
 const renderTo = async (name) => {
-  const outPath = join(await mkdtemp(join(tmpdir(), 'pdfa-')), name);
+  const dir = await mkdtemp(join(tmpdir(), 'pdfa-'));
+  await chmod(dir, READABLE_BY_CONTAINER);
+  const outPath = join(dir, name);
   await renderPdf(buildReportHtml(scan, branding), outPath);
   return outPath;
 };
@@ -41,8 +44,7 @@ test('renders a tagged PDF with French language and an outline', async () => {
   assert.match(pdf, /\/Outlines/);
 });
 
-const VERAPDF_TODO = 'PDF/UA: pied de page en marges CSS non balisé, voir docs/pdf-accessibility.md';
-const verapdfOptions = verapdfAvailable() ? { todo: VERAPDF_TODO } : { skip: SKIP_NO_VERAPDF };
+const verapdfOptions = verapdfAvailable() ? {} : { skip: SKIP_NO_VERAPDF };
 
 test('veraPDF PDF/UA check passes on the rendered report', verapdfOptions, async () => {
   const { status, output } = verifyPdfs([await renderTo('ua.pdf')]);

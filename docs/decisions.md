@@ -27,3 +27,8 @@ Journal des décisions d'architecture et de produit. Une entrée par décision :
 - **Contexte :** Contrôle PDF/UA du rapport. Java absent, pas de sudo ; veraPDF n est pas publié comme CLI sur Maven Central.
 - **Décision :** veraPDF 1.30.3 exécuté via l image Docker `verapdf/cli` (tag `latest`, la version 1.30.3 n a pas de tag dédié). Aucune dépendance npm ajoutée. Tests veraPDF sautés si docker est absent.
 - **Conséquences :** docker requis pour `verify:pdf` ; le test PDF/UA reste en `todo` jusqu à la correction du pied de page et des métadonnées XMP (voir docs/pdf-accessibility.md).
+
+- **Date :** 2026-10-11
+- **Contexte :** PDF/UA : pied de page en marges `@page` non balisé, XMP absent.
+- **Décision :** pied de page et numérotation supprimés ; post-traitement JS pur du PDF (XMP, artefacts) dans `src/pdf-accessibility.js`.
+- **Conséquences :** le test veraPDF est bloquant ; le post-traitement suppose un PDF Chromium à table xref classique et flux de contenu ligne à ligne.

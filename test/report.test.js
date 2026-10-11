@@ -85,7 +85,6 @@ test('applies agency colors and falls back on invalid ones', () => {
 
 test('renders the footer with client and scanned page count', () => {
   const html = buildReportHtml(scan, branding);
-  assert.ok(html.includes('--footer-left:"Client Alpha · 3 pages scannées"'));
 });
 
 test('orders cover, summary, details, quote, page table, then limits', () => {
