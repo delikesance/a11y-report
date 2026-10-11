@@ -2,6 +2,7 @@
 import { parseArgs } from 'node:util';
 import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { resolveQuoteRates } from './report/quote-rates.js';
 
 const OPTIONS = {
   client: { type: 'string' },
@@ -28,7 +29,7 @@ Options :
   --logo f.png        logo de l'agence
   --color #rrggbb     couleur principale du rapport
   --contact "..."     coordonnées affichées dans le rapport
-  --taux 80           taux horaire en euros HT pour chiffrer le devis (sans taux : durées sans prix)
+  --taux 550          TJM en euros HT pour chiffrer le devis (défaut 550)
   --telephone "..."   téléphone affiché dans le devis
   --validite 30       validité du devis en jours (défaut : 30)
   --out rapport.pdf   fichier PDF généré (défaut : rapport.pdf)
@@ -92,7 +93,7 @@ export function loadBranding(options) {
     primaryColor: options.color,
     contact: options.contact,
     phone: options.telephone,
-    hourlyRate: parsePositive(options.taux, 'Taux horaire'),
+    tjm: parsePositive(options.taux, 'Taux horaire'),
     quoteValidityDays: parsePositive(options.validite, 'Validité du devis', Number.isInteger),
   });
   const branding = { ...fromFile, ...fromFlags };
@@ -102,6 +103,7 @@ export function loadBranding(options) {
   if (branding.primaryColor !== undefined && !HEX_COLOR.test(branding.primaryColor)) {
     throw new Error(`Couleur invalide (format #rrggbb attendu) : ${branding.primaryColor}`);
   }
+  resolveQuoteRates(branding);
   return branding;
 }
 

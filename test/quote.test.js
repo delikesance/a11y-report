@@ -1,12 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { computeQuote } from '../src/report/model.js';
+import { computeQuote } from '../src/report/quote-calc.js';
 import { renderQuote } from '../src/report/quote.js';
 
 const problem = (id, titre, impact, occurrences, minutesParOccurrence) => ({
   id,
   impact,
   occurrences,
+  nodes: Array.from({ length: occurrences }, (_, index) => ({ html: `<${id}-${index}>`, target: `#${id}-${index}` })),
   rule: { titre, minutesParOccurrence },
 });
 
@@ -22,7 +23,7 @@ const branding = {
   phone: '01 23 45 67 89',
 };
 
-const render = (overrides = {}) => renderQuote(computeQuote(problems, 60), problems, { ...branding, ...overrides });
+const render = (overrides = {}) => renderQuote(computeQuote(problems, { tjm: 60 }), problems, { ...branding, ...overrides });
 
 test('renderQuote lists each phase with its count, severity and first titles', () => {
   const html = render();
@@ -36,7 +37,7 @@ test('renderQuote shows phase hours, phase prices and the total', () => {
   const html = render();
 
   assert.match(html, /<strong class="qt-cell__value">1 h<\/strong>/);
-  assert.match(html, /150 € HT/);
+  assert.match(html, /198 € HT/);
 });
 
 test('renderQuote shows the validity, contact and phone from branding', () => {
@@ -53,7 +54,7 @@ test('renderQuote uses branding quoteValidityDays when provided', () => {
 
 test('renderQuote marks an empty phase as having no problem', () => {
   const onlyCritical = [problems[0]];
-  const html = renderQuote(computeQuote(onlyCritical, null), onlyCritical, branding);
+  const html = renderQuote(computeQuote(onlyCritical, {}), onlyCritical, branding);
 
   assert.match(html, /qt-phase--genants qt-phase--empty/);
   assert.match(html, /Aucun problème/);

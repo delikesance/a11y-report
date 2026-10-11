@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { renderCover } from '../src/report/cover.js';
 import { renderSummary } from '../src/report/summary.js';
-import { computeQuote } from '../src/report/model.js';
+import { computeQuote } from '../src/report/quote-calc.js';
 
 const TRAP = '<script>alert(1)</script>';
 const THIRD_PARTY_BRAND = /axe|deque|playwright|chromium/i;
@@ -11,7 +11,7 @@ const problem = (id, impact, occurrences, titre) => ({
   id,
   impact,
   occurrences,
-  nodes: [],
+  nodes: Array.from({ length: occurrences }, (_, index) => ({ html: `<${id}-${index}>`, target: `#${id}-${index}` })),
   pages: [],
   rule: { titre, minutesParOccurrence: 30 },
 });
@@ -56,7 +56,7 @@ test('cover uses a dash when contact is missing', () => {
 });
 
 test('summary shows severity bars, estimated hours, projected score and priorities', () => {
-  const quote = computeQuote(problems, 60);
+  const quote = computeQuote(problems, { tjm: 60 });
   const html = renderSummary(problems, score, quote, branding);
 
   assert.match(html, /class="sy-bar sy-critical"/);
@@ -68,7 +68,7 @@ test('summary shows severity bars, estimated hours, projected score and prioriti
 
 test('summary escapes problem titles', () => {
   const trapped = [problem('image-alt', 'critical', 1, TRAP)];
-  const quote = computeQuote(trapped, 60);
+  const quote = computeQuote(trapped, { tjm: 60 });
   const html = renderSummary(trapped, score, quote, branding);
 
   assert.ok(!html.includes(TRAP));
@@ -76,7 +76,7 @@ test('summary escapes problem titles', () => {
 });
 
 test('cover and summary carry no third-party brand', () => {
-  const quote = computeQuote(problems, 60);
+  const quote = computeQuote(problems, { tjm: 60 });
 
   assert.doesNotMatch(renderCover(scan, branding, date, problems, score), THIRD_PARTY_BRAND);
   assert.doesNotMatch(renderSummary(problems, score, quote, branding), THIRD_PARTY_BRAND);
