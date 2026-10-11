@@ -33,4 +33,5 @@ export const AUTOMATABLE_CRITERIA = [
   { id: '12.8', theme: 'Navigation', titre: 'Cohérence de l\'ordre de tabulation' },
   { id: '13.1', theme: 'Consultation', titre: 'Contrôle des limites de temps' },
   { id: '13.8', theme: 'Consultation', titre: 'Contenus en mouvement ou clignotants contrôlables' },
+  { id: '13.9', theme: 'Consultation', titre: "Contenu consultable quelle que soit l'orientation de l'écran" },
 ];

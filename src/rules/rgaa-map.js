@@ -37,7 +37,7 @@ export const RGAA_WCAG = {
   "button-name": { rgaa: ["11.9"], wcag: ["4.1.2"] },
   "color-contrast": { rgaa: ["3.2"], wcag: ["1.4.3"] },
   "color-contrast-enhanced": { rgaa: ["3.2"], wcag: ["1.4.6"] },
-  "css-orientation-lock": { rgaa: [HORS_RGAA], wcag: ["1.3.4"] },
+  "css-orientation-lock": { rgaa: ["13.9"], wcag: ["1.3.4"] },
   "definition-list": { rgaa: ["9.3"], wcag: ["1.3.1"] },
   "dlitem": { rgaa: ["9.3"], wcag: ["1.3.1"] },
   "document-title": { rgaa: ["8.5"], wcag: ["2.4.2"] },
@@ -110,7 +110,6 @@ export const RGAA_WCAG = {
 };
 
 export const HORS_RGAA_JUSTIFICATION = {
-  "accesskeys": "Conflit de raccourcis clavier : bonne pratique axe-core, sans critère RGAA 4.1 équivalent.",
-  "css-orientation-lock": "Critère WCAG 1.3.4 (AA) : RGAA 4.1 ne contient pas de critère dédié à l’orientation d’affichage.",
+  "accesskeys": "Attribut accesskey : bonne pratique axe-core ; aucun critère RGAA 4.1 ne le couvre (le critère 12.10 vise les raccourcis à une touche, WCAG 2.1.4, et ne s’y applique pas).",
   "target-size": "Critère WCAG 2.5.8 (AA, WCAG 2.2) postérieur à RGAA 4.1, qui n’en contient pas d’équivalent.",
 };
