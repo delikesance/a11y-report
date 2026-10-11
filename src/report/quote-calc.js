@@ -1,4 +1,5 @@
 import { resolveQuoteRates } from './quote-rates.js';
+import { normaliseImpact } from './model.js';
 
 const QUOTE_PHASES = [
   { key: 'bloquants', label: 'Bloquants', impacts: ['critical'] },
@@ -17,10 +18,11 @@ const toEuros = (cents) => (cents === null ? null : cents / CENTS);
 const sumOf = (items, pick) => items.reduce((total, item) => total + (pick(item) ?? 0), 0);
 const roundUpToHalfHour = (hours) => Math.ceil(hours * HALF_HOURS_PER_HOUR) / HALF_HOURS_PER_HOUR;
 
-const minutesPerOccurrence = (problem) => problem.rule.minutesParOccurrence ?? MINUTES_BY_IMPACT[problem.impact];
+const minutesPerOccurrence = (problem) =>
+  problem.rule.minutesParOccurrence ?? MINUTES_BY_IMPACT[normaliseImpact(problem.impact)];
 const nodeKey = ({ html, target }) => `${html}\u0000${target}`;
-const distinctFixes = (problem) => new Set(problem.nodes.map(nodeKey)).size;
-const problemMinutes = (problem) => minutesPerOccurrence(problem) * distinctFixes(problem);
+const occurrencesOf = (problem) => Math.max(1, new Set(problem.nodes.map(nodeKey)).size);
+const problemMinutes = (problem) => minutesPerOccurrence(problem) * occurrencesOf(problem);
 
 function priceCentsFor(hours, rates) {
   const workCents = toCents(hours * rates.tjm * (1 + rates.marge));
@@ -39,7 +41,7 @@ function pricedPhase({ key, label }, phaseProblems, rates) {
     key,
     label,
     problemCount: phaseProblems.length,
-    occurrences: sumOf(phaseProblems, (problem) => problem.nodes.length),
+    occurrences: sumOf(phaseProblems, occurrencesOf),
     minutes,
     hours,
     priceCents,
@@ -49,7 +51,7 @@ function pricedPhase({ key, label }, phaseProblems, rates) {
 }
 
 function buildPhase(phase, problems, rates) {
-  const phaseProblems = problems.filter((problem) => phase.impacts.includes(problem.impact));
+  const phaseProblems = problems.filter((problem) => phase.impacts.includes(normaliseImpact(problem.impact)));
   return phaseProblems.length === 0 ? emptyPhase(phase) : pricedPhase(phase, phaseProblems, rates);
 }
 
