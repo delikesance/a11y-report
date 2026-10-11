@@ -35,8 +35,8 @@ test('cover shows client, score, problem counts and date', () => {
   const html = renderCover(scan, branding, date, problems, score);
 
   assert.match(html, /55<span class="cv-score-max">\/100<\/span>/);
-  assert.match(html, /<strong>3 problèmes<\/strong>/);
-  assert.match(html, /<strong>1 critiques<\/strong>/);
+  assert.match(html, /<span class="strong">3 problèmes<\/span>/);
+  assert.match(html, /<span class="strong">1 critiques<\/span>/);
   assert.match(html, /Constat chiffré sur 3 pages/);
   assert.match(html, /11 octobre 2026/);
   assert.match(html, /contact@studio-exemple\.fr/);

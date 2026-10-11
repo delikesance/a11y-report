@@ -28,7 +28,7 @@ export function renderCover(scan, branding, date, problems, score) {
     <p class="cv-lead">Constat chiffré sur ${escapeHtml(scan.pages.length)} pages, problèmes classés par gravité, corrections prêtes à appliquer et devis.</p>
     <div class="cv-score-card">
       <div class="cv-score">${escapeHtml(score)}<span class="cv-score-max">/100</span></div>
-      <div class="cv-score-text"><strong>${escapeHtml(problems.length)} problèmes</strong> à corriger, dont <strong>${escapeHtml(criticalCount)} critiques</strong> qui bloquent des utilisateurs aujourd'hui.</div>
+      <div class="cv-score-text"><span class="strong">${escapeHtml(problems.length)} problèmes</span> à corriger, dont <span class="strong">${escapeHtml(criticalCount)} critiques</span> qui bloquent des utilisateurs aujourd'hui.</div>
     </div>
     <div class="cv-spacer"></div>
     <div class="cv-meta">

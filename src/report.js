@@ -65,6 +65,8 @@ export async function renderPdf(html, outPath) {
       displayHeaderFooter: false,
       preferCSSPageSize: true,
       printBackground: true,
+      tagged: true,
+      outline: true,
     });
   } finally {
     await browser.close();

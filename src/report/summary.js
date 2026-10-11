@@ -28,7 +28,7 @@ const renderScoreRing = (score) => {
 const renderSeverityBar = (problems, impact, maxCount) => {
   const count = countImpact(problems, impact);
   const length = Math.round((count / maxCount) * BAR_MAX_LENGTH);
-  return `<div class="sy-bar-row"><span class="sy-bar-label">${escapeHtml(IMPACT_FR[impact])}</span><div class="sy-bar sy-${impact}" style="width: ${length}px"></div><strong>${count}</strong></div>`;
+  return `<div class="sy-bar-row"><span class="sy-bar-label">${escapeHtml(IMPACT_FR[impact])}</span><div class="sy-bar sy-${impact}" style="width: ${length}px"></div><span class="strong">${count}</span></div>`;
 };
 
 const renderSeverityBars = (problems) => {
@@ -37,7 +37,7 @@ const renderSeverityBars = (problems) => {
 };
 
 const renderPriority = (problem, rank) => `<div class="sy-priority">
-  <strong class="sy-rank">${rank}</strong>
+  <span class="strong sy-rank">${rank}</span>
   <span class="sy-priority-title">${escapeHtml(problem.rule.titre)}</span>
   <span class="sy-priority-impact ${problem.impact}">${escapeHtml(IMPACT_FR[problem.impact])}</span>
 </div>`;
@@ -58,7 +58,7 @@ export function renderSummary(problems, score, quote, branding) {
     ${renderScoreRing(score)}
     <div class="sy-bars">${renderSeverityBars(problems)}</div>
   </div>
-  <div class="sy-callout"><strong>Pourquoi agir maintenant.</strong> L'European Accessibility Act s'applique depuis le 28 juin 2025 à de nombreux services en ligne. Au-delà du risque juridique, un site inaccessible perd des clients : les personnes concernées ne peuvent pas acheter, réserver ou vous contacter.</div>
+  <div class="sy-callout"><span class="strong">Pourquoi agir maintenant.</span> L'European Accessibility Act s'applique depuis le 28 juin 2025 à de nombreux services en ligne. Au-delà du risque juridique, un site inaccessible perd des clients : les personnes concernées ne peuvent pas acheter, réserver ou vous contacter.</div>
   <h3 class="sy-section-title">Les ${TOP_PRIORITIES} priorités</h3>
   <div class="sy-priorities">${priorities.map((problem, index) => renderPriority(problem, index + 1)).join('')}</div>
   <div class="sy-kpis">
