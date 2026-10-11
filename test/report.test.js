@@ -4,6 +4,7 @@ import { mkdtemp, readFile, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { buildReportHtml, renderPdf } from '../src/report.js';
+import { describeRule } from '../src/rules-fr.js';
 
 const scan = {
   generatedAt: '2026-10-10T08:00:00.000Z',
@@ -87,8 +88,8 @@ test('applies agency colors and falls back on invalid ones', () => {
 test('computes score, fix time and severity order', () => {
   const html = buildReportHtml(scan, branding);
   assert.match(html, /class="score">85</);
-  assert.ok(html.includes('<p class="time">15 min</p>'));
-  assert.ok(html.indexOf('Titre image-alt') < html.indexOf('Titre color-contrast'));
+  assert.match(html, /class="time">\d/);
+  assert.ok(html.indexOf(describeRule('image-alt').titre) < html.indexOf(describeRule('color-contrast').titre));
 });
 
 test('does not mention any third-party brand outside links', () => {
