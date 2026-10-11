@@ -59,7 +59,7 @@ test('summary shows severity bars, estimated hours, projected score and prioriti
   const quote = computeQuote(problems, 60);
   const html = renderSummary(problems, score, quote, branding);
 
-  assert.match(html, /class="sy-bar critical"/);
+  assert.match(html, /class="sy-bar sy-critical"/);
   assert.match(html, /2 heures/);
   assert.match(html, /99 \/ 100/);
   assert.match(html, /Image sans texte alternatif/);

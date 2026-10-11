@@ -28,7 +28,7 @@ const renderScoreRing = (score) => {
 const renderSeverityBar = (problems, impact, maxCount) => {
   const count = countImpact(problems, impact);
   const length = Math.round((count / maxCount) * BAR_MAX_LENGTH);
-  return `<div class="sy-bar-row"><span class="sy-bar-label">${escapeHtml(IMPACT_FR[impact])}</span><div class="sy-bar ${impact}" style="width: ${length}px"></div><strong>${count}</strong></div>`;
+  return `<div class="sy-bar-row"><span class="sy-bar-label">${escapeHtml(IMPACT_FR[impact])}</span><div class="sy-bar sy-${impact}" style="width: ${length}px"></div><strong>${count}</strong></div>`;
 };
 
 const renderSeverityBars = (problems) => {

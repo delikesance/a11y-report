@@ -79,6 +79,7 @@ img {
 }
 
 .flow {
+  break-after: page;
   box-sizing: border-box;
   padding: 56px;
 }
