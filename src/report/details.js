@@ -18,7 +18,7 @@ function renderPageCount(count) {
 }
 
 function renderNode(node) {
-  return `<div class="dt-mono dt-node"><code>${escapeHtml(truncate(node.html))}</code><span class="dt-target">${escapeHtml(node.target.join(' '))}</span></div>`;
+  return `<div class="dt-mono dt-node"><code>${escapeHtml(truncate(node.html))}</code><span class="dt-target">${escapeHtml(node.target)}</span></div>`;
 }
 
 function renderLocation(problem) {

@@ -7,8 +7,8 @@ const problem = (overrides = {}) => ({
   impact: 'critical',
   occurrences: 2,
   nodes: [
-    { html: '<select onchange="location.href = this.value;">', target: ['#ville'] },
-    { html: '<select id="pays">', target: ['#pays'] },
+    { html: '<select onchange="location.href = this.value;">', target: '#ville' },
+    { html: '<select id="pays">', target: '#pays' },
   ],
   pages: [
     { url: 'https://client.example/accueil' },
@@ -56,7 +56,7 @@ test('renderDetails keeps full URLs when origins differ', () => {
 test('renderDetails truncates and escapes snippets and text', () => {
   const trap = '<script>alert(1)</script>';
   const html = renderDetails([
-    problem({ nodes: [{ html: `<p>${'x'.repeat(300)}</p>`, target: ['p'] }] }),
+    problem({ nodes: [{ html: `<p>${'x'.repeat(300)}</p>`, target: 'p' }] }),
     problem({ rule: { ...problem().rule, titre: trap } }),
   ]);
 
@@ -66,7 +66,7 @@ test('renderDetails truncates and escapes snippets and text', () => {
 });
 
 test('renderDetails shows at most three nodes per problem', () => {
-  const nodes = [1, 2, 3, 4].map((index) => ({ html: `<img id="i${index}">`, target: [`#i${index}`] }));
+  const nodes = [1, 2, 3, 4].map((index) => ({ html: `<img id="i${index}">`, target: `#i${index}` }));
   const html = renderDetails([problem({ nodes })]);
 
   assert.match(html, /#i3/);
