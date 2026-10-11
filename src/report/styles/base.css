@@ -1,6 +1,10 @@
 :root {
-  --ink: #14202b;
-  --muted: #44525e;
+  --ink: #1c1917;
+  --muted: #57534e;
+  --paper: #ffffff;
+  --surface: #f5f5f4;
+  --border: #767676;
+  --on-primary: #ffffff;
   --line: #d5dde3;
   --tint: #f3f6f8;
   --critical: #9b1c1c;

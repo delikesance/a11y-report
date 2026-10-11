@@ -1,6 +1,6 @@
 .cv-cover {
   display: flex;
-  background: #ffffff;
+  background: var(--paper);
   font-family: 'IBM Plex Sans', sans-serif;
   color: var(--ink);
 }
@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: center;
   background: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary);
   font-family: 'Source Serif 4', serif;
   font-weight: 700;
   font-size: 20px;
