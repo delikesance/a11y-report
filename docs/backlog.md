@@ -11,7 +11,7 @@ Source : `docs/baseline.md` (sections 3 et 5) et écarts par rapport à la cible
 | RULE-01 | P0 | 2 | Couvrir les 105 règles axe-core de `src/rules-fr.js` (59 couvertes, 46 en texte générique). | Un test compare `getRules()` d'axe-core 4.13.0 aux clés de `RULES` et échoue si une règle manque. Aucune règle ne retombe sur le texte générique. |
 | CRED-01 | P0 | 3 | Rendre la citation crédible : chaque affirmation chiffrée ou juridique (RGAA, WCAG, minutes par occurrence) est sourcée. | Chaque règle citée dans `docs/sources.md` a une URL officielle et une date de consultation. Aucune référence RGAA ou WCAG sans source. |
 | REP-01 | P0 | 4 | Rapport professionnel : score par page, méthodologie du score, pourcentage indicatif RGAA. | La couverture et chaque page affichent leur score. Une section méthodologie explique le calcul (pénalités par impact) et ses limites. Le pourcentage RGAA est présenté comme indicatif. Tests sur `model.js`. |
-| PDF-01 | P0 | 5 | PDF balisé (accessible) : tags, langue du document, titres de signets, texte alternatif des images. | Le PDF produit par `renderPdf` contient les tags structurels et la langue `fr`. Un contrôle veraPDF (profil PDF/UA) passe sans erreur bloquante sur le rapport de référence. |
+| PDF-01 | P0 | 5 | Résolu. PDF balisé (accessible) : tags, langue du document, titres de signets, texte alternatif des images. | Le PDF produit par `renderPdf` contient les tags structurels et la langue `fr`. Un contrôle veraPDF (profil PDF/UA) passe sans erreur bloquante sur le rapport de référence. |
 | PDF-02 | P0 | 5 | Intégrer une vérification veraPDF dans la chaîne de test. | Un script `npm run verify:pdf` lance veraPDF sur un PDF généré et échoue sur toute erreur de conformité. Le script est documenté dans le README. |
 
 ## Interface en ligne de commande (P1)
@@ -29,7 +29,7 @@ Source : `docs/baseline.md` (sections 3 et 5) et écarts par rapport à la cible
 
 | ID | Priorité | Étape | Élément | Critère d'acceptation |
 | --- | --- | --- | --- | --- |
-| QUO-01 | P1 | 4 | Devis avec TVA : ligne de TVA et total TTC, option `--tva` (défaut 20 %). | Sans `--taux`, rien ne change. Avec `--taux`, le devis affiche HT, TVA et TTC, et TTC = HT × (1 + TVA). |
+| QUO-01 | P1 | 4 | Résolu. Devis avec TVA : ligne de TVA et total TTC, option `--tva` (défaut 20 %). | Sans `--taux`, rien ne change. Avec `--taux`, le devis affiche HT, TVA et TTC, et TTC = HT × (1 + TVA). |
 | SHR-01 | P1 | 2 | Corriger la couverture de `src/report/shared.js` (76,92 % branches, lignes 37, 41-45). | Couverture de `shared.js` au moins 95 % en lignes et branches. |
 
 ## Design (P2)
@@ -80,4 +80,4 @@ Source : `docs/marche.md` (sections 1 et 4). Aucun de ces points n'est déjà au
 | MKT-02 | P1 | 7 | Annexe de tests manuels guidés (clavier, lecteur d'écran) à compléter avant livraison, pour couvrir la limite de l'audit automatique. | Le rapport contient une checklist des critères non testables automatiquement, avec case à cocher et champ de constat ; les critères cochés apparaissent dans la synthèse. |
 | MKT-03 | P2 | 3 | Référence RGAA 4.1.2 par critère dans le rapport : critères testés automatiquement, critères non couverts, numéro de critère pour chaque règle. | Chaque règle affichée porte son numéro de critère RGAA (source `docs/sources.md`) ; une section liste les critères sans règle axe correspondante. |
 | MKT-04 | P2 | 7 | Comparaison entre deux scans sauvegardés en JSON (nouvelles, corrigées, persistantes). | Avec deux fichiers `--save-json`, le rapport liste les écarts par règle et par page ; test sur deux scans de fixtures. |
-| MKT-05 | P2 | 7 | Rapport d'exemple public, anonymisé, pour démonstration commerciale. | Un PDF d'exemple accompagne la documentation ; aucune donnée d'un client réel ; passe `verify:pdf` une fois PDF-01 livré. |
+| MKT-05 | P2 | 7 | Rapport d'exemple public, anonymisé, pour démonstration commerciale. | Un PDF d'exemple accompagne la documentation ; aucune donnée d'un client réel ; passe `verify:pdf` (PDF-01 livré). |
