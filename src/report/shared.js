@@ -32,6 +32,8 @@ export const truncate = (text) =>
 export const badge = (impact) =>
   `<span class="badge ${escapeHtml(impact)}">${escapeHtml(IMPACT_FR[impact])}</span>`;
 
+export const formatHours = (hours) => (hours === 1 ? '1 heure' : `${hours} heures`);
+
 export function formatDuration(minutes) {
   if (minutes < 60) return `${minutes} min`;
   return `${Math.floor(minutes / 60)} h ${String(minutes % 60).padStart(2, '0')} min`;

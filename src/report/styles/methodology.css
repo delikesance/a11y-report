@@ -18,8 +18,8 @@
 .me-warning {
   padding: 14px 16px;
   border-left: 4px solid var(--accent);
-  background: #fdf3e7;
-  color: #1a1a1a;
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .mr-list {

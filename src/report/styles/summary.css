@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: 56px 56px 40px;
-  background: #ffffff;
+  background: var(--paper);
   font-family: 'IBM Plex Sans', sans-serif;
   color: var(--ink);
 }

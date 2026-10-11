@@ -1,6 +1,6 @@
 import { IMPACT_FR, IMPACT_ORDER } from '../rules-fr.js';
 import { computeImpactWeightedScore } from './model.js';
-import { escapeHtml, TOP_PRIORITIES } from './shared.js';
+import { escapeHtml, formatHours, TOP_PRIORITIES } from './shared.js';
 
 const SEVERE_IMPACTS = ['critical', 'serious'];
 const MAX_SCORE = 100;
@@ -62,7 +62,7 @@ export function renderSummary(problems, score, quote, branding) {
   <h3 class="sy-section-title">Les ${TOP_PRIORITIES} priorités</h3>
   <div class="sy-priorities">${priorities.map((problem, index) => renderPriority(problem, index + 1)).join('')}</div>
   <div class="sy-kpis">
-    ${renderKpi('Temps de correction estimé', `${quote.totalHours} heures`)}
+    ${renderKpi('Temps de correction estimé', formatHours(quote.totalHours))}
     ${renderKpi('Score visé après corrections', `${projectedScore} / ${MAX_SCORE}`)}
   </div>
 </section>`;

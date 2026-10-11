@@ -3,7 +3,7 @@
   padding: 56px 56px 40px;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: var(--paper);
   font-family: 'IBM Plex Sans', sans-serif;
   color: var(--ink);
   break-after: page;
@@ -63,7 +63,7 @@
   align-items: center;
   justify-content: center;
   background: var(--minor);
-  color: #ffffff;
+  color: var(--on-primary);
   font-family: 'Source Serif 4', serif;
   font-size: 28px;
   font-weight: 700;
@@ -129,7 +129,7 @@
   align-items: baseline;
   padding: 18px 20px;
   background: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary);
 }
 
 .qt-total__label {
