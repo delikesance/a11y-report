@@ -1,0 +1,62 @@
+.ap-page {
+  padding: 56px;
+}
+
+.ap-title {
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary);
+  font-family: 'Source Serif 4', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.ap-table th,
+.ap-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  word-break: break-all;
+}
+
+.ap-table th {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.ap-count {
+  width: 64px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ap-table th.critical {
+  color: var(--critical);
+}
+
+.ap-table th.serious {
+  color: var(--serious);
+}
+
+.ap-table th.moderate {
+  color: var(--moderate);
+}
+
+.ap-table th.minor {
+  color: var(--minor);
+}
+
+.ap-limits p {
+  margin-bottom: 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
