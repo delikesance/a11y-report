@@ -1,0 +1,147 @@
+.dt-section {
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.dt-header {
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.dt-header h2 {
+  margin: 0;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--primary);
+}
+
+.dt-header p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dt-fiche {
+  break-inside: avoid;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.dt-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.dt-chip {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+}
+
+.dt-impact-critical { background: var(--critical); }
+.dt-impact-serious { background: var(--serious); }
+.dt-impact-moderate { background: var(--moderate); }
+.dt-impact-minor { background: var(--minor); }
+
+.dt-title {
+  margin: 10px 0 0;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--primary);
+}
+
+.dt-label {
+  margin: 14px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.dt-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.dt-mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  background: var(--tint);
+  padding: 10px 12px;
+  margin: 0 0 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.dt-node {
+  border-left: 3px solid var(--critical);
+}
+
+.dt-target {
+  display: block;
+  color: var(--muted);
+}
+
+.dt-compare {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.dt-before,
+.dt-after {
+  flex: 1;
+  padding: 10px 12px;
+}
+
+.dt-before { background: #fbeaea; }
+.dt-after { background: #e5f3ea; }
+
+.dt-before .dt-compare-label { color: var(--critical); }
+.dt-after .dt-compare-label { color: #14693a; }
+
+.dt-compare-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.dt-compare pre {
+  margin: 6px 0 0;
+  background: none;
+  padding: 0;
+}
+
+.dt-footer {
+  display: flex;
+  gap: 32px;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.dt-stat-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dt-footer strong {
+  font-size: 16px;
+}
