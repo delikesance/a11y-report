@@ -52,10 +52,11 @@ describe('scanPages', () => {
     assert.ok(!Number.isNaN(Date.parse(scan.generatedAt)));
     assert.equal(scan.pages.length, 1);
     const [page] = scan.pages;
-    assert.equal(page.error, undefined);
+    assert.equal(page.error, null);
+    assert.equal(page.audited, true);
     assert.equal(page.title, 'Page de test');
     assert.equal(typeof page.passes, 'number');
-    assert.equal(typeof page.incomplete, 'number');
+    assert.ok(Array.isArray(page.incomplete));
 
     for (const expectedId of ['image-alt', 'button-name', 'color-contrast']) {
       const violation = page.violations.find((v) => v.id === expectedId);

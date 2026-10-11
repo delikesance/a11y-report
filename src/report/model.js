@@ -32,6 +32,13 @@ export function computeImpactWeightedScore(problems) {
   return Math.max(0, 100 - penalty);
 }
 
+export function collectAuditGaps(scan) {
+  return {
+    unauditedPages: scan.pages.filter((page) => !page.audited),
+    incomplete: scan.pages.flatMap((page) => page.incomplete.map((violation) => ({ ...violation, pageUrl: page.url }))),
+  };
+}
+
 export const totalFixMinutes = (problems) =>
   problems.reduce((sum, problem) => sum + problem.rule.minutesParOccurrence * problem.occurrences, 0);
 
