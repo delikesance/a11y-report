@@ -1,0 +1,122 @@
+.cv-cover {
+  display: flex;
+  background: #ffffff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink);
+}
+
+.cv-bar {
+  width: 22px;
+  background: var(--primary);
+}
+
+.cv-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 72px 64px 56px 56px;
+}
+
+.cv-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cv-brand img {
+  height: 40px;
+  width: auto;
+}
+
+.cv-monogram {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #ffffff;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.cv-agency {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cv-eyebrow {
+  margin-top: 200px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.cv-title {
+  margin: 16px 0 0;
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 1.08;
+  color: var(--primary);
+}
+
+.cv-lead {
+  margin: 24px 0 0;
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.cv-score-card {
+  margin-top: 56px;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+}
+
+.cv-score {
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.cv-score-max {
+  font-size: 26px;
+  color: var(--muted);
+}
+
+.cv-score-text {
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.cv-spacer {
+  flex-grow: 1;
+}
+
+.cv-meta {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.cv-meta-label {
+  font-weight: 600;
+  color: var(--ink);
+}
